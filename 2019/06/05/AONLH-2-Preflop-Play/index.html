@@ -533,7 +533,7 @@ EV_{5bet.folded}=1.5+11+24=36.5</script><p>需要注意的是，这里我们讨�
 </div>
 <p>首先我们假设自己的bluff在被跟注之后能够实现的平均equity为10%（事实上这已经将这个情景乐观化了很多），因为对手行动空间上的概率分布已经固定，我们就可以计算出bluff的EV：</p>
 <script type="math/tex; mode=display">
-EV_{open.bluff}=1.5\times0.1^5+3.5(10\%\times5\times0.9-90\%\times1)(1-0.1^5)=-1.47BB</script><p>其中，$1.5\times0.1^5$代表剩余5名玩家全部fold并直接获利的期望；$10\%\times5\times0.9$表示二项分布的独立同分布实验的期望盈利；而$99\%.$则表示在get called之后输掉的y用于open raise的下注大小。可以非常清楚的发现由于对手的range为固定值，我们的bluff永远都是一个负EV的操作。</p>
+EV_{open.bluff}=1.5\times0.1^5+3.5(10\%\times5\times0.9-90\%\times1)(1-0.1^5)=-1.47BB</script><p>其中，$1.5\times0.1^5​$代表剩余5名玩家全部fold并直接获利的期望；$10\%\times5\times0.9​$表示二项分布的独立同分布实验的期望盈利；而$99\%.​$则表示在get called之后输掉的y用于open raise的下注大小。可以非常清楚的发现由于对手的range为固定值，我们的bluff永远都是一个负EV的操作。</p>
 <p>接着我们来计算在这样的牌桌中最大的open range是多少，假设自己的open raise中最差手牌需要具有的平均equity为$x$，则根据前文的假设最差手牌的EV应当接近于0，故而有：</p>
 <script type="math/tex; mode=display">
 EV_{open.worst}=1.5\times0.1^5+3.5(x\times5\times0.9-(1-x))(1-0.1^5)=0</script><p>解得$x=18.2\%$，而我们知道这里的$x$为平均需要具有的equity，而不是range本身。也就是说当equity近似于pot odds时我们就应该open raise，甚至条件还更加宽松。这一点其实和我们在牌桌上的体验是相同的：首先因为新手对于范围不敏感，所以当你open raise时，其余玩家的跟注等效于盲注大小变大，并没有将其余玩家排除在游戏之外。而且由于对手总体的弃牌率低，使得自己拿到池内盲注的immediate reward的EV降低，也就是说在这种情况下open的size并没有那么关键，所以作任何size的open都是一个0EV的选择。因此从数学上来说，是否做open是一件无关紧要的事，如何在flop轮之后榨取更多的价值，才是一件需要我们更多思考的事。</p>
@@ -545,13 +545,18 @@ EV_{open.worst}=1.5\times0.1^5+3.5(x\times5\times0.9-(1-x))(1-0.1^5)=0</script><
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">June 5th 2019, 5:34:29 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">June 11th 2019, 11:29:11 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">June 13th 2019, 10:24:15 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/06/11/AONLH-3-Preflop-Play-continued/" title="AONLH(3) - Preflop Play (continued)">
+                    <div class="nextTitle">AONLH(3) - Preflop Play (continued)</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -701,9 +706,29 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 2
+        Total : 4
         </div>
         <!-- search  -->
         
@@ -716,6 +741,16 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">Google Research Football - RL Environment</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2019/06/11/AONLH-3-Preflop-Play-continued/">AONLH(3) - Preflop Play (continued)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -733,6 +768,10 @@ top:50vh;
     <div class="sidebar-tags-name">
     
         <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
