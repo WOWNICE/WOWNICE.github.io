@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>AONLH(4) - Preflop Play (part 3) · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">AONLH(4) - Preflop Play (part 3)</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            AONLH(4) - Preflop Play (part 3)
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.7k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/06/17</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,41 +399,104 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">
-            
-                <span>Google Research Football - RL Environment</span>
-        </a>
-        <div class="abstract-content">
-            Novel Google Football Virtual Environment paper notes.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="paper">paper</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Defending-Enough-Against-Opens"><a href="#Defending-Enough-Against-Opens" class="headerlink" title="Defending Enough Against Opens"></a>Defending Enough Against Opens</h1><p>我们现在已经可以根据之前讨论的概念来建立更加复杂的范围了。我们的最终目标是找到一个双方都没有任何偏离意图的“均衡”的策略，但是不幸的是preflop range是非常难达到这一点的，这是因为我们没有一个非常明确的起点（已知的正确范围）来帮助我们建立理论正确的范围。一个非常简单的例子：我们首先要知道<strong>BTN</strong>的opening range才有可能为盲位（<strong>SB/BB</strong>）设计防守open的范围；而相反的我们如果不知道盲位玩家3-bet和call的频率，我们又很难为<strong>BTN</strong>设计优秀的opening range。所以这就要求我们要采用更加“trial &amp; error”的方法来分析preflop play。</p>
+<p>除此之外，改变策略的某个部分通常会影响到游戏的其他方面。例如说，假设我们想要更松的range去对抗对手的3-bet bluff从而让他bluff成功的概率变低，那么虽然这样做确实迫使对手在不利位置更多地游戏大底池，但同时也弱化了我们的范围从而提升了对手在post-flop上游戏弱手牌的EV。</p>
+<p>为每个位置都采用同样的方法去计算一遍range会让这个过程变得非常冗长，所以这一章我们会先介绍方法论然后在最后给出一章Hand Chart来显示最终的结果。这里还需要重申，完美的范围是不可能被找到的，我们所能做到的只能是“均衡”的范围，即一旦双方都达到了这个范围，他们都不想再偏移自己的策略。</p>
+<p>我们首先讨论盲位应该如何回应<strong>BTN</strong>的open raise。这个范围在6-max的牌桌上经常发生，重要性自然不言而喻（即便如此，在菜鸟牌桌上可能一整晚也遇不到一次）。假设<strong>BTN</strong>位的open size为2.5BB（注意在前面章节中我们已经提到，通常<strong>BTN</strong>位的玩家因为具有绝对的位置优势会做size小一些的open来鼓励对手入池）且3-bet的size为9.5BB，从而有<strong>BTN</strong>的open bluff（这里假定3-bet  bluff就是open range中的最差手牌）不能够在高于62.5%的情况下成功。</p>
+<script type="math/tex; mode=display">
+1.5X-2.5(1-X)=0</script><p>另外，<strong>SB</strong>的3-bet bluff不能够在高于69.3%的情况下成功</p>
+<script type="math/tex; mode=display">
+4X-9(1-X)=0</script><p>而<strong>BB</strong>的频率为68.0%。</p>
+<script type="math/tex; mode=display">
+4X-8.5(1-X)=0</script><p>最后，我们假设当<strong>BTN</strong>玩家4-bet时他会使用19BB的size，虽然面对<strong>SB/BB</strong>的频率不同，但他们的值非常接近。我们可以计算出<strong>BTN</strong>的4-bet必须成功57%左右。</p>
+<script type="math/tex; mode=display">
+12.5X-16.5(1-X)=0</script><p>检验一下我们以上得出的成果，看看他们是不是没有理论上的矛盾。</p>
+<ul>
+<li><strong>BTN</strong>的open raise不能够在高于62.5%的频率上成功，不然<strong>BTN</strong>位的玩家将会用任意的手牌进行open来赢取盲注的钱。</li>
+<li>在<strong>BTN</strong>位open range中的最弱手牌在被盲位3-bet时会失去2.5BB。</li>
+<li>两个盲位玩家进行3-bet防守的频率总和不能够超过37.5%。</li>
+<li>两个盲位玩家如果只进行call防守，那么他们防守频率的总和要超过37.5%。</li>
+<li>BTN opening range中的最差手牌无所谓进行open或者是fold。</li>
+<li><strong>BB</strong>只会在自己手牌的EV高于-1时对open raise进行冷跟。</li>
+<li><strong>SB</strong>只会在自己手牌的EV高于-0.5时对open raise进行冷跟。</li>
+<li>Hands in the small and big blind flatting range will on average have a higher expected value against weaker hands than stronger hands in the button opening range. </li>
+</ul>
+<p><strong>BB</strong> calling range中的最差手牌无所谓call或者是fold，这意味着这手最弱手牌在面对<strong>BTN</strong>位的opening具有接近-1BB的EV。当<strong>BTN</strong>的opening range中的最弱手牌对于open或者fold无所谓而且当盲位的最弱手牌无所谓call或者是fold，我们会说双方玩家达到了一种均衡。</p>
+<p>我们现在可以写一长串的数学公式（虽然没有办法被解决）来找到<strong>BTN</strong>位open的EV。然而，我们将用一个不那么精确但是更加实用的公式来找出BTN open和盲位defend的合理范围。</p>
+<blockquote>
+<p>(EV when both blinds fold) (frequency both blinds fold) + (average EV when called) (frequency called) - (EV when 3-bet) (facing 3-bet frequency) = 0</p>
+</blockquote>
+<p>上面的公式为书中的原文，但是其中有一点不严谨的地方，那就是EV when 3-bet这一栏的EV本身就是带符号的所以之前的-号应该还是保持+号。故而通用公式为：</p>
+<blockquote>
+<p>(EV when both blinds fold) (frequency both blinds fold) + (average EV when called) (frequency called) + (EV when 3-bet) (facing 3-bet frequency) = 0</p>
+</blockquote>
+<p>我们可以将我们已经知道的值插入上述这条公式，得到：</p>
+<blockquote>
+<p>(1.5)(frequency both blinds fold) + (average EV when called)(frequency called) – (2.5)(facing 3-bet frequency) = 0</p>
+</blockquote>
+<p>如果我们能够知道average EV of the worst hand when called那么这条式子就可解了。但是要知道这个值无异于要解决整个德州扑克游戏。虽然无解，但这条式子也有它有用的地方。比如我们可以先插入一些常见的range来解决这个未知的问题，如果这些range看起来合理，那么我们就可以拿它们来和一些强大的对手对抗，并在未来不断的对抗中refine自己的range。</p>
+<p>首先让我们设计理论上合理的3-bet range。我们知道盲位合起来的3-bet频率必须低于37.5%，而且43%的3-bet在面对4-bet时必须进行防守。因此，一个不错的开头是设计一个5%的value bet hands（<strong>TT+，AJs+, AQo+</strong>）和7.5%的bluff。这样两个盲位各自都是12.5%的3-bet频率。</p>
+<p>这是一个很多优秀玩家都在使用的标准3-bet范围。因为3-bet range中的40%是强牌，所以在整个3-bet range上防守43%将不再是一件难事：只需要混合进一些跟注和一些5-bet bluff就可以填充剩下3%的频率。如果盲位玩家都是12.5%的3-bet频率，那么<strong>BTN</strong>位的玩家总共会面对盲位玩家23.4%的3-bet。</p>
+<script type="math/tex; mode=display">
+0.234=1-(0.875)^2</script><p>让我们同时假设<strong>SB</strong>和<strong>BB</strong>在没有3-bet时分别以10%和20%的频率跟注。这就意味着至少一名盲位玩家跟注的频率为24.3%，其中，0.875意味着在<strong>SB</strong>跟注后<strong>BB</strong>不进行3-bet的频率；0.775表示<strong>SB</strong>在遇到<strong>BTN</strong> open之后弃牌的频率。</p>
+<script type="math/tex; mode=display">
+0.243=0.1\times0.875+0.2\times0.775</script><p>现在我们就有了足够的已知值来插入到我们先前的等式中。根据我们的盲位防守策略，我们可以计算出<strong>BTN</strong>位使用open range中的最弱牌进行open的EV。</p>
+<script type="math/tex; mode=display">
+0.234(-2.5)+(0.243)X+(1-0.234-0.243)(1.5)=0</script><p>其中，$0.234(-2.5)$指的是<strong>BTN</strong>遭遇3-bet时的EV；$(0.243)(X)$为<strong>BTN</strong>遭遇跟注的EV；而$(1-0.234-0.243)(1.5)$为<strong>SB/BB</strong>均弃牌的EV。也就是说，<strong>BTN</strong>玩家open range中的最弱牌被跟注时的EV要维持在-0.82才能够让这手牌无所谓open或fold。</p>
+<p>现在让我们来评估一下这个值的合理性。当<strong>BTN</strong>的open被任意一名盲位玩家跟注，<strong>BTN</strong>在post-flop面上处于有利位置，池内有5.5或者6个BB。这时均衡的范围使得<strong>BTN</strong>的EV为-0.82，也就是说<strong>BTN</strong>在这个底池中拿回1.68BB就算完成任务。现在的问题是：</p>
+<p><strong>&gt;&gt;&gt; 这个-0.82BB的EV推算出的1.68BB，是一个合理的值吗？</strong></p>
+<p>这里作者写到，虽然他也没有办法给出正确的值，但他认为1.68BB绝对不是一个合理的值。因为两个盲位玩家都具有相当松的calling range而同时<strong>BTN</strong>具有绝对的位置优势。而1.68BB意味着在被跟注后的<strong>BTN</strong>具有不到1/3的equity，也就导致<strong>BTN</strong>位的玩家可以用超级松的范围进行open而获得比1.68BB大的平均盈利。故而，这就使得作者相信当前盲位玩家需要比现在使用的数值3-bet/call地更加激进一些。</p>
+<p>以上的几段论述非常好地示范了在受到我们能够理论证明的约束范围之内，虽然我们不能够得出确切的数值，我们却能够通过询问“这些范围是合理的吗”并结合实际的经验对理论得出的结论进行验证。理论的推演通常能够帮助我们看到“什么一定是错的”，而不是“什么一定是对的”。所以我们可以通过理论推演来逐渐优化我们的范围或者面对不同的敌人应用不同的策略。</p>
+<p>你可能会问：“就算<strong>BTN</strong>有一个非常松的+EV open range，那又怎样呢？这不一定就代表着盲位玩家的防守范围太过紧缩，只是说明<strong>BTN</strong>位的位置优势就有这么大呀。”但是事实是，<strong>BTN</strong>位的玩家一旦开始非常宽松地进行open，那么他的open面对对手激进的3-bet将会变得非常脆弱（这一点将在未来的章节”Defending Enough Against 3-Bets”看到）。</p>
+<p>最后，我们在本章中将两个盲位玩家的范围作了等效处理，但是要注意的是这只是为了使问题变成单变量的一种简化。在数学上更加娴熟的读者可以使用这本书的方法进行更加复杂的演算，而针对<strong>SB/BB</strong>更加成熟的冷跟范围也能够被轻松发现。在本章结束之前，让我们对两个盲位玩家采取不同的范围使用我们的公式。我们假设<strong>SB</strong>以16%的频率3-bet并且以8%的频率call，<strong>BB</strong>以14%的频率3-bet并以20%的频率冷跟。我们首先会发现两者3-bet的频率之和是27.8%。</p>
+<script type="math/tex; mode=display">
+0.278=0.16+0.84\times0.14</script><p>另外，BTN被冷跟的频率为21.7%。</p>
+<script type="math/tex; mode=display">
+0.217=0.08\times0.86+0.20\times0.74</script><p>这样的话我们解得<strong>BTN</strong>的opening range中的最弱牌EV为-0.29。</p>
+<script type="math/tex; mode=display">
+0.278\times(-2.5)+0.217X+(1-0.278-0.217)\times1.5=0</script><p>当这手最弱牌被跟注时，<strong>BTN</strong>平均输掉0.29BB。<strong>BTN</strong>的opening range平均应当比盲位玩家的calling range弱，但因为位置优势<strong>BTN</strong>玩家又能够获得多一些的死钱，所以可以认为这个范围是相对合理的。</p>
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/17/AONLH-4-Preflop-Play-part-3/">http://www.shihaizhou.com/2019/06/17/AONLH-4-Preflop-Play-part-3/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/17/AONLH-4-Preflop-Play-part-3/">June 17th 2019, 4:33:22 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/17/AONLH-4-Preflop-Play-part-3/">June 18th 2019, 4:42:46 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/06/12/Google-Research-Football-RL-Environment/" title="Google Research Football - RL Environment">
+                    <div class="prevTitle">Google Research Football - RL Environment</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -450,6 +574,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defending-Enough-Against-Opens"><span class="toc-number">1.</span> <span class="toc-text">Defending Enough Against Opens</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -625,6 +767,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
