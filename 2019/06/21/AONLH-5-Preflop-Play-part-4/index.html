@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>AONLH(5) - Preflop Play (part 4) · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -77,6 +77,8 @@
 
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -201,14 +203,23 @@
 </head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">AONLH(5) - Preflop Play (part 4)</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -227,17 +238,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            N1H111SM's Miniverse
-            <!-- 文章页  -->
+            AONLH(5) - Preflop Play (part 4)
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -245,12 +256,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                There is no YOURSELF, just live with whatever it is.
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.5k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/06/21</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -351,278 +399,130 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/21/AONLH-5-Preflop-Play-part-4/">
-            
-                <span>AONLH(5) - Preflop Play (part 4)</span>
-        </a>
-        <div class="abstract-content">
-            Complex Range Discussion
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Designing-Defending-Ranges-to-Maximizing-EV"><a href="#Designing-Defending-Ranges-to-Maximizing-EV" class="headerlink" title="Designing Defending Ranges to Maximizing EV"></a>Designing Defending Ranges to Maximizing EV</h1><p>虽然之前的章节告诉我们如何去衡量盲位玩家的防守范围是合理的，但是并没有教会我们哪些hands应该被纳入到range当中。新手玩家通常采用以上策略的一种过度简化版本：使用（范围内的）强牌raise for value，中等牌力call，下等牌力进行raise bluff，最差的手牌fold。这样会带来以下问题：</p>
+<ul>
+<li>这会鼓励对手仅仅根据自己手牌的equity进行准确的牌力排序。</li>
+<li>这没有考虑到对手的范围会随着line that we take进行相应的变化从而影响我们手牌的equity。因此，最适宜平跟的hands不一定比最适宜bluff的hands的equity更高。</li>
+</ul>
+<p>因为一个名GTO玩家永远采取EV最高的line，所以我们应当采取在那些range内表现好的3-betting和calling范围。简单的规则没有办法适应GTO玩家的复杂范围，这也就要求我们必须时刻意识到我们对手范围是如何组成的，以及我们的行动（calling, betting and raising）是如何影响对手的范围的。</p>
+<p>让我们继续设计面对<strong>BTN</strong>位open的盲位防守范围。当我们作为盲位玩家跟注<strong>BTN</strong>位对手的open时，我们几乎总是在小底池内面对宽范围（play against a wide range for a small pot）。这也就意味着我们的calling range需要“put more emphasis on flatting with hands which make marginal pairs at a high frequency and can win small and medium sized pots”。显然的，calling range中常见的有<strong>KTs</strong>，<strong>K9s</strong>，<strong>QTs</strong>，<strong>QTs</strong>。当然范围中也需要其他的牌，但是所有的这些牌都能够在flop轮上能够成一个不错的对，从而很好地对抗wide open  range。</p>
+<p>虽然这些手牌在小底池中的表现不错，但是用他们在3-bet底池中游戏会变得比较棘手。那是因为3-bet会导致我们对手的范围强很多而使得我们在不利位置用一个“顶对-中踢脚”游戏大底池变得异常困难。所以在preflop使用类似<strong>K9s</strong>或者<strong>QTo</strong>进行跟注往往是最好的选择，因为它们让对手的范围继续保持很宽同时在击中顶对时我们通常会有更好的踢脚。</p>
+<p>另外，适合3-bet bluff的手牌通常具有在river上成为最强牌力的可能。比方说<strong>57s</strong>或者<strong>45s</strong>，因为他们在后续的翻牌中有可能击中顺子和同花，而拿着这样的牌我们几乎总是能够肯定自己拿的是nuts从而轻松实现自己的equity。通常来说我们会拿上面的牌力进行3-bet bluff，但是拿它们进行跟注也是有利可图的。但需要注意的是，虽然用小的同花连张（small suited connector）具有正的EV，但是当我们真的击中了弱对，又很难立即结束牌局获得盈利。</p>
+<p>需要注意的是，当我们的对手具有位置优势（例如当前讨论的盲位对抗<strong>BTN</strong>）时，他通常会采用跟注的方式防守我们的3-bet，因为这会使得我们在一个不利位置和他游戏一个大底池。因此根据这一心理，我们的3-bet range需要能够在3-bet pot中表现良好。不幸的是，我们3-bet bluff range中并不是所有手牌都能轻松应对对手的跟注，因为按照上一章的分析，我们需要更加激进地3-bet位于<strong>BTN</strong>的对手，所以像<strong>K7s</strong>这样的手牌虽然可能会在post-flop轮上将我们引入困境，但是我们也应当用这样的手牌来平衡我们的range。虽然“顶对-弱踢脚”非常难以游戏，但是为我们的flop checking range保留一些marginal hands还是一定程度上有用的。</p>
+<h1 id="Balance"><a href="#Balance" class="headerlink" title="Balance"></a>Balance</h1><p>德州扑克中最常被误解和被错误应用的概念莫过于“平衡”一个范围（balancing a range）。如果我们的范围不是平衡的，我们的对手就能够经常采取非常有效的line来对抗我们的range。一个平衡的范围其实是用GTO策略（即最大化EV）玩每一手牌的副产物。</p>
+<p>不管我们的range如何平衡，总是有一些公共牌面纹理（Board Texture）对对手的range更加有利。比方说，如果我们的range平均比对手的range弱，那么他就能够更加频繁地下重注，因为他知道我们几乎很少成强牌。</p>
+<blockquote>
+<p>This encourages us to put hands in our preflop range which allow us to connect better on boards which would otherwise miss our range, and we’ll<br>occasionally win a massive pot when we have one of the few possible strong hands in an otherwise weak range.</p>
+</blockquote>
+<p>这一段的文字让我有些困惑，我能够理解更弱的range意味着击中强牌的概率更低，因此对手c-bet的概率更高，但同时一旦击中强牌就能够赢下一个大底池（因为这个事件的发生完全是基于频率的）；但是我不是非常理解“this encourages us to put hands in our preflop range which allow us to connect better on boards”这一段，如果对这一段文字有比较好的理解可以联系我进行交流。</p>
+<p>现在让我们来看一下<strong>CO</strong>对抗<strong>BTN</strong>的实际情况。假设<strong>BTN</strong>按照大多数玩家做的那样在preflop上遇到了<strong>CO</strong>的open会100%频率3-bet<strong>AA</strong>和<strong>AK</strong>。而如果<strong>BTN</strong>玩家没有进行raise，那么在King High的这样的flop面<strong>BTN</strong>位玩家拿到强牌的概率就小了很多，于是<strong>CO</strong>玩家就能够在绝大多数的King High牌面进行c-bet迫使<strong>BTN</strong>位玩家弃牌。注意<strong>BTN</strong>拿到两对+Queen以上踢脚的概率是非常小的。</p>
+<p>以上的挤压产生就意味着<strong>BTN</strong>现在有了改变自己策略的动机。因为对手在King High牌面的激进策略让底池变大，而如果<strong>BTN</strong>此时能够慢玩<strong>AKo+</strong>就能够获得比3-bet更高的收益。另外，通过使用强牌在preflop平跟有时能够赢下非常大的底池：因为有时盲位玩家会进行通过reraise挤压（这就恰恰掉进了我们的圈套）。</p>
+<p>当<strong>CO</strong>意识到<strong>BTN</strong>在King High的牌面上范围中也有<strong>AKo+</strong>的手牌，他就会开始变得保守起来。<strong>你来我往的策略调整过程最终会将玩家们引向GTO策略并建立起相互之间的均衡（Equilibrium）</strong>。<strong>BTN</strong>虽然会经常在preflop轮3-bet自己的<strong>AKo+</strong>，但也会时不时地用它们进行平跟；而<strong>CO</strong>虽然会经常在King High面上激进c-bet，也会时不时地过牌给<strong>BTN</strong>位玩家进行先手行动。</p>
+<p>当我们在<strong>SB</strong>的时候如果从来都不平跟强牌或许也会遇到上述问题，这样的话我们的范围在面对<strong>BB</strong>挤压时就会变得非常脆弱。注意<strong>BB</strong>并不会有这样的问题因为他如果跟注则游戏进入了flop轮。虽然<strong>BB</strong>冷跟的range是紧缩的，但是在<strong>BTN</strong>能够利用这一点之前，flop轮中又会经常出现<strong>BB</strong>击中了two pairs或者sets（the flop will usually put some two pairs and sets in the big blinds range before the button can capitalize on this）。</p>
+<p>因此，我们在<strong>SB</strong>位的flatting range最好放一些强牌。我们没有办法去证明（数学上）这一定就是好的，而且通常遇到挤压时<strong>SB</strong>最好fold并且期待<strong>BTN</strong>位的玩家进行防守。但到目前为止在<strong>SB</strong>位时不时地慢玩<strong>AKo+</strong>是一个理论上正确的策略，尤其当<strong>BB</strong>玩家非常激进并且经常挤压时我们更应当这么做。</p>
+<h1 id="Board-Texture-Frequencies"><a href="#Board-Texture-Frequencies" class="headerlink" title="Board Texture Frequencies"></a>Board Texture Frequencies</h1><p>在设计防守范围时另一个需要考虑的因素就是公共牌面纹理频率（Board Texture Frequencies），这个频率指的是某一种类型的flop公共牌面出现的频率。例如，没有击中King High牌面会比没有击中Seven High牌面更加成问题，因为King High牌面出现的概率要高很多。<strong>我们需要经常思考对方的range击中某一种牌面的概率，这一点是很重要的。</strong></p>
+<p>以下表格展示了flop轮出现某种High Card的概率。Ace High毫无疑问是所有High Card牌面中最经常出现的，而在Eight High以下的牌面是会很少遇到的。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">High Card</th>
+<th style="text-align:center">Single High (%)</th>
+<th style="text-align:center">Double High (%)</th>
+<th style="text-align:center">Total (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Ace</td>
+<td style="text-align:center">20.4</td>
+<td style="text-align:center">1.3</td>
+<td style="text-align:center">21.7</td>
+</tr>
+<tr>
+<td style="text-align:center">King</td>
+<td style="text-align:center">17.1</td>
+<td style="text-align:center">1.2</td>
+<td style="text-align:center">18.4</td>
+</tr>
+<tr>
+<td style="text-align:center">Queen</td>
+<td style="text-align:center">14.1</td>
+<td style="text-align:center">1.1</td>
+<td style="text-align:center">15.2</td>
+</tr>
+<tr>
+<td style="text-align:center">Jace</td>
+<td style="text-align:center">11.4</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">12.4</td>
+</tr>
+<tr>
+<td style="text-align:center">Ten</td>
+<td style="text-align:center">9.0</td>
+<td style="text-align:center">0.9</td>
+<td style="text-align:center">9.9</td>
+</tr>
+<tr>
+<td style="text-align:center">Nine</td>
+<td style="text-align:center">6.8</td>
+<td style="text-align:center">0.8</td>
+<td style="text-align:center">7.6</td>
+</tr>
+<tr>
+<td style="text-align:center">Eight or less</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">14.8</td>
+</tr>
+</tbody>
+</table>
 </div>
-            
-        </div>
+<p>虽然大致理解公共牌面纹理频率是怎样的是有帮助的，但是我们不必要将他们都记下来，<strong>只需要注意到翻出J及J以上的flop占到了67.7%的频率就够了</strong>。正如我们看到的那样，盲位的冷跟范围经常没有办法击中Eight High及以下的flop牌面，这样设计主要是根据上面牌面的出现频率的，所以即便没有击中自己的range，由于它发生的频率非常低所以不需要太过在意。另外，在未来的章节中，我们将会看到在不利位置游戏这种low boards会非常困难。即便我们将更多小的同色连张例如<strong>7h6h</strong>（红桃76）放进我们的平跟范围，在<strong>6c3c2d</strong>（草花6、3和方片2）的牌面上处于不利位置也将会很难进行游戏。而这就意味着在盲位碰上这种牌面，check-fold或许成为了最好的办法。<strong>总而言之，我们需要将range设计得更加容易击中Jack High以上的Board Texture（因为它们出现的频率更高），而不要尝试加入小的连张以期在flop击中顺子。</strong></p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/17/AONLH-4-Preflop-Play-part-3/">
-            
-                <span>AONLH(4) - Preflop Play (part 3)</span>
-        </a>
-        <div class="abstract-content">
-            Discussion about how BTN opens and Blinds defend.
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/">http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/">June 21st 2019, 9:47:33 am</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/">June 23rd 2019, 10:41:41 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">
-            
-                <span>Google Research Football - RL Environment</span>
-        </a>
-        <div class="abstract-content">
-            Novel Google Football Virtual Environment paper notes.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="paper">paper</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/11/AONLH-3-Preflop-Play-continued/">
-            
-                <span>AONLH(3) - Preflop Play (part 2)</span>
-        </a>
-        <div class="abstract-content">
-            Something more complex about preflop.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/05/AONLH-2-Preflop-Play/">
-            
-                <span>AONLH(2) - Preflop Play (part 1)</span>
-        </a>
-        <div class="abstract-content">
-            About preflop.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/04/AONLH-Chap-NO-1-Basics/">
-            
-                <span>AONLH(1) - Basics</span>
-        </a>
-        <div class="abstract-content">
-            About poker.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src="/avatar/Goku_1.png">
-    <div class="profile-name">N1H111SM</div>
-    
-    <div class="profile-signature">
-        Just live with it.
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+        </li>
+        <li class="previous">
             
-                <a href="mailto:shihaizhou@zju.edu.cn" class="iconfont-archer email" title="email"></a>
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/06/17/AONLH-4-Preflop-Play-part-3/" title="AONLH(4) - Preflop Play (part 3)">
+                    <div class="prevTitle">AONLH(4) - Preflop Play (part 3)</div>
+                </a>
             
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
-            
-                <a href="//github.com/WOWNICE" class="iconfont-archer github" target="_blank" title="github"></a>
-            
-        
     
-        
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href="//www.baidu.com" target="_black">friendA</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href="//www.google.com" target="_black">friendB</a>
-                    </span>
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href="/about">ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -698,6 +598,24 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Designing-Defending-Ranges-to-Maximizing-EV"><span class="toc-number">1.</span> <span class="toc-text">Designing Defending Ranges to Maximizing EV</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Balance"><span class="toc-number">2.</span> <span class="toc-text">Balance</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Board-Texture-Frequencies"><span class="toc-number">3.</span> <span class="toc-text">Board Texture Frequencies</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -887,6 +805,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
