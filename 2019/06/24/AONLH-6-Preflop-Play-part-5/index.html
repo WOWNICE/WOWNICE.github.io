@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>AONLH(6) - Preflop Play (part 5) · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -77,6 +77,8 @@
 
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -201,14 +203,23 @@
 </head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">AONLH(6) - Preflop Play (part 5)</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -227,17 +238,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            N1H111SM's Miniverse
-            <!-- 文章页  -->
+            AONLH(6) - Preflop Play (part 5)
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -245,12 +256,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                There is no YOURSELF, just live with whatever it is.
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.6k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/06/24</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -351,336 +399,106 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">
-            
-                <span>RL Course Lesson (1) - MP, MRP, MDP</span>
-        </a>
-        <div class="abstract-content">
-            Stanford CS234 Lecture 2.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Defending-Enough-Against-3-bets"><a href="#Defending-Enough-Against-3-bets" class="headerlink" title="Defending Enough Against 3-bets"></a>Defending Enough Against 3-bets</h1><p>我们知道跟注对手的open会迫使我们防守一个更宽的范围，因为这使得我们的对手看到了翻牌。这一概念在我们open之后又防守3-bet时也是同样适用的，因为当我们跟注了对手的raise，他就看到了翻牌并且有机会击中强牌或者能够进行有利可图的bluff。这就迫使我们学习防守相比仅仅4-bet reraise更多的手牌组合。</p>
+<p>假设我们以45%的频率进行<strong>BTN</strong>位的open，一个众多优秀选手采用的<strong>BTN</strong>位open range。当我们使用2.5BB来open并且我们的对手在<strong>BB</strong>位3-bet了9.5BB，他在冒着丢掉8.5BB的风险去赢得4BB。如我们之前章节的分析所述，我们需要在遇到3-bet时至少防守32%的频率。综合我们的open range：我们需要防守14.4%的频率</p>
+<script type="math/tex; mode=display">
+0.144=0.32\times0.45</script><p>然而，14.4%的范围代表着我们仅仅采用4-bet的频率，现在我们需要找出多少更多的hands应当被加入到calling range中。事实上，<strong>BB</strong>的期望值为零的等式和上一章节中“Defending Enough Against Opens”的结果几乎相同。</p>
+<blockquote>
+<p>(EV when button folds)(frequency button folds) + (average EV when called)(frequency called) – (EV when 4-bet)(facing 4-bet frequency) = 0</p>
+</blockquote>
+<p>现在我们有两种方法解决这个问题。第一种是将我们典型的4-betting range作为已知值插入到公式中去求得<strong>BB</strong>在3-bet时被跟注的平均EV是多少才能保持整体bluff为0EV。另一种想法是先估计当我们跟注防守时<strong>BB</strong>3-bet bluff的EV，然后再去设计我们的防守范围。例如，我们假设<strong>BB</strong>会平均输掉5.5个BB当他的弱3-bet bluff（只是他范围内相对弱的）被跟注，那么我们可以算出他会平均从18BB的底池中取回3BB的筹码。这看起来非常弱，但事实上我们马上就会在接下来的hand chart中看到<strong>BB</strong>的3-bet范围中的最弱牌其实是真的非常弱。从而证实了我们假设的合理性。</p>
+<p>另外，假设当我们在<strong>BTN</strong>位遇到3-bet，我们会以<strong>总共</strong>5%的范围进行4-bet。如果我们使用<strong>KK</strong>-<strong>JJ</strong>、<strong>AK</strong>以及bluff组成的范围进行小size的4-bet raise，这个范围将是合理的。这表示我们4-bet的条件概率（即面对3-bet后的频率）为11.1%。</p>
+<script type="math/tex; mode=display">
+0.111={0.05\over0.45}</script><p>现在我们可以将这些频率插入之前的公式并求出我们<strong>BTN</strong>位受到3-bet时的calling range。</p>
+<script type="math/tex; mode=display">
+4(1-X-0.111)-5.5X-8.5\times0.111=0</script><p>解得$X=0.275$。其中4表示当<strong>BTN</strong>弃牌的收益；$1-X-0.111$表示<strong>BTN</strong>弃牌的频率；-5.5表示当<strong>BTN</strong>跟注时的收益；$X$为待计算的<strong>BTN</strong>位跟注频率；0.111位<strong>BTN</strong> 4-bet的频率；-8.5为当<strong>BTN</strong>4-bet时盲位的收益。因此<strong>BTN</strong>需要额外（除4-bet的5%外）以跟注的方式防守他27.5%的open range。这意味着整体12.4%的防守范围。</p>
+<script type="math/tex; mode=display">
+0.124=0.275\times0.45</script><p>我们可以重复上述过程：假设我们对手bluff被跟注时他只会平均失去4.5BB，那么我们需要用跟注额外防守30.7%的open range。故而综合4-bet和calling，我们需要在open range的40%左右进行防守。现在让我们真切地看一下在不同的open range下<strong>BTN</strong>位的3-bet calling range。虽然有人会说用<strong>QJo</strong>进行跟注比<strong>66o</strong>或是<strong>67s</strong>跟注更好，但是从数学角度来说，如果决策相近，他们的EV值不会相差太多。</p>
+<p>接下来的表格表示了<strong>BTN</strong> raiser平跟<strong>BB</strong>3-bet的范围，其中假设<strong>BB</strong>3-bet范围中的最弱手牌被跟注时平均输掉5.5BB。</p>
+<h3 id="Button-3-Bet-Calling-Range"><a href="#Button-3-Bet-Calling-Range" class="headerlink" title="Button 3-Bet Calling Range"></a>Button 3-Bet Calling Range</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Opening Range (%)</th>
+<th>Percentage of Opening Range Called (%)</th>
+<th>Percentage of All Possible Hands Called (%)</th>
+<th>Possible Cold Calling Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </div>
-            
-        </div>
+<p>注意几乎所有的<strong>BTN</strong> flatting ranges都包含了<strong>AA</strong>。<strong>AA</strong>有非常强的阻挡作用因此对对手有非常稳健的胜率（我们几乎可以总是在flop和turn上进行c-bet，如果牌面非常threatening）。<strong>AA成强牌的Board往往不会让我们3-bet flatting range中的手牌成强牌，因此作者认为将AA放入3-bet的平跟范围会更容易获利。KK和QQ也能够拿来平跟3-bet，但是他们在flop上碰到A就会变得比较脆弱，因此慢玩它们会更具风险。</strong></p>
+<p>和之前所提到的一样，一旦<strong>BTN</strong>位的玩家开始频繁open，那么<strong>BB</strong>的3-bet也有了更多获利的机会，<strong>BTN</strong>位玩家将很难阻止他用很弱的手牌进行有效的bluff。这也就表示<strong>BTN</strong>的opening range不应当这么大，仅仅因为我们一旦用超过半数的手牌进行open，防守盲位玩家的挤压将变得非常困难。有一些玩家可能会不同意这一点，但那仅仅是因为他们有很好的翻后技术来应对这种情况。</p>
+<p>在现实中，很多玩家会按照理论提示的相反方式，非常宽松地游戏<strong>BTN</strong>位，这仅仅是因为他们比对手的技术强太多了，另外，当你的对手处于有利位置而且技术又碾压你的时候，你就会更容易犯错误给对手更多的盈利机会。相似的，水平稍微差一些的玩家看到顶级玩家在<strong>BTN</strong>用70%的频率做open，于是也去模仿他们，没过多久整个poker community也就接受了这非理论最优的习惯。从众心理（Mob Mentality）一旦养成而没有独立思考的能力，一个玩家也就没有办法再提高自己了。</p>
+<h1 id="Defending-Against-4-Bets"><a href="#Defending-Against-4-Bets" class="headerlink" title="Defending Against 4-Bets"></a>Defending Against 4-Bets</h1><p>翻前的一个困难的地方是如何去抵抗4bet。我们已经讨论过，在有利位置和不利位置用平跟去对抗4bet从动机和概念上说完全合理的，因此我们在这里不再重复这个思维过程。然而，决定如何去具体地应对4bet是一个难以处理的问题，而且往往没有一个明确的答案。</p>
+<p>我们现在将尝试分析盲位玩家在3bet之后抵抗<strong>BTN</strong>玩家4bet的各种可能的方法。处理这个问题有两种通用的方法：</p>
+<ul>
+<li>设计我们的3bet范围，使得每一手牌在面对4bet时都能舒服地5bet all-in或弃牌。这使我们能够避免在不利位置游戏大底池，但也使得小注码的4bet对抗我们非常奏效。</li>
+<li>对抗4bet时，用一些牌跟注，用另一些牌做5bet。这允许我们在对手给我们极好赔率的时候跟注，而且像<strong>KQs</strong>这样的牌在这种情况下非常适合游戏（因为我们不想弃牌又无法用它有效做5bet）。</li>
+</ul>
+<p>当我们跟注了4-bet，我们需要记住的是只要我们的后续EV大于-9.5BB就合格了，同时这允许我们在flop上以一个高频率进行check-fold，只要能够保持着大于-9.5BB就好了。如果我们在不利位置跟注了4-bet，我们将很难在flop轮上进行防守，对手很容易手持任意两张手牌进行bet。如果他当时的4-bet确实是bluff并且被我们的4-bet跟注，本身他已经投入了19.5BB的筹码，所以让他在post-flop上进行有利可图的bluff是一件可以接受的事，因为如果他激进地用弱牌bluff还是一个-EV的操作。（这一段我是基本按照原文翻译下来的，我想了很久这里的情况应该只有我们处于盲位，才有可能“在不利位置跟注对手的4-bet”，这里贴上原文）</p>
+<blockquote>
+<p>After calling a 4-bet out of position, we are likely not going to be able to prevent our opponent from being able to profitably bet any two cards on the flop. When his 4-bet bluff is called, he’ll have already invested 19.5 big blinds preflop, so allowing him to make a profitable bet post-flop with any two cards is not a problem. That’s because he’ll still lose money by 4-bet bluffing too weak of hands preflop despite the fact that he can often make profitable bluffs post-flop.</p>
+</blockquote>
+<p>最后，如果我们的对手注意到了我们4-bet calling range太弱，他就会在flop轮上频繁地下注。和我们在之前章节中谈到的那样，这个时候慢玩强牌例如<strong>AA</strong>就会比5-bet更加有利可图。</p>
+<p>虽然我们现在已经非常了解4-bet跟注范围背后的数学理论知识，实际应用场景中会有一些关乎范围设计的问题值得引起我们的注意。首先就是即使我们使用了非常激进的3-betting range，我们能够在4-bet flatting range以及5-bett中能够用上的手牌也非常有限。这就要求我们在两个范围（有的时候甚至还需要融合进folding range）中复用一些手牌组合。这会加大我们的难度。比方说当我们在盲位用<strong>AQo</strong> 3-bet了<strong>BTN</strong>的open并且<strong>BTN</strong>玩家采用4-bet回应，如果这时跟注对手的4-bet，<strong>AQo</strong>是一个在flop轮上难以实现自身Equity的手牌典型，就会导致频繁的被剥削；而考虑到<strong>AQo</strong>阻挡了非常多的对手5-bet calling range中的组合（包括<strong>AA</strong>、<strong>AKo+</strong>、<strong>KK</strong>），我们用它来做5-bet也会很好（做跟注则是考虑绝对牌力）。因此两种想法是没有错对之分的。</p>
+<p>类似的，如果我们的4-bet跟注范围充斥了太多的像<strong>AJ</strong>、<strong>KQ</strong>之类的组合，那么就太有迹可循了，这会让我们的策略过于透明从而让我们的对手能够很好地针对我们。最后我们必须记住不论是我们的对手还是我们自己都没有办法采用理论最优的策略进行游戏。基于此，你觉得哪一种玩家在4-bet底池更容易犯错误呢？是在有利位置用两极化策略游戏的玩家还是在不利位置用紧缩范围游戏的玩家？很显然一个polarized range要比condesed range容易游戏很多，这启示我们除非我们对自己的post-flop的技术非常自信，不然还是尽量避免在不利位置进行4-bet flatting。</p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/24/AONLH-6-Preflop-Play-part-5/">
-            
-                <span>AONLH(6) - Preflop Play (part 5)</span>
-        </a>
-        <div class="abstract-content">
-            Defending enough against 3-bets, 4-bets.
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/24/AONLH-6-Preflop-Play-part-5/">http://www.shihaizhou.com/2019/06/24/AONLH-6-Preflop-Play-part-5/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/24/AONLH-6-Preflop-Play-part-5/">June 24th 2019, 7:08:43 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/24/AONLH-6-Preflop-Play-part-5/">July 14th 2019, 12:37:44 am</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/21/AONLH-5-Preflop-Play-part-4/">
-            
-                <span>AONLH(5) - Preflop Play (part 4)</span>
-        </a>
-        <div class="abstract-content">
-            Complex Range Discussion
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/17/AONLH-4-Preflop-Play-part-3/">
-            
-                <span>AONLH(4) - Preflop Play (part 3)</span>
-        </a>
-        <div class="abstract-content">
-            Discussion about how BTN opens and Blinds defend.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">
-            
-                <span>Google Research Football - RL Environment</span>
-        </a>
-        <div class="abstract-content">
-            Novel Google Football Virtual Environment paper notes.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="paper">paper</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/11/AONLH-3-Preflop-Play-continued/">
-            
-                <span>AONLH(3) - Preflop Play (part 2)</span>
-        </a>
-        <div class="abstract-content">
-            Something more complex about preflop.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/05/AONLH-2-Preflop-Play/">
-            
-                <span>AONLH(2) - Preflop Play (part 1)</span>
-        </a>
-        <div class="abstract-content">
-            About preflop.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/04/AONLH-Chap-NO-1-Basics/">
-            
-                <span>AONLH(1) - Basics</span>
-        </a>
-        <div class="abstract-content">
-            About poker.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src="/avatar/Goku_1.png">
-    <div class="profile-name">N1H111SM</div>
-    
-    <div class="profile-signature">
-        Just live with it.
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/" title="RL Course Lesson (1) - MP, MRP, MDP">
+                    <div class="nextTitle">RL Course Lesson (1) - MP, MRP, MDP</div>
+                </a>
             
-                <a href="mailto:shihaizhou@zju.edu.cn" class="iconfont-archer email" title="email"></a>
+        </li>
+        <li class="previous">
             
-        
-    
-        
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/06/21/AONLH-5-Preflop-Play-part-4/" title="AONLH(5) - Preflop Play (part 4)">
+                    <div class="prevTitle">AONLH(5) - Preflop Play (part 4)</div>
+                </a>
             
-                <a href="//github.com/WOWNICE" class="iconfont-archer github" target="_blank" title="github"></a>
-            
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
     
-        
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href="//www.baidu.com" target="_black">friendA</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href="//www.google.com" target="_black">friendB</a>
-                    </span>
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href="/about">ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -756,6 +574,24 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Defending-Enough-Against-3-bets"><span class="toc-number">1.</span> <span class="toc-text">Defending Enough Against 3-bets</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Button-3-Bet-Calling-Range"><span class="toc-number">1.0.1.</span> <span class="toc-text">Button 3-Bet Calling Range</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Defending-Against-4-Bets"><span class="toc-number">2.</span> <span class="toc-text">Defending Against 4-Bets</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -987,6 +823,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

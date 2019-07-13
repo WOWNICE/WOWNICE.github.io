@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>AONLH(5) - Preflop Play (part 4) · N1H111SM&#39;s Miniverse</title>
+    <title>RL Course Lesson (1) - MP, MRP, MDP · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">AONLH(5) - Preflop Play (part 4)</a>
+                <a href="#" class="post-name">RL Course Lesson (1) - MP, MRP, MDP</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            AONLH(5) - Preflop Play (part 4)
+            RL Course Lesson (1) - MP, MRP, MDP
             <!-- 404 -->
             
         </h1>
@@ -266,18 +266,18 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.5k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">3.1k</span>阅读时长: <span class="post-count reading-time">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/06/21</span>
+                    <span class="post-intro-time">2019/07/10</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -401,95 +401,140 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="Designing-Defending-Ranges-to-Maximize-EV"><a href="#Designing-Defending-Ranges-to-Maximize-EV" class="headerlink" title="Designing Defending Ranges to Maximize EV"></a>Designing Defending Ranges to Maximize EV</h1><p>虽然之前的章节告诉我们如何去衡量盲位玩家的防守范围是合理的，但是并没有教会我们哪些hands应该被纳入到range当中。新手玩家通常采用以上策略的一种过度简化版本：使用（范围内的）强牌raise for value，中等牌力call，下等牌力进行raise bluff，最差的手牌fold。这样会带来以下问题：</p>
+        <h1 id="Markov-Property"><a href="#Markov-Property" class="headerlink" title="Markov Property"></a>Markov Property</h1><p>马尔科夫性质指的是状态转移的方程与历史状态无关而仅仅和当前状态相关。用数学表达马尔科夫状态$s_t$：</p>
+<script type="math/tex; mode=display">
+p(s_{t+1}|s_t,a_t)=p(s_{t+1}|h_t,a_t)</script><h1 id="Markov-Process"><a href="#Markov-Process" class="headerlink" title="Markov Process"></a>Markov Process</h1><p>马尔科夫过程也可以被称作马尔科夫链，是一种具有马尔科夫性质的无记忆随机过程。马尔科夫过程由一个有限状态集$S$以及一个状态转移模型$P$构成，其中$P$指定了从某个特定状态转移到另一个状态的概率:</p>
+<script type="math/tex; mode=display">
+P(s_{t+1}=s'|s_t=s)</script><p>需要注意的是在马尔科夫过程的设定中还没有reward或者action，这两项元素会逐步被加进来。如果状态集$S$是有限的，那么我们可以将$P$用一个矩阵表示：</p>
+<script type="math/tex; mode=display">
+P = \left[\matrix{P(s_1|s_1) & P(s_2|s_1) & \ldots & P(s_N|s_1)\\
+                P(s_1|s_2) & P(s_2|s_2) & \ldots & P(s_N|s_2)\\
+                \vdots & \vdots & \ddots & \vdots \\
+                P(s_1|s_N) & P(s_2|s_N) & \ldots & P(s_N|s_N)\\}\right]</script><h1 id="Markov-Reward-Process"><a href="#Markov-Reward-Process" class="headerlink" title="Markov Reward Process"></a>Markov Reward Process</h1><p>马尔科夫奖励过程其实就是马尔科夫链（Markov Chain）加上rewards。马尔科夫奖励过程由以下四项元素组成：</p>
 <ul>
-<li>这会鼓励对手仅仅根据自己手牌的equity进行准确的牌力排序。</li>
-<li>这没有考虑到对手的范围会随着line that we take进行相应的变化从而影响我们手牌的equity。因此，最适宜平跟的hands不一定比最适宜bluff的hands的equity更高。</li>
+<li>$S$：代表环境或者世界的一个有限状态集</li>
+<li>$P$：一个状态转移模型，声明了$P(s_{t+1}=s’|s_t=s)$</li>
+<li>$R$：一个奖励函数，声明了在某一状态下agent收到的奖励，$R(s_t=s)=E[r_t|s_t=s]$ </li>
+<li>$\gamma$：对于未来奖励进行加权的折扣因子，$\gamma \in [0,1]$ </li>
 </ul>
-<p>因为一个名GTO玩家永远采取EV最高的line，所以我们应当采取在那些range内表现好的3-betting和calling范围。简单的规则没有办法适应GTO玩家的复杂范围，这也就要求我们必须时刻意识到我们对手范围是如何组成的，以及我们的行动（calling, betting and raising）是如何影响对手的范围的。</p>
-<p>让我们继续设计面对<strong>BTN</strong>位open的盲位防守范围。当我们作为盲位玩家跟注<strong>BTN</strong>位对手的open时，我们几乎总是在小底池内面对宽范围（play against a wide range for a small pot）。这也就意味着我们的calling range需要“put more emphasis on flatting with hands which make marginal pairs at a high frequency and can win small and medium sized pots”。显然的，calling range中常见的有<strong>KTs</strong>，<strong>K9s</strong>，<strong>QTs</strong>，<strong>QTs</strong>。当然范围中也需要其他的牌，但是所有的这些牌都能够在flop轮上能够成一个不错的对，从而很好地对抗wide open  range。</p>
-<p>虽然这些手牌在小底池中的表现不错，但是用他们在3-bet底池中游戏会变得比较棘手。那是因为3-bet会导致我们对手的范围强很多而使得我们在不利位置用一个“顶对-中踢脚”游戏大底池变得异常困难。所以在preflop使用类似<strong>K9s</strong>或者<strong>QTo</strong>进行跟注往往是最好的选择，因为它们让对手的范围继续保持很宽同时在击中顶对时我们通常会有更好的踢脚。</p>
-<p>另外，适合3-bet bluff的手牌通常具有在river上成为最强牌力的可能。比方说<strong>57s</strong>或者<strong>45s</strong>，因为他们在后续的翻牌中有可能击中顺子和同花，而拿着这样的牌我们几乎总是能够肯定自己拿的是nuts从而轻松实现自己的equity。通常来说我们会拿上面的牌力进行3-bet bluff，但是拿它们进行跟注也是有利可图的。但需要注意的是，虽然用小的同花连张（small suited connector）具有正的EV，但是当我们真的击中了弱对，又很难立即结束牌局获得盈利。</p>
-<p>需要注意的是，当我们的对手具有位置优势（例如当前讨论的盲位对抗<strong>BTN</strong>）时，他通常会采用跟注的方式防守我们的3-bet，因为这会使得我们在一个不利位置和他游戏一个大底池。因此根据这一心理，我们的3-bet range需要能够在3-bet pot中表现良好。不幸的是，我们3-bet bluff range中并不是所有手牌都能轻松应对对手的跟注，因为按照上一章的分析，我们需要更加激进地3-bet位于<strong>BTN</strong>的对手，所以像<strong>K7s</strong>这样的手牌虽然可能会在post-flop轮上将我们引入困境，但是我们也应当用这样的手牌来平衡我们的range。虽然“顶对-弱踢脚”非常难以游戏，但是为我们的flop checking range保留一些marginal hands还是一定程度上有用的。</p>
-<h1 id="Balance"><a href="#Balance" class="headerlink" title="Balance"></a>Balance</h1><p>德州扑克中最常被误解和被错误应用的概念莫过于“平衡”一个范围（balancing a range）。如果我们的范围不是平衡的，我们的对手就能够经常采取非常有效的line来对抗我们的range。一个平衡的范围其实是用GTO策略（即最大化EV）玩每一手牌的副产物。</p>
-<p>不管我们的range如何平衡，总是有一些公共牌面纹理（Board Texture）对对手的range更加有利。比方说，如果我们的range平均比对手的range弱，那么他就能够更加频繁地下重注，因为他知道我们几乎很少成强牌。</p>
-<blockquote>
-<p>This encourages us to put hands in our preflop range which allow us to connect better on boards which would otherwise miss our range, and we’ll<br>occasionally win a massive pot when we have one of the few possible strong hands in an otherwise weak range.</p>
-</blockquote>
-<p>这一段的文字让我有些困惑，我能够理解更弱的range意味着击中强牌的概率更低，因此对手c-bet的概率更高，但同时一旦击中强牌就能够赢下一个大底池（因为这个事件的发生完全是基于频率的）；但是我不是非常理解“this encourages us to put hands in our preflop range which allow us to connect better on boards”这一段，如果对这一段文字有比较好的理解可以联系我进行交流。</p>
-<p>现在让我们来看一下<strong>CO</strong>对抗<strong>BTN</strong>的实际情况。假设<strong>BTN</strong>按照大多数玩家做的那样在preflop上遇到了<strong>CO</strong>的open会100%频率3-bet<strong>AA</strong>和<strong>AK</strong>。而如果<strong>BTN</strong>玩家没有进行raise，那么在King High的这样的flop面<strong>BTN</strong>位玩家拿到强牌的概率就小了很多，于是<strong>CO</strong>玩家就能够在绝大多数的King High牌面进行c-bet迫使<strong>BTN</strong>位玩家弃牌。注意<strong>BTN</strong>拿到两对+Queen以上踢脚的概率是非常小的。</p>
-<p>以上的挤压产生就意味着<strong>BTN</strong>现在有了改变自己策略的动机。因为对手在King High牌面的激进策略让底池变大，而如果<strong>BTN</strong>此时能够慢玩<strong>AKo+</strong>就能够获得比3-bet更高的收益。另外，通过使用强牌在preflop平跟有时能够赢下非常大的底池：因为有时盲位玩家会进行通过reraise挤压（这就恰恰掉进了我们的圈套）。</p>
-<p>当<strong>CO</strong>意识到<strong>BTN</strong>在King High的牌面上范围中也有<strong>AKo+</strong>的手牌，他就会开始变得保守起来。<strong>你来我往的策略调整过程最终会将玩家们引向GTO策略并建立起相互之间的均衡（Equilibrium）</strong>。<strong>BTN</strong>虽然会经常在preflop轮3-bet自己的<strong>AKo+</strong>，但也会时不时地用它们进行平跟；而<strong>CO</strong>虽然会经常在King High面上激进c-bet，也会时不时地过牌给<strong>BTN</strong>位玩家进行先手行动。</p>
-<p>当我们在<strong>SB</strong>的时候如果从来都不平跟强牌或许也会遇到上述问题，这样的话我们的范围在面对<strong>BB</strong>挤压时就会变得非常脆弱。注意<strong>BB</strong>并不会有这样的问题因为他如果跟注则游戏进入了flop轮。虽然<strong>BB</strong>冷跟的range是紧缩的，但是在<strong>BTN</strong>能够利用这一点之前，flop轮中又会经常出现<strong>BB</strong>击中了two pairs或者sets（the flop will usually put some two pairs and sets in the big blinds range before the button can capitalize on this）。</p>
-<p>因此，我们在<strong>SB</strong>位的flatting range最好放一些强牌。我们没有办法去证明（数学上）这一定就是好的，而且通常遇到挤压时<strong>SB</strong>最好fold并且期待<strong>BTN</strong>位的玩家进行防守。但到目前为止在<strong>SB</strong>位时不时地慢玩<strong>AKo+</strong>是一个理论上正确的策略，尤其当<strong>BB</strong>玩家非常激进并且经常挤压时我们更应当这么做。</p>
-<h1 id="Board-Texture-Frequencies"><a href="#Board-Texture-Frequencies" class="headerlink" title="Board Texture Frequencies"></a>Board Texture Frequencies</h1><p>在设计防守范围时另一个需要考虑的因素就是公共牌面纹理频率（Board Texture Frequencies），这个频率指的是某一种类型的flop公共牌面出现的频率。例如，没有击中King High牌面会比没有击中Seven High牌面更加成问题，因为King High牌面出现的概率要高很多。<strong>我们需要经常思考对方的range击中某一种牌面的概率，这一点是很重要的。</strong></p>
-<p>以下表格展示了flop轮出现某种High Card的概率。Ace High毫无疑问是所有High Card牌面中最经常出现的，而在Eight High以下的牌面是会很少遇到的。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">High Card</th>
-<th style="text-align:center">Single High (%)</th>
-<th style="text-align:center">Double High (%)</th>
-<th style="text-align:center">Total (%)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Ace</td>
-<td style="text-align:center">20.4</td>
-<td style="text-align:center">1.3</td>
-<td style="text-align:center">21.7</td>
-</tr>
-<tr>
-<td style="text-align:center">King</td>
-<td style="text-align:center">17.1</td>
-<td style="text-align:center">1.2</td>
-<td style="text-align:center">18.4</td>
-</tr>
-<tr>
-<td style="text-align:center">Queen</td>
-<td style="text-align:center">14.1</td>
-<td style="text-align:center">1.1</td>
-<td style="text-align:center">15.2</td>
-</tr>
-<tr>
-<td style="text-align:center">Jace</td>
-<td style="text-align:center">11.4</td>
-<td style="text-align:center">1.0</td>
-<td style="text-align:center">12.4</td>
-</tr>
-<tr>
-<td style="text-align:center">Ten</td>
-<td style="text-align:center">9.0</td>
-<td style="text-align:center">0.9</td>
-<td style="text-align:center">9.9</td>
-</tr>
-<tr>
-<td style="text-align:center">Nine</td>
-<td style="text-align:center">6.8</td>
-<td style="text-align:center">0.8</td>
-<td style="text-align:center">7.6</td>
-</tr>
-<tr>
-<td style="text-align:center">Eight or less</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">14.8</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>虽然大致理解公共牌面纹理频率是怎样的是有帮助的，但是我们不必要将他们都记下来，<strong>只需要注意到翻出J及J以上的flop占到了67.7%的频率就够了</strong>。正如我们看到的那样，盲位的冷跟范围经常没有办法击中Eight High及以下的flop牌面，这样设计主要是根据上面牌面的出现频率的，所以即便没有击中自己的range，由于它发生的频率非常低所以不需要太过在意。另外，在未来的章节中，我们将会看到在不利位置游戏这种low boards会非常困难。即便我们将更多小的同色连张例如<strong>7h6h</strong>（红桃76）放进我们的平跟范围，在<strong>6c3c2d</strong>（草花6、3和方片2）的牌面上处于不利位置也将会很难进行游戏。而这就意味着在盲位碰上这种牌面，check-fold或许成为了最好的办法。<strong>总而言之，我们需要将range设计得更加容易击中Jack High以上的Board Texture（因为它们出现的频率更高），而不要尝试加入小的连张以期在flop击中顺子。</strong></p>
-
+<h2 id="Parameter-Explanation"><a href="#Parameter-Explanation" class="headerlink" title="Parameter Explanation"></a>Parameter Explanation</h2><h3 id="Horizon"><a href="#Horizon" class="headerlink" title="Horizon"></a>Horizon</h3><p>注意这个名词很少在项目中被提到，简单来说它就是一个episode的time step数目。horizon可以是无限的，如果任意一个horizon都是有限的，那么我们可以将这样的MRP称作Finite MRP。</p>
+<h3 id="Return"><a href="#Return" class="headerlink" title="Return"></a>Return</h3><p>Return $G_t$ 的中文译名我没有关注，在数学上的含义就是从某个时间步$t$开始沿着某个状态$s$的序列获得的奖励之和：</p>
+<script type="math/tex; mode=display">
+G_t=r_t+\gamma r_{t+1}+\gamma^{2}r_{t+2}+\gamma^{3}r_{t+3}+\ldots</script><h3 id="State-Value-Function"><a href="#State-Value-Function" class="headerlink" title="State Value Function"></a>State Value Function</h3><p>状态$s$的状态价值函数指的是从状态$s$出发取得的return的期望值：</p>
+<script type="math/tex; mode=display">
+V(s)=E[G_t|s_t=s]=E[r_t+\gamma r_{t+1}+\gamma^{2}r_{t+2}+\gamma^{3}r_{t+3}+\ldots|s_t=s]</script><h3 id="Discount-Factor"><a href="#Discount-Factor" class="headerlink" title="Discount Factor"></a>Discount Factor</h3><p>折扣因子是小于等于1的正数，这个参数的提出基于两个考虑。第一是能够带来数学上的便利：在其小于1时保证每个状态的状态价值函数的值保证收敛；第二就是符合人在行动时的常见模式：比起远处的reward人们更在意immediate reward。当$\gamma=0$时，意味着模型只考虑immediate reward，成为完全的贪婪模型；当$\gamma=1$时则适用于有限马尔科夫过程，认为未来和当前的reward有相同的重要性。</p>
+<h2 id="Computing-State-Value-Function-for-MRP"><a href="#Computing-State-Value-Function-for-MRP" class="headerlink" title="Computing State Value Function for MRP"></a>Computing State Value Function for MRP</h2><h3 id="Via-simulation"><a href="#Via-simulation" class="headerlink" title="Via simulation"></a>Via simulation</h3><p>首先最直观的方法是通过模拟（simulation）的方法求得每个状态的state value，得到大量的episodes，将所有的return值进行加和求平均即可，<strong>这样做不需要整个环境是符合马尔科夫假设的</strong>。</p>
+<h3 id="Via-matrix-equation"><a href="#Via-matrix-equation" class="headerlink" title="Via matrix equation"></a>Via matrix equation</h3><p>如果马尔科夫假设在应用场景中是合理的，那么我们可以写出一条state value之间的关系式，其含义是 状态$s$的value = 当前状态的immediate reward + 经过折扣的各个状态的价值期望。</p>
+<script type="math/tex; mode=display">
+V(s)=R(s)+\gamma \sum_{s'\in S}{P(s'|s)V(s')}</script><p>因为对于所有的状态都成立，所以我们可以将上面针对某个状态的等式写成矩阵形式（依然只适用于有限马尔科夫过程）：</p>
+<script type="math/tex; mode=display">
+\left[\matrix{V(s_1)\\ \vdots \\ V(s_N)}\right] = 
+\left[\matrix{R(s_1)\\ \vdots \\ R(s_N)}\right] + \gamma 
+\left[\matrix{P(s_1|s_1) & \ldots & P(s_N|s_1)\\
+                P(s_1|s_2) & \ldots & P(s_N|s_2)\\
+                \vdots & \ddots & \vdots \\
+                P(s_1|s_N) & \ldots & P(s_N|s_N)\\}\right] 
+\left[\matrix{V(s_1)\\ \vdots \\ V(s_N)}\right]</script><p>更进一步地简化矩阵内部的元素，得到：</p>
+<script type="math/tex; mode=display">
+V=R+\gamma PV</script><p>最终目标是算出$V$向量，通过矩阵解方程方法，得到：</p>
+<script type="math/tex; mode=display">
+V=(I-\gamma P)^{-1}R</script><p>根据数值分析中的知识，我们知道矩阵求逆是$O(N^3)$的复杂度。</p>
+<h3 id="Via-dynamic-programming"><a href="#Via-dynamic-programming" class="headerlink" title="Via dynamic programming"></a>Via dynamic programming</h3><p>其实我们可以通过递推的方式来解得最终的表示，不过我们需要证明整个递推表达式是收敛的。</p>
+<script type="math/tex; mode=display">
+V_{k}(s)=R(s)+ \gamma \sum_{s'\in S}{P(s'|s)V_{k-1}(s')}</script><p>整个动态规划的算法为：</p>
+<ul>
+<li>for all s​，Initialize $V_0(s)=0$</li>
+<li>for k = 1, until convergence<ul>
+<li>for all s in S<ul>
+<li>do update as mentioned</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>每一次iteration的时间复杂度为$O(|S|^2)$，也就是$O(|N|^2)$。</p>
+<h1 id="Markov-Decision-Process"><a href="#Markov-Decision-Process" class="headerlink" title="Markov Decision Process"></a>Markov Decision Process</h1><p>马尔科夫决策过程（MDP）是马尔科夫奖励过程（MRP）+actions。类似的，MDP由以下5组元素构成：</p>
+<ul>
+<li>$S$：代表环境或者世界的一个有限状态集，$s\in S$</li>
+<li>$A$：代表agent能够执行的有限动作集，$a\in A$</li>
+<li>$P$：一个状态转移模型。和MRP不同的是，MDP中的状态转移模型是一个同时关于当前状态$s$和当前行动$a$的函数，声明了$P(s_{t+1}=s’|s_t=s,a_t=a)$</li>
+<li>$R$：一个奖励函数。同样的奖励函数也接受了动作$a$作为其中一个变量，声明了在某一状态下采取某一动作agent收到的奖励，$R(s_t=s,a_t=a)=E[r_t|s_t=s,a_t=a]$ 。需要注意的是这仅仅是这门课程中的表示方法，仔细想一下其实$R$是一个仅关于状态的函数也是正确的。</li>
+<li>$\gamma$：对于未来奖励进行加权的折扣因子，$\gamma \in [0,1]$ </li>
+</ul>
+<p>综上我们可以将MDP简化写为一个五元组$(S,A,P,R,\gamma)$。</p>
+<h2 id="MDP-Policy"><a href="#MDP-Policy" class="headerlink" title="MDP + Policy"></a>MDP + Policy</h2><p>对于给定的Policy，MDP会退化成一个MRP，因为给定的Policy导致了给定的状态转移概率分布，同时也导致了给定的奖励函数分布。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+R^\pi(s) &= \sum_{a\in A}\pi(a|s)R(s,a) \\
+P^\pi(s'|s) &= \sum_{a\in A}\pi(a|s)P(s'|s,a)
+\end{align}</script><p>以上的退化形式告诉我们能够利用MRP中的评价方法对于某个特定的policy $\pi$ 进行评价，即计算每个状态的价值函数。Iterative的方法递推公式如下所示，这被称作某个特定policy的Bellman Backup，关于Bellman Operator，我们现在只需要知道这是一个用于辅助证明迭代方法最终能够收敛的手段，在未来如果有机会可以进行更详细的了解。</p>
+<script type="math/tex; mode=display">
+V_{k}^{\pi}(s)=r(s,\pi(s)) + \gamma \sum_{s'\in S}{P(s'|s,\pi(s))V_{k-1}^{\pi}(s')}</script><h1 id="MDP-Control"><a href="#MDP-Control" class="headerlink" title="MDP Control"></a>MDP Control</h1><p>MDP Control目的在于找到一个最优的策略$\pi^*$使得在该策略下的状态价值函数最大化。</p>
+<script type="math/tex; mode=display">
+\pi^*(s)=\arg\max_{\pi}V^{\pi}(s)</script><p>课程中提到这种情况下一定存在一个唯一的最优价值函数，但这里还需要再进一步研究。对于Infinite Horizon problem，最优策略一定是deterministic &amp; stationary的，也就是最终会坍缩到不依赖于time step。</p>
+<p>寻找最优的Policy即Policy Search有三种思想，除去最简单的Enumeration的暴力方法（如果是Deterministic Policy的话可以将所有的Policy都罗列出来，复杂度为$|A|^{|S|}$），最为重要的两种方法为策略迭代（Policy Iteration，PI）和价值迭代（Value Iteration，VI）。</p>
+<h2 id="Policy-Iteration"><a href="#Policy-Iteration" class="headerlink" title="Policy Iteration"></a>Policy Iteration</h2><p>策略迭代的想法是找到最优的value &amp; policy。</p>
+<p>定义State-Action Value $Q$，其含义为在当前状态$s$下采取动作$a$之后再follow策略$\pi$收获的价值：</p>
+<script type="math/tex; mode=display">
+Q^\pi(s,a) = R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^\pi(s')</script><p>上述公式实际上是采取了未来一步的探索。将这条式子应用于迭代模型，对于当前迭代轮次$i$：每个$(s,a)$ pair都可以算出相应的$Q$值并且可以更新到下一个迭代轮次：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+Q^{\pi_i}(s,a) &= R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s') \\
+\pi_{i+1}(s) &= \arg \max_{a} Q^{\pi_i}(s,a), \forall s \in S
+\end{align}</script><p>需要证明这样的更新方法最终是一定能够收敛到全局最优解的，也就是说需要证明这是一个Monotonic Improvement。定义策略价值函数的序关系之后再进行一些简单的放缩即可得到整个更新的过程是单调的。</p>
+<script type="math/tex; mode=display">
+V^{\pi_1} \geq V^{\pi_2}:V^{\pi_1}(s) \geq V^{\pi_2}(s), \forall s \in S</script><p>因为策略更新是单调的，所以整个策略迭代的过程的停止终点就是策略的更新为零的时候，即：</p>
+<script type="math/tex; mode=display">
+||\pi_i - \pi_{i-1}||_1=0</script><p>同时策略的更新次数是有界的，也就是在之前提到的Enumeration方法的复杂度$|A|^{|S|}$之内一定能够达到最优点。</p>
+<h2 id="Value-Iteration"><a href="#Value-Iteration" class="headerlink" title="Value Iteration"></a>Value Iteration</h2><p>价值迭代的核心思想在于“Maintain optimal value of starting in a state $s$ if have a finite number of steps k left in the episode.”也就是说首先假设未来只有k步，通过迭代不断地将k往后推，从而达到拟合。</p>
+<p>首先介绍Bellman Equation，一个策略的价值函数必须满足以下等式：</p>
+<script type="math/tex; mode=display">
+V^{\pi}(s)=R^{\pi}(s)+\gamma\sum_{s'\in S}P^{\pi}(s'|s)V^{\pi}(s')</script><p>Bellman Operator也被称作Bellman Backup Operator。算子（Operator）就是作用在一个函数上将函数再进行一次映射。Bellman Operator作用在这里的value function上同时返回一个新的映射到所有状态的函数。</p>
+<script type="math/tex; mode=display">
+BV(s)=\max_{a}R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V(s')</script><p>Value Iteration的算法中的迭代部分公式为：</p>
+<script type="math/tex; mode=display">
+V_{k+1}(s)=\max_{a}R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_{k}(s')</script><p>从整个迭代从Bellman Backup的角度来看，每一次迭代的过程就是做了以下的操作：</p>
+<script type="math/tex; mode=display">
+V_{k+1}=BV_k\\
+\pi_{k+1}(s)=\arg \max_aR(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_k(s')</script><p><strong>这里，每个迭代轮次$k$对应的价值$V_k$其实代表了从当前状态向后行动$k$个时间步的最大价值。</strong>对于FInite Horizon问题来说迭代不需要等到Converge，只需要运行最大Horizon步长即可。</p>
+<p>回到策略迭代，同样可以用Bellman Operator来表达策略迭代的过程，$B^\pi$是针对于某个特定的策略$\pi$的Bellman算子：</p>
+<script type="math/tex; mode=display">
+B^{\pi}V(s)=R^{\pi}(s)+\gamma \sum_{s'\in S}P^{\pi}(s'|s)V(s)</script><p>Policy Evaluation相当于计算$B^\pi$的不动点，只需要不断地进行Bellman Operator的变换直到$V$不再变化即可。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+V^\pi &= B^\pi B^\pi \ldots B^\pi V\\
+\pi_{k+1}(s) &= \arg\max_{a}R(s,a)+\gamma \sum_{s'\in S} P(s'|s,a)V^{\pi_k}(s')
+\end{align}</script><p>下面介绍Bellman Operator是一个压缩算子（Contraction）。压缩算子$O$指的是对于任何形式的norm，都有以下不等式成立。如果$V’$是上次迭代的结果，那么该不等式是迭代过程收敛的一个充分条件，表明最终的结果会收敛到一个不动点。</p>
+<script type="math/tex; mode=display">
+|OV-OV'|\leq|V-V'|</script><p>可以证明当折扣因子$\gamma &lt; 1$，Bellman Operator是一个压缩算子，因此说明我们的迭代过程是收敛的。证明过程如下：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+||BV_k - BV_j||&=||\max_a{(R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_k(s'))} - \max_{a'}{(R(s,a')+\gamma \sum_{s'\in S}P(s'|s,a)V_j(s'))}||\\
+&\leq ||\max_a(R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_k(s') - R(s,a)-\gamma \sum_{s'\in S}P(s'|s,a)V_j(s'))|| \\
+&= ||\max_a \gamma \sum_{s' \in S}P(s'|s,a)(V_k(s')-V_j(s'))||\\
+&\leq ||\max_a (\gamma \sum_{s' \in S}P(s'|s,a)||V_k(s')-V_j(s')||)||\\
+&=\gamma||V_k - V_j||
+\end{align}</script><h2 id="VI-v-s-PI"><a href="#VI-v-s-PI" class="headerlink" title="VI v.s. PI"></a>VI v.s. PI</h2><p>VI算法依次计算Horizon为$k$的最优值，PI则被用于计算一个策略的Infinite Horizon值，并用于选择一个更好的策略，和未来即将介绍的RL重要算法Policy Gradient有非常紧密的联系。</p>
+<h2 id="Policy-Improvement"><a href="#Policy-Improvement" class="headerlink" title="Policy Improvement"></a>Policy Improvement</h2><p>最后再formulate一下利用Policy Iteration进行Policy Improvement的具体流程：</p>
+<p>首先计算当前策略$\pi_i$的$Q$值：</p>
+<script type="math/tex; mode=display">
+Q^{\pi_i}(s,a) = R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s')</script><p>因为有以下不等式成立：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\max_aQ^{\pi_i}(s,a)&=\max_aR(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s')\\
+&\geq R(s,\pi_i(s))+\gamma \sum_{s'\in S}P(s'|s,\pi_i(s))V^{\pi_i}(s')\\
+&= V^{\pi_i}(s)
+\end{align}</script><p>意味着state-action value是严格非减的，通过迭代就能够不断优化策略。定义下一个迭代轮次$i+1$的策略：</p>
+<script type="math/tex; mode=display">
+\pi_{i+1}(s) = \arg\max_aQ^{\pi_i}(s,a),\forall s\in S</script>
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/">http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/">June 21st 2019, 9:47:33 am</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/21/AONLH-5-Preflop-Play-part-4/">June 23rd 2019, 10:44:51 pm</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">July 10th 2019, 6:16:03 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">July 14th 2019, 12:37:39 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -497,17 +542,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/06/24/AONLH-6-Preflop-Play-part-5/" title="AONLH(6) - Preflop Play (part 5)">
-                    <div class="nextTitle">AONLH(6) - Preflop Play (part 5)</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/06/17/AONLH-4-Preflop-Play-part-3/" title="AONLH(4) - Preflop Play (part 3)">
-                    <div class="prevTitle">AONLH(4) - Preflop Play (part 3)</div>
+                <a href="/2019/06/24/AONLH-6-Preflop-Play-part-5/" title="AONLH(6) - Preflop Play (part 5)">
+                    <div class="prevTitle">AONLH(6) - Preflop Play (part 5)</div>
                 </a>
             
         </li>
@@ -619,7 +659,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Designing-Defending-Ranges-to-Maximize-EV"><span class="toc-number">1.</span> <span class="toc-text">Designing Defending Ranges to Maximize EV</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Balance"><span class="toc-number">2.</span> <span class="toc-text">Balance</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Board-Texture-Frequencies"><span class="toc-number">3.</span> <span class="toc-text">Board Texture Frequencies</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Property"><span class="toc-number">1.</span> <span class="toc-text">Markov Property</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Process"><span class="toc-number">2.</span> <span class="toc-text">Markov Process</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Reward-Process"><span class="toc-number">3.</span> <span class="toc-text">Markov Reward Process</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Parameter-Explanation"><span class="toc-number">3.1.</span> <span class="toc-text">Parameter Explanation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Horizon"><span class="toc-number">3.1.1.</span> <span class="toc-text">Horizon</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Return"><span class="toc-number">3.1.2.</span> <span class="toc-text">Return</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#State-Value-Function"><span class="toc-number">3.1.3.</span> <span class="toc-text">State Value Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discount-Factor"><span class="toc-number">3.1.4.</span> <span class="toc-text">Discount Factor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Computing-State-Value-Function-for-MRP"><span class="toc-number">3.2.</span> <span class="toc-text">Computing State Value Function for MRP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Via-simulation"><span class="toc-number">3.2.1.</span> <span class="toc-text">Via simulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Via-matrix-equation"><span class="toc-number">3.2.2.</span> <span class="toc-text">Via matrix equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Via-dynamic-programming"><span class="toc-number">3.2.3.</span> <span class="toc-text">Via dynamic programming</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Decision-Process"><span class="toc-number">4.</span> <span class="toc-text">Markov Decision Process</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MDP-Policy"><span class="toc-number">4.1.</span> <span class="toc-text">MDP + Policy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MDP-Control"><span class="toc-number">5.</span> <span class="toc-text">MDP Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Policy-Iteration"><span class="toc-number">5.1.</span> <span class="toc-text">Policy Iteration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Value-Iteration"><span class="toc-number">5.2.</span> <span class="toc-text">Value Iteration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VI-v-s-PI"><span class="toc-number">5.3.</span> <span class="toc-text">VI v.s. PI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Policy-Improvement"><span class="toc-number">5.4.</span> <span class="toc-text">Policy Improvement</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
