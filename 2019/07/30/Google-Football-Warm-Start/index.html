@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Haizhou Shi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Haizhou Shi">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Google Football Warm Start · N1H111SM&#39;s Miniverse</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/Goku_1.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Google Football Warm Start</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">N1H111SM's Miniverse</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Google Football Warm Start
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="notes">notes</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">3.3k</span>阅读时长: <span class="post-count reading-time">20 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/07/30</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>The analytical work on the <a href="https://github.com/google-research/football/" target="_blank" rel="noopener">google research football project</a> involved in this article is completed during the internship at Intel. Thanks again to <em>Qiyuan Gong &amp; Shengsheng Huang</em> for their kind guidance and mentoring, and also many thanks to those who helped me during this period of time. </p>
+<p>About the project description, please refer to the previous post <a href="https://shihaizhou.com/2019/06/12/Google-Research-Football-RL-Environment/" target="_blank" rel="noopener">Google Research Football - RL Environment</a> on my personal website, which is the summary of the <a href="https://github.com/google-research/football/blob/master/paper.pdf" target="_blank" rel="noopener">Google Football paper</a>.</p>
+<h1 id="Working-Environment-Setting"><a href="#Working-Environment-Setting" class="headerlink" title="Working Environment Setting"></a>Working Environment Setting</h1><p>Assuming that we have two local workstations <strong>W</strong> and <strong>L</strong> with Windows and linux installed respectively, one gateway server <strong>G</strong> and one remote server <strong>S</strong>, we now introduce some user-friendly developping tools before getting started. Note that the tools/softwares in this section are not necessary once you have alternatives. </p>
+<p>For <strong>W</strong>: </p>
+<ul>
+<li><strong>Pycharm (professional):</strong> available once you have an edu email, which allows you to deploy, develop, debug remotely. <a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="noopener">https://www.jetbrains.com/pycharm/</a></li>
+<li><strong>MobaXTerm:</strong> powerful remote shell software. It can save your remote ssh session, without typing the password repeatedly. <a href="https://mobaxterm.mobatek.net/" target="_blank" rel="noopener">https://mobaxterm.mobatek.net/</a></li>
+<li><strong>VNC viewer:</strong> will be used when there is need to run graphical programs on the remote server. <a href="https://www.realvnc.com/en/connect/download/viewer/" target="_blank" rel="noopener">https://www.realvnc.com/en/connect/download/viewer/</a></li>
+</ul>
+<p>For <strong>L</strong>:</p>
+<ul>
+<li><strong>oh my zsh:</strong> fancier version of the linux bash, multiple useful plugins for customizing your own bash experience. <a href="https://ohmyz.sh/" target="_blank" rel="noopener">https://ohmyz.sh/</a></li>
+</ul>
+<h2 id="SSH-Tunneling"><a href="#SSH-Tunneling" class="headerlink" title="SSH Tunneling"></a>SSH Tunneling</h2><p>If you are working in a big corporation like Intel, you will need to interact with the remote server through the gateway node, thus understanding SSH tunneling is a must. </p>
+<p>SSH tunneling process is used for the packet forwarding. For example, when <strong>W</strong> cannot directly access the IP address of the remote server <strong>S</strong>, the SSH tunneling mechanisfm can create a process running on the gateway node <strong>G</strong> that listens to one port (on <strong>W</strong>) and forward any request to another port (on <strong>S</strong>). By doing so, we make <strong>W</strong> look like directly connected to the remote server <strong>S</strong>. </p>
+<p>To start a SSH tunneling process, type in the following command on your local workstation:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L &lt;port of L&gt;:&lt;IP of G&gt;:&lt;port of S&gt; &lt;username of S&gt;@&lt;IP of S&gt;</span><br></pre></td></tr></table></figure>
+<p>in which the arguments represent different meanings:</p>
+<ul>
+<li><strong>-N:</strong> Do not execute a remote command.  This is useful for just forwarding ports.</li>
+<li><strong>-f:</strong> Requests ssh to go to background just before command execution.</li>
+<li><strong>-L:</strong> Specifies that connections to the given TCP port or Unix socket on the local (client) host are to be forwarded to the given host and port, or Unix socket, on the remote side.</li>
+</ul>
+<p>If you are working on <strong>W</strong>, then the MobaXTerm has a pretty good UI for you to set the tunneling configuration and you don’t need to use this command. The SSH tunneling exists everywhere if there is a requirement for connection through the gateway node. </p>
+<p>For more information about SSH tunneling, please refer to the following websites/blogs. </p>
+<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html" target="_blank" rel="noopener">SSH tunneling: how it works</a></li>
+<li><a href="https://www.jianshu.com/p/8f262bc444f0" target="_blank" rel="noopener">PyCharm SSH tunneling</a> </li>
+</ul>
+<h1 id="Running-GFootball-Locally"><a href="#Running-GFootball-Locally" class="headerlink" title="Running GFootball Locally"></a>Running GFootball Locally</h1><p>Running Google Football locally doesn’t require any more techniques than mentioned in their <a href="https://github.com/google-research/football" target="_blank" rel="noopener">github repo</a>. First you need to prepare a Linux Environment (on your local workstation <strong>L</strong>). Then get the root authority and download the following packages by runninng ‘apt-get install’. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git cmake build-essential libgl1-mesa-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-gfx-dev libboost-all-dev libdirectfb-dev libst-dev mesa-utils xvfb x11vnc libsqlite3-dev glee-dev libsdl-sge-dev python3-pip</span><br></pre></td></tr></table></figure>
+<p>The packages above are mainly for OpenGL rendering (including libgl1-mesa-dev and so on) and VNC remote rendering (including xvfb and x11vnc). There may be sometimes an error showing up indicating that some of the packages couldn’t be installed because the dependency tree can’t be resolved. When encounterd with that, I suggest that you choose another machine with clean environment and start the previous process all over again. </p>
+<p>After the installation of the packages, we then install the google football by pip, to note here that the pip version matters (remember to downgrade it to 18.1), since the ‘parse-dependency-links’ option is not available for the higher version of pip. This installation issue lately has some update, for more information please refer to  <a href="https://github.com/google-research/football/issues/1" target="_blank" rel="noopener">this installation issue</a>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pip==18.1</span><br><span class="line">pip install gfootball[tf_cpu]</span><br></pre></td></tr></table></figure>
+<p>Finally run the simple example of the google football by playing the game yourself, in case that the OpenGL version is not compatible, I suggest adding some ENV parameter as follows. You can check <a href="https://github.com/google-research/football/issues/7" target="_blank" rel="noopener">this issue</a> for more information.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MESA_GL_VERSION_OVERRIDE=3.2 MESA_GLSL_VERSION_OVERRIDE=150 python3 -m gfootball.play_game</span><br></pre></td></tr></table></figure>
+<p>For the full doc of running google football, please visit the README file in the <a href="https://github.com/google-research/football" target="_blank" rel="noopener">official repo</a>. </p>
+<h1 id="Running-GFootball-Remotely"><a href="#Running-GFootball-Remotely" class="headerlink" title="Running GFootball Remotely"></a>Running GFootball Remotely</h1><h2 id="X-Window-System"><a href="#X-Window-System" class="headerlink" title="X Window System"></a>X Window System</h2><p>When training the google football agent remotely on a server without rendering, there is nothing to worry about. But what if one wants to use the rendered pixels as the environment representation (observation), or wants to supervise the training process in a more intuitive way? Before diving into the solution/actual code to this problem, we need to understand how a Linux graphical system works, since it involves the rendering system. Please check <a href="http://en.wikipedia.org/wiki/X_Window_System" target="_blank" rel="noopener">X Window System</a> on wikipedia.</p>
+<p>The X Window System (X11) is a windowing system for bitmap displays, commonly on Unix-like operating systems. X is of a typical <strong>C/S</strong> architecture, where there is a <strong>X server</strong> residing between the input/output hardware drives (keyboard, mouse, screen) and the user programs, which act as <strong>X clients</strong>. When a user program wants to display something on the screen, it has to pull up a request to the X server, and then the X server needs to find the frame buffer of the screen and execute the rendering commands sent from the client program, i.e., writing bits into the frame buffer. That’s all we need to know in this section. </p>
+<p>When we are running google football on the workstation, the X server and the X client are both on the same machine. While when we try to run it remotely on the server <strong>S</strong> and want to see the rendering results on the local workstation <strong>W/L</strong>, the X server and the X client are sperate: X server on the local <strong>W/L</strong>, while the X client (google football) on the server <strong>S</strong>. </p>
+<p>The all-important fact to know is that those packages needed by rendering should be installed where rendering happens, namely, where the X server resides. </p>
+<h2 id="Local-Linux-System"><a href="#Local-Linux-System" class="headerlink" title="Local Linux System"></a>Local Linux System</h2><p>If the local workstation is installed with the Linux system, then we could use the <a href="https://www.jianshu.com/p/24663f3491fa" target="_blank" rel="noopener"><strong>x11 forwarding mechanism</strong></a>. Which means if you install all the packages on your local workstation, you will make it. </p>
+<p>The x11 forwarding techniques are not tested in this article. Hopefully you will succeed. </p>
+<h2 id="Local-Windows-System"><a href="#Local-Windows-System" class="headerlink" title="Local Windows System"></a>Local Windows System</h2><p><strong><em>Forget it! the MobaXTerm x11 forwarding mechanism doesn’t work!</em></strong> If you try to do so, you will receive a confusing error message which can’t be traced:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;Couldn&apos;t load GL function glBegin: Video subsystem has not been initialized.&quot;</span><br></pre></td></tr></table></figure>
+<p>On Windows system, we could use some simulated X server tools (such as <a href="https://sourceforge.net/projects/xming/" target="_blank" rel="noopener">Xming</a>) to receive the rendering requests from the remote server, and the x11 feature provided by MobaXTerm follows this idea. But the fact that the google football requires so many packages that could only be installed on Linux system makes it impossible to use the x11 forwarding mechanism. </p>
+<p>The basic idea to solve this problem is to put the X server back to the server <strong>S</strong>. Instead of letting the X server write the screen bits into the frame buffer, we use a portion of the hard drive space, pretending that it’s the frame buffer of the screen, and then forward the image to the local workstation <strong>W</strong> via network. </p>
+<h3 id="1-Set-up-the-virtual-frame-buffer-amp-message-forwarding"><a href="#1-Set-up-the-virtual-frame-buffer-amp-message-forwarding" class="headerlink" title="1. Set up the virtual frame buffer &amp; message forwarding"></a>1. Set up the virtual frame buffer &amp; message forwarding</h3><p>First, login to the remote server and install the google football package (as shown in the previous section). </p>
+<p>Then run the following two commands in the shell:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Xvfb :1 -screen 0 800x600x24 &amp;</span><br><span class="line">x11vnc -display :1 -allow &lt;IP of W&gt; -autoport 5900 &amp;</span><br></pre></td></tr></table></figure>
+<p>The first command <code>Xvfb</code> stands for <a href="https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml" target="_blank" rel="noopener">X Virtual FrameBuffer</a>. The <code>:1</code> option denotes that this process starts a No.1 server, and the <code>-screen</code> option takes in 2 arguments: screen number and WxHxD, where D represents the color depth (measured by bits) of the screen. </p>
+<p>The second command <code>x11vnc</code> (<a href="https://linux.die.net/man/1/x11vnc" target="_blank" rel="noopener">x11vnc man page</a>) starts a process forwarding the dumped screen output to a certain port, where <code>-display</code> option should be binded with the previously executed <code>Xvfb</code> command; and <code>-allow</code> specifies the IP address allowed; The command will automatically search a port available from a certain port which is specified by  <code>-autoport</code> option. </p>
+<p>You need to remember the listening port number for future use, here we have 5900. </p>
+<p><img src="https://i.loli.net/2019/07/31/5d413b31caa7e82895.png" alt></p>
+<h3 id="2-Set-up-the-SSH-tunneling"><a href="#2-Set-up-the-SSH-tunneling" class="headerlink" title="2. Set up the SSH tunneling"></a>2. Set up the SSH tunneling</h3><p>With the port 5900 set up, we can now forward the message to our local Windows machine. Run the following command: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L 6666:&lt;IP of G&gt;:5900 &lt;username of S&gt;@&lt;IP of S&gt;</span><br></pre></td></tr></table></figure>
+<p>To note here port 6666 is just a random local access point that you can designate at will for later VNC viewer. </p>
+<h3 id="3-VNC-viewer-connection"><a href="#3-VNC-viewer-connection" class="headerlink" title="3. VNC viewer connection"></a>3. VNC viewer connection</h3><p>Open the VNC viewer. Type in <code>localhost:6666</code> and set up the VNC connection. If the connection is built, there will be a warning console popping up as shown in the following figure. Click ‘continue’ and you will be all set. </p>
+<p><img src="https://i.loli.net/2019/07/31/5d413f7ba712732902.png" alt></p>
+<h3 id="4-Google-Football-Training"><a href="#4-Google-Football-Training" class="headerlink" title="4. Google Football Training"></a>4. Google Football Training</h3><p>The training code is provided by google team in the file <code>run_ppo.py</code>. We should designate the exact screen it should be rendered by setting the <code>DISPLAY</code> environment paramter: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env DISPLAY=:1.0 MESA_GL_VERSION_OVERRIDE=3.2 MESA_GLSL_VERSION_OVERRIDE=150 python3 -m gfootball.examples.run_ppo2 --dump_full_episodes=True --level=academy_run_to_score_with_keeper --render=True</span><br></pre></td></tr></table></figure>
+<p>And the final result is shown. One thing to note here is that the refresh rate of the rendered picture is pretty low, therefore don’t get your expectation too high.</p>
+<p><img src="https://i.loli.net/2019/07/31/5d413eda6288d55623.png" alt></p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>Up to now we have conducted one experiment to reimplement the Shooting Bronze mini-game in FIFA18. The performance of the <a href="https://arxiv.org/abs/1707.06347" target="_blank" rel="noopener">PPO algorithm</a> is actually pretty good while it’s still sometimes influenced by the large training variance. </p>
+<h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><p>The football academy provided by the google research team has a very similar setting called <code>academy_run_to_score_with_keeper.py</code> in the <code>scenarios</code> folder, with the starting point of the player set in the middle of the field. By setting the ball nearer to the goal, and with some minor modification of the players’ position, we can reimplement the FIFA Shooting Bronze scenario in the google football. </p>
+<h3 id="Original-Setting-of-academy-run-to-score-with-keeper-py"><a href="#Original-Setting-of-academy-run-to-score-with-keeper-py" class="headerlink" title="Original Setting of academy_run_to_score_with_keeper.py"></a>Original Setting of <code>academy_run_to_score_with_keeper.py</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">builder.SetBallPosition(<span class="number">0.02</span>, <span class="number">0.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set current team to home</span></span><br><span class="line">builder.SetTeam(Team.e_Left)</span><br><span class="line">builder.AddPlayer(<span class="number">-1.0</span>, <span class="number">0.0</span>, e_PlayerRole_GK)</span><br><span class="line">builder.AddPlayer(<span class="number">0.0</span>, <span class="number">0.0</span>, e_PlayerRole_CB)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set current team to away</span></span><br><span class="line">builder.SetTeam(Team.e_Right)</span><br><span class="line">builder.AddPlayer(<span class="number">-1.0</span>, <span class="number">0.0</span>, e_PlayerRole_GK)</span><br><span class="line">builder.AddPlayer(<span class="number">0.12</span>, <span class="number">0.2</span>, e_PlayerRole_LB)</span><br><span class="line">builder.AddPlayer(<span class="number">0.12</span>, <span class="number">0.1</span>, e_PlayerRole_CB)</span><br><span class="line">builder.AddPlayer(<span class="number">0.12</span>, <span class="number">0.0</span>, e_PlayerRole_CM)</span><br><span class="line">builder.AddPlayer(<span class="number">0.12</span>, <span class="number">-0.1</span>, e_PlayerRole_CB)</span><br><span class="line">builder.AddPlayer(<span class="number">0.12</span>, <span class="number">-0.2</span>, e_PlayerRole_RB)</span><br></pre></td></tr></table></figure>
+<h3 id="Shooting-Bronze-Reimplementation"><a href="#Shooting-Bronze-Reimplementation" class="headerlink" title="Shooting Bronze Reimplementation"></a>Shooting Bronze Reimplementation</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">builder.SetBallPosition(<span class="number">0.52</span>, <span class="number">0.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set current team to home</span></span><br><span class="line">builder.SetTeam(Team.e_Home)</span><br><span class="line">builder.AddPlayer(<span class="number">-1.0</span>, <span class="number">0.0</span>, e_PlayerRole_GK)</span><br><span class="line">builder.AddPlayer(<span class="number">0.5</span>, <span class="number">0.0</span>, e_PlayerRole_CF)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set current team to away</span></span><br><span class="line">builder.SetTeam(Team.e_Away)</span><br><span class="line">builder.AddPlayer(<span class="number">-1.0</span>, <span class="number">0.0</span>, e_PlayerRole_GK)</span><br><span class="line">builder.AddPlayer(<span class="number">-0.3</span>, <span class="number">0.2</span>, e_PlayerRole_LB)</span><br><span class="line">builder.AddPlayer(<span class="number">-0.3</span>, <span class="number">0.1</span>, e_PlayerRole_CB)</span><br><span class="line">builder.AddPlayer(<span class="number">-0.3</span>, <span class="number">0.0</span>, e_PlayerRole_DM)</span><br><span class="line">builder.AddPlayer(<span class="number">-0.3</span>, <span class="number">-0.1</span>, e_PlayerRole_CB)</span><br><span class="line">builder.AddPlayer(<span class="number">-0.3</span>, <span class="number">-0.2</span>, e_PlayerRole_RB)</span><br></pre></td></tr></table></figure>
+<p>One crucial thing to understand here is that the setting procedure is imperative (like pyplot and matlab). The coordinate axis of the ball is absolute, while the coordinate axis of the team is relative, which is shown in the following figure. </p>
+<p><img src="https://i.loli.net/2019/07/31/5d414fba1ec3261321.png" alt></p>
+<h2 id="Parallelism-Performance"><a href="#Parallelism-Performance" class="headerlink" title="Parallelism Performance"></a>Parallelism Performance</h2><p>We tested the performance (accuracy, speed) of the single-machine PPO algorithm. The PPO algorithm runs the episodes parallelly, and then collect all the traces to form a pool and then run the SGD update for several times. The parallelism of the PPO on google football is tested on a workstation with an Intel i9-7900 CPU, the result of which is shown in the following figure, where FPS stands for the total steps per second and the yellow line stands for the standard deviation of the FPS. </p>
+<p><img src="https://i.loli.net/2019/07/31/5d4151f05527d87911.png" alt></p>
+<p>The reason why the number of the environments could be larger than the number of the physical cores and still gain performance improvement is that the PPO implemented by <a href="https://github.com/openai/baselines" target="_blank" rel="noopener">OpenAI baselines</a> package is totally synchronous, which means that the environment stepping and the parameter updating is performed completely sequentially. The future work of the google football is highly likely to be deployed on distributed systems, making PPO algorithm and performance analysis less important. </p>
+<h2 id="Accuray-Performance"><a href="#Accuray-Performance" class="headerlink" title="Accuray Performance"></a>Accuray Performance</h2><p>The pure PPO algorithm achieves a remarkablely high accuracy after 2M steps, sometimes with over 90% (or even 100%). While it may crash and get stuck at some local optimal point. The detailed record of the accuracy is lost, but you could check out the inference demo by clicking <a href="https://drive.google.com/file/d/1bNO5rpUhCeCZY9zPGgVCzgUlqH9QF39n/view?usp=sharing" target="_blank" rel="noopener">this link</a> on google drive. </p>
+<h1 id="GFootball-Code-Analysis"><a href="#GFootball-Code-Analysis" class="headerlink" title="GFootball Code Analysis"></a>GFootball Code Analysis</h1><p>Personally I don’t think diving too deep into the google football environment code is a fantastic idea, for the detailed implementation should always be hidden from us users, unless there are some bugs you can’t wait to be fixed by the developers and you want to DIY (then I guess you must be super super gooood).</p>
+<p>In this section, we will start with the overall structure of the google football project. Then we will list and explain all the exposed interfaces that you might need when developing your own algorithms. Finally we will cover some valuable issues. </p>
+<h2 id="Overall-Structure"><a href="#Overall-Structure" class="headerlink" title="Overall Structure"></a>Overall Structure</h2><p>First of all, the whole project is composed of 2 major parts: <strong>football engine</strong> and <strong>football environment</strong>. The football engine is written in C++ because it involves the OpenGL rendering and should be highly optimized to improve the responsiveness. The football environment is written in Python and is wrapped gym-likely (<a href="https://gym.openai.com/" target="_blank" rel="noopener">OpenAI gym</a>) for better compatibility with the machine learning community. When installing the google football package, it will first compile the football engine and generate a dynamic library called <code>gfootball_engine.so</code>, which could be invoked by Python file using <code>import</code> statement (for more information about how to write the C++/Python Interface, please check the <a href="https://www.boost.org/doc/libs/1_70_0/libs/python/doc/html/index.html" target="_blank" rel="noopener">boost.Python</a> C++ library).</p>
+<p><img src="https://i.loli.net/2019/07/31/5d41ae603455946761.png" alt></p>
+<p>Our main focus is the gfootball environment construction, which is implemented in the directory <code>/gfootball/env</code>. The stream of creating the final environment object <code>FootballEnv</code> (in <code>/gfootball/env/football_env.py</code>) goes through at least three wrappers: </p>
+<ul>
+<li>First,<code>FootballEnvCore</code> (in <code>/gfootball/env/football_env_core.py</code>) interacts directly with the football engine, creates in total 11+11 <code>controllers</code> for every player, and most importantly, realizes the gym-like environment API including <code>reset</code> and <code>step</code>. </li>
+<li>Secondly, <code>FootballEnvWrapper</code> (in <code>/gfootball/env/football_env_wrapper.py</code>) follows the same API standard and implements additional ‘writing_dumps’ function.</li>
+<li>Finally, <code>FootballEnv</code> inherits the <code>FootballEnvWrapper</code>‘s API and loads the player algorithm by <code>_constructin_players</code>. </li>
+</ul>
+<p>After that, multiple wrappers could be used for a much more customized environment, as shown in the function <code>create_single_environment</code> in the file <code>/gfootball/env/__init__.py</code>. For more informationn about the wrappers, please check out the classes in <code>/gfootball/env/wrappers.py</code>.</p>
+<p>The overall structure of the code is demonstrated in the following figure. To note that there might be some changes in the latest release, it’s better for you to check the newest version of the code and not get trapped in this article. </p>
+<p><img src="https://i.loli.net/2019/07/31/5d41ae5fa113687245.png" alt></p>
+<h2 id="Interfaces"><a href="#Interfaces" class="headerlink" title="Interfaces"></a>Interfaces</h2><h3 id="1-General-Configuration"><a href="#1-General-Configuration" class="headerlink" title="1. General Configuration"></a>1. General Configuration</h3><p>The configuration of the environment could be found in file <code>/gfootbal/env/config.py</code> and``. The important configuration paramters that might be used in the future include (you should double check it yourself):</p>
+<ul>
+<li><strong>action_set</strong>: a string deciding allowed actions. The dictionary defining the string-action_set mapping resides in file <code>/gfootball/env/football_action_set.py</code>.</li>
+<li><strong>dump_full_episodes</strong>: a bool deciding whether dumps the full episodes to the disk when training. </li>
+<li><strong>game_difficulty</strong>: a real number from 0 to 1 indicating the responsiveness of the bot, {easy: 0.05, medium: 0.6, hard: 0.95}.</li>
+<li><strong>level</strong>: a string of the scenario name deciding which <code>scenarios/</code> file should imported. </li>
+<li><strong>real_time</strong>: a bool ddeciding whether it’s real time for human player. </li>
+</ul>
+<h3 id="2-Scenario-Configuration"><a href="#2-Scenario-Configuration" class="headerlink" title="2. Scenario Configuration"></a>2. Scenario Configuration</h3><p>It’s implemented in file <code>/gfootball/env/scenario_builder.py</code>, but should be used with the <code>scenario_builder</code> class as shown in any file in the <code>/gfootball/env/scenarios/</code>.  There mainly interfaces that you will use when creating your own customized scenarios:</p>
+<ul>
+<li><strong>SetFlag(name, value)</strong>: directly invoke <code>config.set_scenario_value()</code> , which is defined in the <code>Config</code> class. The related parameters are listed as follows (all of them):<ul>
+<li><em>deterministic</em>: whether there is some stochasticity.</li>
+<li><em>end_episode_on_score</em>: if score then end the episode. </li>
+<li><em>end_episode_on_possession_change</em>: if possession of the ball is changed, then end the episode.</li>
+<li><em>end_episode_on_out_of_play</em>: if out of play, then end the episode.</li>
+<li><em>game_duration</em>: how many steps of the environment before ending it forcely.</li>
+<li><em>offsides</em>: whether offsides judegement is introduced to the games. </li>
+</ul>
+</li>
+<li><strong>SetTeam(team)</strong>: set current team (left/right).</li>
+<li><strong>SetBallPosition(ball_x, ball_y)</strong>: set the position of the ball. </li>
+<li><strong>AddPlayer(x, y, role)</strong>: add a player to the field. </li>
+</ul>
+<p>One typical way of using this interface is to rewrite a scenario builder as <code>/gfootball/scenarios/11_vs_11_easy_stochastic.py</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_scenario</span><span class="params">(builder)</span>:</span></span><br><span class="line">  builder.SetFlag(<span class="string">'game_duration'</span>, <span class="number">3000</span>)</span><br><span class="line">  builder.SetFlag(<span class="string">'game_difficulty'</span>, <span class="number">0.05</span>)</span><br><span class="line">  builder.SetFlag(<span class="string">'deterministic'</span>, <span class="literal">False</span>)</span><br><span class="line">  <span class="keyword">if</span> builder.EpisodeNumber() % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">    first_team = Team.e_Left</span><br><span class="line">    second_team = Team.e_Right</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    first_team = Team.e_Right</span><br><span class="line">    second_team = Team.e_Left</span><br><span class="line">  builder.SetTeam(first_team)</span><br><span class="line">  builder.AddPlayer(<span class="number">-1.000000</span>, <span class="number">0.000000</span>, e_PlayerRole_GK)</span><br><span class="line">  builder.AddPlayer(<span class="number">0.000000</span>,  <span class="number">0.020000</span>, e_PlayerRole_RM)</span><br><span class="line">  builder.AddPlayer(<span class="number">0.000000</span>, <span class="number">-0.020000</span>, e_PlayerRole_CF)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.422000</span>, <span class="number">-0.19576</span>, e_PlayerRole_LB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.500000</span>, <span class="number">-0.06356</span>, e_PlayerRole_CB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.500000</span>, <span class="number">0.063559</span>, e_PlayerRole_CB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.422000</span>, <span class="number">0.195760</span>, e_PlayerRole_RB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.184212</span>, <span class="number">-0.10568</span>, e_PlayerRole_CM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.267574</span>, <span class="number">0.000000</span>, e_PlayerRole_CM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.184212</span>, <span class="number">0.105680</span>, e_PlayerRole_CM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.010000</span>, <span class="number">-0.21610</span>, e_PlayerRole_LM)</span><br><span class="line">  builder.SetTeam(second_team)</span><br><span class="line">  builder.AddPlayer(<span class="number">-1.000000</span>, <span class="number">0.000000</span>, e_PlayerRole_GK)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.050000</span>, <span class="number">0.000000</span>, e_PlayerRole_RM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.010000</span>, <span class="number">0.216102</span>, e_PlayerRole_CF)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.422000</span>, <span class="number">-0.19576</span>, e_PlayerRole_LB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.500000</span>, <span class="number">-0.06356</span>, e_PlayerRole_CB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.500000</span>, <span class="number">0.063559</span>, e_PlayerRole_CB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.422000</span>, <span class="number">0.195760</span>, e_PlayerRole_RB)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.184212</span>, <span class="number">-0.10568</span>, e_PlayerRole_CM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.267574</span>, <span class="number">0.000000</span>, e_PlayerRole_CM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.184212</span>, <span class="number">0.105680</span>, e_PlayerRole_CM)</span><br><span class="line">  builder.AddPlayer(<span class="number">-0.010000</span>, <span class="number">-0.21610</span>, e_PlayerRole_LM)</span><br></pre></td></tr></table></figure>
+<h3 id="3-Player-Interface"><a href="#3-Player-Interface" class="headerlink" title="3. Player Interface"></a>3. Player Interface</h3><p>The player interface is well defined and easy to implement. Just all you need to do is to load your own trained model and reimplement the <code>take_action</code> method as the rest of the player files residing in the folder <code>/gfootball/env/players</code>.</p>
+<h3 id="4-Reward-Interface"><a href="#4-Reward-Interface" class="headerlink" title="4. Reward Interface"></a>4. Reward Interface</h3><p>The paper proposes two ways of giving reward to an agent, one of which is called ‘checkpoint’. The checkpoint reward wrapper <code>CheckpointRewardWrapper</code> is implemented in the file <code>/gfootball/wrappers.py</code> and it inherits from the <code>gym.RewardWrapper</code> class. The only thing that we need to do to customize our own reward mechanism is to implement <code>reset()</code> and <code>reward()</code> method. </p>
+<h2 id="Related-Issues"><a href="#Related-Issues" class="headerlink" title="Related Issues"></a>Related Issues</h2><p>Several related issues were raised and (nicely) solved by the google football team. Firstly, <a href="https://github.com/google-research/football/tree/v1.1" target="_blank" rel="noopener">the latest release</a> supports multi-agent training and self-play. Secondly, about the FPS evaluation, the whole environment interacts with the agent in a synchronous way while it could be confusing when compared with playing with human, <a href="https://github.com/google-research/football/issues/41" target="_blank" rel="noopener">this issue</a> was solved just lately. Last, about <a href="https://github.com/google-research/football/issues/36" target="_blank" rel="noopener">not able to change the active player</a>, the only answer we got is that it’s not exposed to us users thus modifying it needs to dig down to the C++ engine. </p>
+<h1 id="Last-Words"><a href="#Last-Words" class="headerlink" title="Last Words"></a>Last Words</h1><p>Thank you for reading this article. I would be super happy even if it only helps you a little bit! Wish you good luck! If you have any question, please do not hesitate to contact me via my email at the bottom! </p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/07/30/Google-Football-Warm-Start/">http://www.shihaizhou.com/2019/07/30/Google-Football-Warm-Start/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/07/30/Google-Football-Warm-Start/">July 30th 2019, 11:42:26 am</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/07/30/Google-Football-Warm-Start/">August 1st 2019, 12:12:25 am</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/07/16/AONLH-7-Preflop-Play-summary/" title="AONLH(7) - Preflop Play (summary)">
+                    <div class="prevTitle">AONLH(7) - Preflop Play (summary)</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:shihaizhou@zju.edu.cn" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/WOWNICE" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Preface"><span class="toc-number">1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Working-Environment-Setting"><span class="toc-number">2.</span> <span class="toc-text">Working Environment Setting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-Tunneling"><span class="toc-number">2.1.</span> <span class="toc-text">SSH Tunneling</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Running-GFootball-Locally"><span class="toc-number">3.</span> <span class="toc-text">Running GFootball Locally</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Running-GFootball-Remotely"><span class="toc-number">4.</span> <span class="toc-text">Running GFootball Remotely</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#X-Window-System"><span class="toc-number">4.1.</span> <span class="toc-text">X Window System</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Local-Linux-System"><span class="toc-number">4.2.</span> <span class="toc-text">Local Linux System</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Local-Windows-System"><span class="toc-number">4.3.</span> <span class="toc-text">Local Windows System</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Set-up-the-virtual-frame-buffer-amp-message-forwarding"><span class="toc-number">4.3.1.</span> <span class="toc-text">1. Set up the virtual frame buffer &amp; message forwarding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Set-up-the-SSH-tunneling"><span class="toc-number">4.3.2.</span> <span class="toc-text">2. Set up the SSH tunneling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-VNC-viewer-connection"><span class="toc-number">4.3.3.</span> <span class="toc-text">3. VNC viewer connection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Google-Football-Training"><span class="toc-number">4.3.4.</span> <span class="toc-text">4. Google Football Training</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiments"><span class="toc-number">5.</span> <span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting"><span class="toc-number">5.1.</span> <span class="toc-text">Setting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Original-Setting-of-academy-run-to-score-with-keeper-py"><span class="toc-number">5.1.1.</span> <span class="toc-text">Original Setting of academy_run_to_score_with_keeper.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shooting-Bronze-Reimplementation"><span class="toc-number">5.1.2.</span> <span class="toc-text">Shooting Bronze Reimplementation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parallelism-Performance"><span class="toc-number">5.2.</span> <span class="toc-text">Parallelism Performance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Accuray-Performance"><span class="toc-number">5.3.</span> <span class="toc-text">Accuray Performance</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GFootball-Code-Analysis"><span class="toc-number">6.</span> <span class="toc-text">GFootball Code Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overall-Structure"><span class="toc-number">6.1.</span> <span class="toc-text">Overall Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interfaces"><span class="toc-number">6.2.</span> <span class="toc-text">Interfaces</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-General-Configuration"><span class="toc-number">6.2.1.</span> <span class="toc-text">1. General Configuration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Scenario-Configuration"><span class="toc-number">6.2.2.</span> <span class="toc-text">2. Scenario Configuration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Player-Interface"><span class="toc-number">6.2.3.</span> <span class="toc-text">3. Player Interface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Reward-Interface"><span class="toc-number">6.2.4.</span> <span class="toc-text">4. Reward Interface</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Related-Issues"><span class="toc-number">6.3.</span> <span class="toc-text">Related Issues</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Last-Words"><span class="toc-number">7.</span> <span class="toc-text">Last Words</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 11
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/16</span><a class="archive-post-title" href="/2019/07/16/AONLH-7-Preflop-Play-summary/">AONLH(7) - Preflop Play (summary)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href="/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">RL Course Lesson (2) - Model-Free Policy Evaluation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">RL Course Lesson (1) - MP, MRP, MDP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2019/06/24/AONLH-6-Preflop-Play-part-5/">AONLH(6) - Preflop Play (part 5)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/21</span><a class="archive-post-title" href="/2019/06/21/AONLH-5-Preflop-Play-part-4/">AONLH(5) - Preflop Play (part 4)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2019/06/17/AONLH-4-Preflop-Play-part-3/">AONLH(4) - Preflop Play (part 3)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">Google Research Football - RL Environment</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2019/06/11/AONLH-3-Preflop-Play-continued/">AONLH(3) - Preflop Play (part 2)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/05</span><a class="archive-post-title" href="/2019/06/05/AONLH-2-Preflop-Play/">AONLH(2) - Preflop Play (part 1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2019/06/04/AONLH-Chap-NO-1-Basics/">AONLH(1) - Basics</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+    
+        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
+    
+        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
+    
+        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
+    
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Haizhou Shi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+</body>
+</html>
+
+
