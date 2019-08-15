@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>RL Course Lesson (2) - Model-Free Policy Evaluation · N1H111SM&#39;s Miniverse</title>
+    <title>N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">N1H111SM&#39;s Miniverse</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">RL Course Lesson (2) - Model-Free Policy Evaluation</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            RL Course Lesson (2) - Model-Free Policy Evaluation
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/07/15</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,168 +338,43 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="Policy-Evaluation"><a href="#Policy-Evaluation" class="headerlink" title="Policy Evaluation"></a>Policy Evaluation</h1><p>本章主要解决如何在缺少MDP模型内部的转移函数的情况下进行Policy Evaluation。主要的方法为动态规划、蒙特卡洛（Monte Carlo Policy Evaluation）方法以及Temporal Difference（TD）。</p>
-<p>首先回顾一下价值迭代用到的方法：</p>
-<script type="math/tex; mode=display">
-V_{k}^{\pi}(s)=r(s,\pi(s)) + \gamma \sum_{s'\in S}{P(s'|s,\pi(s))V_{k-1}^{\pi}(s')}</script><p>其中$V_k^{\pi}(s)$是在策略$\pi$下的$k$-horizon value的精确值；而当$k$足够大的时候又是Infinite horizon value的估计值。Policy Evaluation的核心在于以下的数学期望表达式：策略$\pi$下的状态-价值=当前状态下Return值的数学期望。</p>
-<script type="math/tex; mode=display">
-V^{\pi}(s)=E_\pi[G_t|s_t=s]</script><p>使用动态规划的Evaluation方法利用了公式：</p>
-<script type="math/tex; mode=display">
-V^\pi(s)\approx E_\pi[r_t+\gamma V_{k-1}|s_t=s]</script><p>使用这个递推表达式有以下的约束和drawback：首先是公式中的$P(s’|s, \pi(s))$需要MDP Model $M$的具体条件转化概率矩阵；第二使用Bootstrapping方法要求整个过程是马尔科夫的（也就是和状态历史无关）。事实上在绝大部分情况下我们的agent都是不知道自己所处环境的状态转移关系$P$以及奖励模型$R$的，也就是这章要讲的Model-free Policy Evaluation。</p>
-<h1 id="Monte-Carlo-Policy-Evaluation"><a href="#Monte-Carlo-Policy-Evaluation" class="headerlink" title="Monte Carlo Policy Evaluation"></a>Monte Carlo Policy Evaluation</h1><p>Policy Evaluation的目标是：对任意状态$s$，计算$V^{\pi}(s)=E_\pi[G_t|s_t=s]$。最简单的想法就是在当前的环境中能够进行采样，对每个采样的轨迹（trajectory）进行奖励的求和并对总体平均，这样就是一个对于$G_t$的estimate。该方法是一个通用方法，它不需要马尔科夫假设作为支撑，但它也只能被用于episodic MDP上，也就是说每个trajectory必须要有terminate的时候。通常MC方法都采用增量式的更新模式。</p>
-<h2 id="First-Visit-MC-amp-Every-Time-MC"><a href="#First-Visit-MC-amp-Every-Time-MC" class="headerlink" title="First-Visit MC &amp; Every-Time MC"></a>First-Visit MC &amp; Every-Time MC</h2><p>First-Visit MC方法仅仅更新一个新采样Episode中第一次看到的状态的价值函数，这种方法是$V^\pi$的无偏估计。Every-Time MC方法每一次在sample中看到状态都会进行更新，虽然它是$V^\pi$的有偏估计，但是它依旧是一个consistent estimator并且比First-Visit MC具有更好的均方误差（MSE）。</p>
-<h2 id="Variant-of-Every-Time-MC"><a href="#Variant-of-Every-Time-MC" class="headerlink" title="Variant of Every-Time MC"></a>Variant of Every-Time MC</h2><p>在Incremental MC方法当中需要维护一个数组$N(s)$来记录每个状态被访问更新的次数。定义$G_{i,t}$是在第$i$个episode的第$t$个time step的return值，我们将更新状态价值函数的表达式进行一些改写，将后面的项数看作是增量部分，那么$N(s)$就是每一次sample时更新的步幅，可以用$\alpha$表示：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-V^{\pi}(s) &= V^{\pi}(s){N(s)-1\over N(s)}+{G_{i,t}\over N(s)} \\
-&= V^\pi(s) + {1\over N(s)}[G_{i,t}-V^\pi(s)] \\
-&= V^\pi(s) + \alpha [G_{i,t}-V^\pi(s)]
-\end{align}</script><ul>
-<li><p>当$\alpha={1\over N(s)}$时，更新的方法和Every-Visit MC相同。</p>
-</li>
-<li><p>当$\alpha\gt {1\over N(s)}$时，倾向于忘记之前的data sample，而对最近的sample较为敏感。这种更新策略对于Non-stationary domain的问题比较有效。</p>
-</li>
-</ul>
-<h2 id="Key-Limitations-of-MC"><a href="#Key-Limitations-of-MC" class="headerlink" title="Key Limitations of MC"></a>Key Limitations of MC</h2><ul>
-<li>首先MC是一个high-variance的方法，通常需要大量的sampled data才能够解决这个问题。</li>
-<li>需要Episodic Setting，轨迹必须终结。</li>
-</ul>
-<h1 id="Temporal-Difference-Learning"><a href="#Temporal-Difference-Learning" class="headerlink" title="Temporal Difference Learning"></a>Temporal Difference Learning</h1><p>TD-learning是一个结合了MC方法和DP方法的Policy Evaluation策略，它采用了bootstrapping的思想，能够支持Infinite-Horizon的问题以及能够做到在每个step取得tuple $(s,a,r,s’)$后都直接进行更新。</p>
-<p>MC方法中，我们用来更新价值的公式为：</p>
-<script type="math/tex; mode=display">
-V^\pi(s) = V^\pi(s) + \alpha [G_{i,t}-V^\pi(s)]</script><p>我们知道$G$是状态价值函数的estimate，要拿到这个值必须要在episode结束之后。观察Bellman Equation的后半部分，这里的形式是利用MDP model的状态转移概率来写出精确的数学期望，但是在sampling的时候后面的部分会以sample的形式作为下一个状态和reward返回给agent，因此我们可以这个estimate来对Return值$G$进行bootsrappinng</p>
-<script type="math/tex; mode=display">
-\begin{align}
-B^\pi V(s) &= r(s,\pi(s)) + \gamma \sum_{s'\in S}P(s'|s,\pi(s))V(s') \\
-V^\pi(s) &= V^\pi(s) + \alpha([r_t+\gamma V^\pi(s_{t+1})] - V^\pi(s))
-\end{align}</script><p>我们将TD error定义为更新的数值：</p>
-<script type="math/tex; mode=display">
-\delta_t = r_t + \gamma V^\pi(s_{t+1}) - V^\pi(s_t)</script><h1 id="Evaluating-Algorithms"><a href="#Evaluating-Algorithms" class="headerlink" title="Evaluating Algorithms"></a>Evaluating Algorithms</h1><p>比较DP/MC/TD三个方法的性质：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>DP</th>
-<th>MC</th>
-<th>TD</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Support Model-Free?</td>
-<td></td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>Support Non-episodic?</td>
-<td>T</td>
-<td></td>
-<td>T</td>
-</tr>
-<tr>
-<td>Support Non-Markov?</td>
-<td></td>
-<td>T</td>
-<td></td>
-</tr>
-<tr>
-<td>Unbiasd Estimate?</td>
-<td></td>
-<td>T (First-Visit MC)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>评价RL算法的重要指标：是否是Biased Estimate？更新的方差大小？数据效率和计算效率？</strong></p>
-<p>MC可以是无偏估计（取决于具体状态函数的更新形式），但该方法具有较高的variance；优点是即便在Function Approximation也能够收敛。</p>
-<p>TD虽然是一个有偏估计，但是却有更小的variance，TD(0)只保证在Tabular Representation下收敛，而不保证在Function Approximation能够收敛。</p>
-<h2 id="Batch-MC-amp-Batch-TD"><a href="#Batch-MC-amp-Batch-TD" class="headerlink" title="Batch MC &amp; Batch TD"></a>Batch MC &amp; Batch TD</h2><p>Batch solution for finite dataset是一种离线算法，能够提高data efficiency。对于已经sample得到的K个episodes，使用MC或TD算法对这K个episodes进行resample并更新参数即可构成该离线算法。</p>
-<p>课程例举了一个实例来说明Batch MC和Batch TD的最终优化结果是不同的。</p>
-<p>课程中认为Batch MC是收敛于min MSE，分析如下：给定一个确定的episode set，我们可以算出什么时候Batch MC的更新为0，也就是说最终每个状态的价值值会收敛到sample出的batch的该状态的平均Return值。这和优化min MSE的结果是相同的（优化函数的导数为0）。</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\alpha [\overline{G_{i,t}}-V^\pi(s)] &= 0 \\
-\Leftrightarrow V^\pi(s) &= \overline{G_{i,t}}
-\end{align}</script><p>而对于Batch TD(0)方法来说，它最终converge到的是“DP policy $V^\pi$ for the MDP with the maximum likelihood model estimates”.极大似概率的MDP model为以下：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\hat{P}(s'|s,a) &= {1\over N(s,a)}\sum_{k=1}^{K}\sum_{t=1}^{L_k-1}1(s_{k,t}=s,a_{k,t}=a, s_{k,t+1}=s') \\
-\hat{r}(s,a) &= {1\over N(s,a)}\sum_{k=1}^{K}\sum_{t=1}^{L_k-1}1(s_{k,t}=s,a_{k,t}=a)r_{t,k}
-\end{align}</script><p>也就是说在给定的sample集上我们能够根据频率构建出关于MDP model的一个估计（利用如上公式），Batch TD(0)收敛到的点就是这个估计的DP policy。同样的分析最终的收敛点为：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\alpha [\overline{r_t+\gamma V^\pi(s_{t+1})}-V^\pi(s)] &= 0 \\
-\Leftrightarrow V^\pi(s) &= \overline{r_t+\gamma V^\pi(s_{t+1})}
-\end{align}</script><p>而我们知道等式右边的平均项其实就是reward和带状态转移概率的价值函数的估计。</p>
-<h2 id="Some-Important-Properties"><a href="#Some-Important-Properties" class="headerlink" title="Some Important Properties"></a>Some Important Properties</h2><p>对于TD和MC方法，更新的时间复杂度关于episode长度$L$来说都是$O(L)$。MC比较TD来说它的data efficiency更高一些，但是TD利用了马尔科夫性质。当我们解决具有马尔科夫性质的问题时，利用这个性质往往会比较有帮助。关于为什么TD利用了马尔科夫性质，我的理解是下面的近似替换表达式认为在当前time step的return value = 当前的immediate reward + 下一状态的state value是历史无关的，只和当前状态有关。</p>
-<script type="math/tex; mode=display">
-G_{i,t}\approx r_t + \gamma V^\pi(s_{t+1})</script><h1 id="MC-Off-Policy-Evaluation"><a href="#MC-Off-Policy-Evaluation" class="headerlink" title="*MC Off-Policy Evaluation"></a>*MC Off-Policy Evaluation</h1><p>当前的policy evaluation都是基于sampling的，是on-policy的方法，on-policy简单来说就是在线跑算法并且在线evaluate。所以本章研究的是如何利用现有的data进行policy evaluation。现在formulate MC Off-Policy Evaluation的问题。</p>
-<ul>
-<li>Aim - estimate value of policy $\pi_1$, $V^{\pi_1}(s)$, givein episodes generated under behavior policy $\pi_2$.<ul>
-<li>$s_1, a_1, r_1, s_2, a_2, r_2, \ldots$ where the actions are sampled from $\pi_2$</li>
-</ul>
-</li>
-<li>If $\pi_2$ is stochastic, can often use it to estimate the value of an alternative policy (formal conditions to follow)</li>
-<li>No requirement that have a model nor that state is Markov. </li>
-</ul>
-<p>Off-policy evaluation存在的主要问题就是两个不同的policy产生出episode和reward的distribution不同。重要性采样（Importance Sampling）的目标是估计一个函数$f(x)$在某一个概率分布$p(x)$下的数学期望，但是现在只有从另一个分布$q(s)$采样出的数据点$x_1,x_2,\ldots,x_n$。首先我们可以很容易地求出这个函数在$q(s)$上的数学期望。</p>
-<script type="math/tex; mode=display">
-E_{x\sim q}[f(x)] = \int_xq(x)f(x)</script><p>假设$h_j$为所有sample点中的第$j$条轨迹：</p>
-<script type="math/tex; mode=display">
-h_j = (s_{j,1}, a_{j,1}, r_{j,1}, s_{j,2}, a_{j,2}, r_{j,2}, \ldots,s_{j, L_j})</script><p>那么根据马尔科夫假设以及乘法原理，得出这条轨迹出现的概率为每个状态转移的乘积：</p>
-<script type="math/tex; mode=display">
-p(h_j|\pi, s=s_{j,1}) = \prod_{t=1}^{L_j-1} \pi(a_{j,t}|s_{j,t})p(r_{j,t}|s_{j,t}, a_{j,t})p(s_{j,t+1}|s_{j,t},a_{j,t})</script><p>虽然整体问题是Model-Free的环境，但从上式得知，导致两个不同的policy分布的地方仅仅在于这策略本身决定action的部分。所以我们容易求出两个策略下轨迹的概率比值，从而得出需要的近似，其中$G(h_j)$为轨迹$h_j$的return value。</p>
-<script type="math/tex; mode=display">
-V^{\pi_1}(s) \approx \sum_{j=1}^{n} {p(h_j|\pi_1,s)\over p(h_j|\pi_2,s)} G(h_j)</script><p>问题：课程中说这个推导过程不需要马尔科夫假设。但是上面将概率写成了只和当前状态相关的概率连乘积不是已经用到了马尔科夫假设了吗？需要进一步思考和验证。</p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">http://www.shihaizhou.com/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">July 15th 2019, 3:49:57 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">July 16th 2019, 8:03:50 pm</a>
-            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">
+            
+                <span>Notes on Emergent Communication Through Negotiation</span>
+        </a>
+        <div class="abstract-content">
+            Notes on an amazing paper.
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="NLP">NLP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Negotiation">Negotiation</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/07/16/AONLH-7-Preflop-Play-summary/" title="AONLH(7) - Preflop Play (summary)">
-                    <div class="nextTitle">AONLH(7) - Preflop Play (summary)</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/" title="RL Course Lesson (1) - MP, MRP, MDP">
-                    <div class="prevTitle">RL Course Lesson (1) - MP, MRP, MDP</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -642,24 +456,6 @@ V^{\pi_1}(s) \approx \sum_{j=1}^{n} {p(h_j|\pi_1,s)\over p(h_j|\pi_2,s)} G(h_j)<
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Policy-Evaluation"><span class="toc-number">1.</span> <span class="toc-text">Policy Evaluation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monte-Carlo-Policy-Evaluation"><span class="toc-number">2.</span> <span class="toc-text">Monte Carlo Policy Evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#First-Visit-MC-amp-Every-Time-MC"><span class="toc-number">2.1.</span> <span class="toc-text">First-Visit MC &amp; Every-Time MC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variant-of-Every-Time-MC"><span class="toc-number">2.2.</span> <span class="toc-text">Variant of Every-Time MC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Key-Limitations-of-MC"><span class="toc-number">2.3.</span> <span class="toc-text">Key Limitations of MC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Temporal-Difference-Learning"><span class="toc-number">3.</span> <span class="toc-text">Temporal Difference Learning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Evaluating-Algorithms"><span class="toc-number">4.</span> <span class="toc-text">Evaluating Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-MC-amp-Batch-TD"><span class="toc-number">4.1.</span> <span class="toc-text">Batch MC &amp; Batch TD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Some-Important-Properties"><span class="toc-number">4.2.</span> <span class="toc-text">Some Important Properties</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MC-Off-Policy-Evaluation"><span class="toc-number">5.</span> <span class="toc-text">*MC Off-Policy Evaluation</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -993,8 +789,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

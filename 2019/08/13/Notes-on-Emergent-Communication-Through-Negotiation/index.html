@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>AONLH(2) - Preflop Play (part 1) · N1H111SM&#39;s Miniverse</title>
+    <title>Notes on Emergent Communication Through Negotiation · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">AONLH(2) - Preflop Play (part 1)</a>
+                <a href="#" class="post-name">Notes on Emergent Communication Through Negotiation</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            AONLH(2) - Preflop Play (part 1)
+            Notes on Emergent Communication Through Negotiation
             <!-- 404 -->
             
         </h1>
@@ -266,18 +266,22 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="poker">poker</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="NLP">NLP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Negotiation">Negotiation</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">4.8k</span>阅读时长: <span class="post-count reading-time">19 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/06/05</span>
+                    <span class="post-intro-time">2019/08/13</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -401,151 +405,83 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><hr>
-<p>首先德扑游戏具有两个特性：对于人类玩家的记忆来说的较大的策略空间和非完美信息博弈，这使得我们没有办法使用特定的策略解决所有的情况。关于如何解决这种情况，书中一个观察让我印象很深刻：</p>
-<blockquote>
-<p>Second, we should note that the best way to approach a problem may often seem backwards or cause us to pause for a while and come back later when we have more information. For instance, suppose on the flop we want to figure out what our bluffing to value raising ratio should be. To accomplish this, we must first know how often we’re going to bet the river with a balanced range, what bet sizing should be used on the turn and river, and how position effects our range. </p>
-<p>其次，我们应该注意解决这个问题的最好方法往往是从后向前的，或者让我们先暂停一下等有了更多的信息再去解决它。比方说，如果我们想要找到最好的bluff和value raising的比例，那么我们必须首先知道该如何在river上进行平衡的bet，在turn上和在river上bet的sizing，以及位置是如何影响我们的range的。</p>
-</blockquote>
-<p>我对这段话的理解是，从一个玩家的角度出发，每一次翻牌的结果和玩家的决策的结果都是策略空间中的一部分。那么每一个最终被选择的策略（翻出什么牌、下了多少注），都会构成这棵决策树上的一条路径。要理解前期的策略应该被如何执行，就要知道前期策略会导致怎么样的后果，也就是要对未来决策树路径的选择非常清楚。也就是说在执行当前决定之前，牌手必须对下来的情况都有应当对策略。</p>
-<p>另外，虽然有的时候我们不能够找到最优的策略，但是我们能够通过分析就判断出一个行为是不是坏的。这里作者举了一个例子：在任何位置上都用自己的<strong>QQ+/AK</strong>去3-bet对抗<strong>UTG</strong>位置的open raise是一个不好的选择。因为如果每个玩家都用这样的牌去进行3-bet，那么UTG的玩家就会马上意识到自己被别人3-bet的频率太高了。于是为了对抗这种高频的3-bet，<strong>UTG</strong>玩家就会降低自己open raise的频率，拿更加强的牌进行open raise。</p>
-<h1 id="Preflop-3-4-5-betting-Frequencies"><a href="#Preflop-3-4-5-betting-Frequencies" class="headerlink" title="Preflop (3,4,5)-betting Frequencies"></a>Preflop (3,4,5)-betting Frequencies</h1><hr>
-<p>在网络德州中，通常情况下每个玩家的stack size是100BB，常见的open size是3.5BB，3-bet size为10BB~12BB。接下来让我们先考虑防守（通常“防守”指的是call对方的raise）对方3-bet的频率。为了让对方在3-bet bluff的EV为0（书中的描述为Indifferent to bluffing），我们假设自己防守的概率为$x$，则有</p>
-<script type="math/tex; mode=display">
-5(1-x)-10x = 0</script><p>其中5表示的大小盲的盲注大小1.5BB加上open raise的3.5BB，同时上面这条式子做了一个简化，那就是假定如果我们进行了防守，对手的bluff一定会输。而此时这个频率构成了双方玩家的一个均衡：也就是说如果想要让对方bluff的EV为0，我们需要防守$x$的频率；而对方如果要平衡自己bluff的频率，则他必须要在$1-x$的频率下进行value bet。由此解得作为open raiser我们需要对抗对手3-bet的频率为33.3%。而如果对手的3-bet的size为12BB，则有：</p>
-<script type="math/tex; mode=display">
-5(1-x)-12x=0</script><p>相应的防守频率为29.4%。这里注意到3-bet进攻的玩家多投入20%的筹码也只会降低open raise玩家4%的防守频率。同时我们还需要注意的是open raise的玩家并不是场上唯一一个防守者，其他后置位的玩家也有可能进行防守。假设<strong>CO</strong>做了3.5BB的open raise，<strong>BTN</strong>做了10BB的3-bet，考虑进其他玩家（此时只剩下了<strong>SB</strong>和<strong>BB</strong>）的防守并假设他们4-bet的频率为3%，我们可以计算出<strong>CO</strong>要进行的防守频率为29.1%：</p>
-<script type="math/tex; mode=display">
-(1-0.03)^2(1-x)=1-0.33</script><script type="math/tex; mode=display">
-\Rightarrow x=29.1\%</script><p>但是德州扑克并没有这么简单。通常来讲处于有利位置的玩家倾向于做一个小的3-bet来鼓励他的对手入池并看到河牌，这种时候其他玩家帮助我们进行防守的概率会变高；处于不利位置的玩家则通常把3-bet的size做的更大一些来获取我们更高的弃牌率。总的来说，我们防守3-bet的频率应该在27%到31%之间。</p>
-<p>当对手做了3-bet时，底池已经有15BB-16BB大小。4-bet raise的size通常是22BB-24BB，如果是原本open raise的玩家进行4-bet raise，那么他的成本就是18.5BB-20.5BB，因为之前的3.5BB已经成为了构成底池的死钱。这也就意味着cold 4-bet需要至少需要60%的成功率，而后者只需要55%的成功率。</p>
-<p>在一个stack只有100BB的牌局中，5-bet bluff通常都会使用all-in进行。<em>这样也就导致了5-bet bluff的玩家通常会使用一个weak pocket pair或者一个weak Ace suited来做5-bet bluff，这是因为这两种牌型在被跟注时具有最高的equity。</em> 但是具体的equity对抗对手不同的calling range是不同的，例如：在对抗<strong>JJ+/AK</strong>时，<strong>33o</strong>和<strong>A5s</strong>分别具有32.2%和30.7%的equity；而在对抗<strong>KK+</strong>的范围时，他们两者就分别只有18.4%和26.7%的equity。</p>
-<p>需要注意到绝大多数情况下进行5-bet bluff的玩家和3-bet的玩家是同一个，这样对于这名玩家来说他在3-bet时投入的11BB（10BB和12BB的中间值）就是底池中的死钱，他在进行5-bet时就只有额外的89BB的风险。假设该名玩家的equity为31%，那么他5-bet bluff被跟注的EV为：</p>
-<script type="math/tex; mode=display">
-EV_{5bet.called} = 201.5(0.31)-89 = -26.5</script><p>而他的对手如果放弃，则他5-bet bluff获利的EV为：</p>
-<script type="math/tex; mode=display">
-EV_{5bet.folded}=1.5+11+24=36.5</script><p>需要注意的是，这里我们讨论的都是heads-up的对局，因此1.5为盲注大小，11为3-bet大小，24则包括了open raise的3.5BB。为了让bluff保持在一个0EV的状态，则我们可以计算出我们的5-bet bluff必须要在42%的情况下奏效，也就是指对手应当有42%的弃牌率：</p>
-<script type="math/tex; mode=display">
-36.5x-26.5(1-x)=0</script><script type="math/tex; mode=display">
-\Rightarrow x = 42\%</script><p>总的来讲，为了要能够有收益，5-bet bluff应当要在40-50%之间奏效才行，而具体的EV值则需要根据具体的5-bet跟注范围、其他bet的sizing进行计算。综上的分析，我们得出了以下频率：</p>
+        <p>原文地址：<a href="https://arxiv.org/abs/1804.03980" target="_blank" rel="noopener">Emergent Communication Through Negotiation</a></p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>这篇工作利用MARL (Multi-Agent Reinforcement Learning)来研究在谈判协商中的语言生成问题。文章设置了两种交流的protocol，第一种是和游戏本身内容高度相关的proposal，第二种是用于交换潜在信息的cheap talk。文章实验发现对于self-interested类型的agent来说，谈判过程不会导致语言的生成；而对于prosocial类型的agent来说，谈判过程生成了语言。文章的结论验证了“Cooperation is necessary for language to emerge”，即合作是语言生成的必须条件。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>文章的动机在于探索交流 (Communication)是如何产生的。“Given these basic requirements, an interesting question to ask is what task structures aid the emergence of communication and how different communication protocols affect task success.” 在这篇文章之前有很多工作通过referential games的设置研究指代问题，本文指出人类语言并不简单是一个指代工具，而且人类很多情况下的沟通是非完全合作性质的，因此本文研究的是在这些非完全合作情境中语言的出现。文章中关于指代问题的文章链接贴在下面，未来可以研究一下。</p>
 <ul>
-<li>3-bet bluff通常需要在67-70%的情况下奏效才能盈利。</li>
-<li>4-bet bluff通常需要在54-60%的情况下奏效才能盈利。</li>
-<li>5-bet bluff通常需要在40-50%的情况下奏效才能盈利。</li>
+<li><a href="http://rbr.cs.umass.edu/shlomo/papers/GAZjaamas07.pdf" target="_blank" rel="noopener">Learning to communicate in a decentralized environment</a></li>
+<li><a href="https://arxiv.org/abs/1612.07182" target="_blank" rel="noopener">Multi-agent cooperation and the emergence of (natural) language</a></li>
+<li><a href="https://arxiv.org/abs/1705.10369" target="_blank" rel="noopener">Emergent language in a multi-modal, multi-step referential game</a></li>
 </ul>
-<p>这是一个非常有趣的观察，那就是虽然3-bet到5-bet的下注大小在不断增大，他们需要成功的条件却是不断宽松，需要成功的频率要求是在不断降低的。如果我们的对手更倾向于call而不是raise，那么3-bet和4-bet的条件又可以放宽一些，因为这又增加了我们在后面几条街上击中并实现equity的概率，而这也常常发生。类似地，我们也可以做这样的说明：</p>
+<p>文章采用了一个经典的谈判问题The bargaining problem来作为研究的环境。文章认为，有效的交流在该问题中是非常关键的，因为agent需要通过交流传达出自己的desire，以及通过交流推断对方的意图。原先的工作主要用offer/counter-offer这样的bargaining game形式来做，但是没有研究emergent communication这样的问题。而MARL在最近的发展为研究这类问题提供了非常好的方法。“By repeatedly interacting with other agents learning at the same time, agents can gradually bootstrap complex behaviour, including motor skills and linguistic communication.”关于motor skills和linguistic communication的引用已经列在下面。</p>
 <ul>
-<li>如果一个玩家从来不flat call对手的3-bet，那么他需要在15-20%的频率下对自己的open raise进行防守。这个频率还可以适当降低因为还有其他的玩家会帮助防守。</li>
-<li>3-bet的玩家如果也不flat call对手的4-bet，那么他需要在40-46%的频率下对自己的3-bet进行防守。</li>
-<li>4-bet的玩家需要在50-60%的频率下call对手的5-bet all-in。</li>
+<li><a href="https://arxiv.org/abs/1710.03748" target="_blank" rel="noopener">Emergent complexity via multi-agent competition</a></li>
+<li><a href="https://arxiv.org/abs/1612.07182" target="_blank" rel="noopener">Multi-agent cooperation and the emergence of (natural) language</a></li>
+<li><a href="https://arxiv.org/abs/1705.11192" target="_blank" rel="noopener">Learning to communicate with sequences of symbols.</a></li>
 </ul>
-<p>这些基于频率的观察帮助我们在3-bet、4-bet和5-bet的情况下平衡自己的value raises和bluff raises，虽然它不能够告诉我们具体该怎么做，但是却能够帮助我们判断自己的策略是否严重地倾斜并及时作出修正。</p>
-<h1 id="Preflop-Raise-First-in-Ranges"><a href="#Preflop-Raise-First-in-Ranges" class="headerlink" title="Preflop Raise, First in Ranges"></a>Preflop Raise, First in Ranges</h1><hr>
-<p>在我们讨论该用怎样的range去对抗对手的open之前，我们应当首先了解我们该使用怎样的手牌去open。注意到在flop前的fold具有的EV为0，所以我们应当拿大于0EV的手牌进行open raise。这样就说明了我们open range中的最差手牌的EV应当接近于0，因此我们对一名GTO玩家的open raise range中的最差牌力有以下四项观察：</p>
+<p>文章在bargaining问题设置了两个交流通道，第一种通道是proposal，第二种通道是cheap talks。在一对一的实验中，文章发现selfish agent可以通过proposal通道和对方agent达成相对合理的分割，但是selfish agent却没有办法利用cheap talks的通道；相反prosocial agent却通过cheap talks的通道生成了语言，为了更好地和对方沟通达成相同目标。第二组实验是针对一个社群的agent进行的，先前关于社群的工作有以下几个观察：</p>
 <ul>
-<li><p>这手牌的EV如果不是恰好等于0，那么它必须接近于0。一手牌只以一定频率被用来open raise的时候它可能就会达到0EV；而它如果总是被拿来open raise，则它的EV会更倾向于变成负。例如<strong>UTG</strong>拿着<strong>56s</strong>以75%的频率做open raise是一个接近于0EV的行动，但是如果100%频率则非常容易被剥削从而变成-EV的策略。</p>
-</li>
-<li><p>这手牌在面对对手的3-bet是需要经常fold的。因为拿最弱的牌去call对手的3-bet不是一件很好的事。</p>
-</li>
-<li>这手牌在面对对手的call时的EV会大于-3.5BB，这是因为即便是一手非常弱的手牌也有可能在后面几条街上实现它的equity。</li>
-<li>这手牌在看见flop时的EV不会大于+1.5BB。因为德扑是一个0和游戏，如果在open raise range中最差的手牌也能够有大于盲注大小的EV，这就说明cold caller没有使用optimal的策略，他的冷跟策略是-EV的。</li>
+<li>cheap talk can have a significant effect on the evolutionary dynamics of the population. (<a href="http://www.dklevine.com/archive/refs4540.pdf" target="_blank" rel="noopener">Efficiency in evolutionary games: Darwin, nash and the secret handshake</a>)</li>
+<li>cheap talk also influences the equilibria, stability, and basins of attractions. (<a href="http://www.socsci.uci.edu/~bskyrms/bio/papers/CheapTalk.pdf" target="_blank" rel="noopener">Signals, evolution and the explanatory power of transient information.</a>)</li>
+<li>unless trainned in a diverse environment, agents overfit to their specific opponent or teammate. (<a href="https://pdfs.semanticscholar.org/fbe9/950202a7fcc756369a38cb1ef4b9b994ae88.pdf" target="_blank" rel="noopener">A unified game-theoretic approach to multiagent reinforcement learning.</a>)</li>
 </ul>
-<p>open raiser利用自己range中最弱的牌将自己的3.5BB投入风险以赢得底池中的1.5BB，结合上文中提到的最弱的牌在遭遇cold call和reraise时都是-EV的，那么它需要在至少70%的情况下能够吓走对手才能够获得收益。这样就意味着如果其余的玩家如果构成了超过30%的3-bet频率，那么对于open raiser来说，他再使用这种在遭遇3-bet时fold的牌进行open raise就不再是一件有利可图的事了。</p>
-<h1 id="Maximum-3-bet-Range"><a href="#Maximum-3-bet-Range" class="headerlink" title="Maximum 3-bet Range"></a>Maximum 3-bet Range</h1><hr>
-<p>为了方便起见，我们假设每一个玩家在不同位置采取的3-bet频率都相同。同样的假设<strong>UTG</strong>进行了open raise，剩下5名玩家需要行动。5名玩家构成了30%的3-bet防守频率，假设每名玩家的3-bet频率为$x$，则有下式：</p>
-<script type="math/tex; mode=display">
-(1-x)^5=1-0.3</script><script type="math/tex; mode=display">
-\Rightarrow x=6.9\%</script><p>从而我们得出，剩下的每名玩家3-bet的最大range是6.9%。同时我们注意到在前面章节中的结论，一名3-bet玩家在面对对手4-bet时不应当在超过40-46%的频率上fold，这也就意味着40-46%的3-bet range要准备好对抗对手的4-bet，我们将这种3-bet的range称为“Value 3-bet”。下表显示了使用上面这种方法计算出的不同位置的3-bet频率。<em>这里尤其需要注意，举第一行为例，6.9%的频率指的是当<strong>UTG</strong>玩家open时，你作为后置位玩家应该3-bet的频率，而不是当你在<strong>UTG</strong>位置上的3-bet频率。</em></p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Opening Range</th>
-<th style="text-align:center">Maximum 3-Betting Percentage</th>
-<th style="text-align:center">Value 3-Betting Percentage</th>
-<th style="text-align:center">Value Component of 3-Betting Range</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">UTG</td>
-<td style="text-align:center">6.9</td>
-<td style="text-align:center">2.76</td>
-<td style="text-align:center">AA-QQ, AK</td>
-</tr>
-<tr>
-<td style="text-align:center">MP</td>
-<td style="text-align:center">8.5</td>
-<td style="text-align:center">3.4</td>
-<td style="text-align:center">AA-JJ, AK, AQs</td>
-</tr>
-<tr>
-<td style="text-align:center">CO</td>
-<td style="text-align:center">11.2</td>
-<td style="text-align:center">4.6</td>
-<td style="text-align:center">JJ+, AJs+, AQo</td>
-</tr>
-<tr>
-<td style="text-align:center">BTN</td>
-<td style="text-align:center">16.3</td>
-<td style="text-align:center">6.52</td>
-<td style="text-align:center">TT+, ATs+, KQs+, AJo+</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>以上的频率和范围并不是理论正确的策略：我们可以3-bet一些并不是最强牌力的牌并且在遭遇4-bet时进行5-bet bluff。我们也可以通过冷跟preflop来慢玩一些超强牌。但是上面的表可以帮助我们判断别的玩家是否在3-bet上做得过于激进了。也就是说，如果他们在接近于以上的频率进行3-bet，那么preflop raiser如果继续采用自己range中最差牌open就会开始输钱了。同时，preflop raising range中最弱的牌一旦get called，就倾向于输钱，理由如下：</p>
+<p>文章在这些观察上给出了自己的设置：一个agent去和不同等级的prosociality的agent进行交互的同时去identify and model other agents’ beliefs帮助谈判的成功。这一结果和基于Theory of Mind这篇文章的模型是相似的：boundedly rational agents can collectively benefit by making inferences about the sophistication levels and beliefs of their opponents (<a href="https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1000254&amp;type=printable" target="_blank" rel="noopener">Game theory of mind</a>).</p>
+<p><img src="https://i.loli.net/2019/08/15/XFW1ktdYVN6BKgI.png" alt="Screen Shot 2019-08-15 at 4.58.26 PM.png"></p>
+<h1 id="Game-Setting"><a href="#Game-Setting" class="headerlink" title="Game Setting"></a>Game Setting</h1><h2 id="Negotiation-Environment"><a href="#Negotiation-Environment" class="headerlink" title="Negotiation Environment"></a>Negotiation Environment</h2><p>基本设置有以下：</p>
 <ul>
-<li>It is weaker than the average hand in a preflop cold calling range. 它比冷跟preflop raise的范围的平均牌力要弱。</li>
-<li>On the flop, the preflop raiser will often be out of position unless he opened on the button or is just called by a blind. 在flop上，preflop raiser通常都处于不利位置，除非他在<strong>BTN</strong>位open并且仅有盲注跟注。</li>
-<li>If one of the blinds does call (thus letting the preflop raiser see a flop in position), the pot will be smaller since there is less extra dead money from the blinds. 如果大小盲中的一个玩家确实跟注了，虽然这会让open raiser在后面几条街上处于有利位置，但这也导致底池比其他玩家跟注的情况要小一些，因为底池中失去了原来盲注位的死钱。</li>
+<li>三种item：[peppers, cherries, strawberries]</li>
+<li>每种item在[0,5]的整数区间内随机初始化数量</li>
+<li>相互隐藏的utility function对应不同的agent对不同item的喜好程度，分布在[0,10]的整数区间内</li>
+<li>每一次通信包括了proposal和cheap talk</li>
+<li>special action用于接受最近一次对方提出的proposal。如果接受的proposal为非法的（例如某个超出当前的最大数量）则双方同时获得0 reward</li>
+<li>如果在最后一轮依旧没有协议达成，双方同时获得0 reward</li>
+<li>最大协商轮数$N$不再是一个固定的自然数，而是一个在[4,10]整数范围内进行truncated Poisson distribution with mean 7的值。这么做是为了消除先手优势（先手方可以在最后一轮提出极大对自己有利的proposal）。这是参考了ultimatum game的问题进行的改进（<a href="http://www.dklevine.com/archive/refs4291.pdf" target="_blank" rel="noopener">An experimental analysis of ultimatum bargaining</a>）。</li>
 </ul>
-<p>接着来到了本文中我个人认为是最重要的一处论述，为了强调它的重要性并且保持原文的忠诚度，我在这里贴上原文。</p>
-<blockquote>
-<p>It’s important to design ranges where all of our theory and beliefs make sense and must not allow ourselves to have a contradicting thought process. We now are equipped with a great set of restrictions, or parameters, which will tell us what we can and cannot do when designing opening ranges and defending ranges from all the positions. </p>
-<p>In order to quickly illustrate this concept, let’s imagine we are playing at an aggressive table and open the worst hand in our theoretically correct UTG opening range for 3.5 big blinds. We are 3-bet 30 percent of the time total and are cold called another 25 percent of the time. Furthermore, let’s be generous and assume our expected value when our open is called is on average 0 EV. We can now plug in these variables to figure out that the expected value of opening the worst hand in an UTG opening range at this table is -0.375 big blinds.</p>
+<p><em>但这里的问题就是：其实我们也可以给出一个根据概率分布的策略来实现先手对后手的优势，例如在第4轮前保持proposal不变，随着谈判向后进行再逐步严格proposal，因为在之后轮terminate的概率会变高，因此后手尽快接受proposal的意图也会更加明显。所以这里我个人认为只需要<strong>先后手依次进行</strong>就能够消除所谓的问题ultimatum bargaining的问题。</em></p>
+<h2 id="Communication-Channels"><a href="#Communication-Channels" class="headerlink" title="Communication Channels"></a>Communication Channels</h2><p>Proposal channel就是一个提出的分割方案；Linguistic channel是本文对cheap talk这个沟通形式的一个具体方案，它在两个方面和Proposal channel不同：</p>
+<ul>
+<li>Non-bindingness: Messages sent via this channel do not commit the sender to any course of action, unlike directly transmitting a proposal which binds the sender to the proposal.</li>
+<li>Unverifiability: There is no inherent link between the linguistic utterance and the private proposal made, meaning that the agents could potentially lie.</li>
+</ul>
+<p>文章关注的点在于：whether and under what circumstances the agents can make use of this channel to facilitate negotiation and establish a common ground for the symbols.</p>
+<h2 id="Agent-Sociality-amp-Reward-Schemes"><a href="#Agent-Sociality-amp-Reward-Schemes" class="headerlink" title="Agent Sociality &amp; Reward Schemes"></a>Agent Sociality &amp; Reward Schemes</h2><p>agent的社会性本质上是由奖励方案反应的，在本文中，prosocial agent就是为了最大化双方的共同价值，而selfish agent就是单纯地最大化自己的价值。在预期里，prosocial agent是需要communication的通道的因为他们需要交流各自的utility function才能达到总体的最大化。</p>
+<h2 id="Agent-Architecture-amp-Learning"><a href="#Agent-Architecture-amp-Learning" class="headerlink" title="Agent Architecture &amp; Learning"></a>Agent Architecture &amp; Learning</h2><p>每个时间步$t$, agent接受3个形式的input：</p>
+<ul>
+<li>item context $c^j=[i;u_j]$, 是item pool $i$ 和该agent的utility函数（也就是向量）</li>
+<li>utterance $m_{t-1}$, 是对方上一个时间步给的cheap talk</li>
+<li>proposal $p_{t-1}$, 是对方上一个时间步给的proposal</li>
+</ul>
+<p>关于agent参数的modeling并不是很重要，无非就是一些LSTM罢了。而每个agent需要独立地优化以下objective function：</p>
 <script type="math/tex; mode=display">
-−0.375BB = (0.3)(−3.5BB)+ (0.25)(0BB) + (0.45)(1.5BB)</script><p>That is the UTG player expects to on average lose -0.375 big blinds when he opens the worst hand in his theoretically correct UTG opening range. </p>
-<p>Notice we are not breaking even at this table by opening the worst hand in our theoretically correct raise first in range. Our opponents are playing too aggressively and our weak hand does poorly against opponents who 3-bet 30 percent total. The fact that theoretically correct raises can have a negative expected value against certain opponents shouldn’t surprise anyone. For instance, a theoretically correct bluff on the flop will lose money against opponents who refuse to fold. </p>
-<p>While we would break even if our opponents always 3-bet or folded and they 3-bet 30 percent total, we must not forget to take into account our open will sometimes be called. This is something which can easily be forgotten when performing calculations. It’s easy to think “since I break even when my opponent calls, it doesn’t change anything,” but this is not true. When our opponents fold we win 1.5 big blinds, yet when one of them calls, we win 0 big blinds. </p>
-<p>This showcases the fact that as long as our opponents have any sort of reasonable cold calling ranges, they must be 3-betting significantly less than 30 percent of the time combined. If instead they always reraise with all these hands, we have no incentive to open with the weak hands in our theoretically correct opening range. </p>
-</blockquote>
-<h1 id="About-Noob-Poker"><a href="#About-Noob-Poker" class="headerlink" title="About Noob Poker"></a>About Noob Poker</h1><hr>
-<p>因为在前文中我们假设对于自己的3-bet其余玩家不会采用跟注的方式防守，而总是采取弃牌或是4-bet，所以在一个稍微平衡一些的牌局中，我们马上就能够通过我们设定好的参数计算发现自己的3-bet频率在导致我们输钱。所以对于牌局的考量：对手应对raise的方式是加注还是跟注，他们下注的sizing等等都应该成为我们平衡自己range的参数，基于这种参数的计算应当在进入牌局之前进行。上面这段文字让我特别有感触的点在于，之前自己对于德扑理论了解得不深，看了一些高额德州stack在200-250BB的牌局，在不理解高手下注的尺度和频率的情况下，就盲目地学习他们的玩法，往往在都是新手的牌局中占不到便宜。因为新手的策略往往都是严重偏离GTO的，所以采用GTO的打法（虽然自己只是拙劣地模仿）会导致盈利不足甚至经常在multi-way中被Bad Beat。现在让我们自己来对这种新手局的preflop场景进行一些分析，而不考虑后面几条街的变数。</p>
-<p>刚接触德扑的新手玩家倾向于跟注入池，而不考虑自己和对手的范围或者相对的位置关系。而在进行一些游戏之后会有少量新手玩家学会在preflop弃掉特别差的牌，例如<strong>27o</strong>等等。同时新手玩家对于raise和raise的尺度并不敏感，他们很少自己进行raise，即便他们手中有超强牌力的手牌。于是我们假设在一个标准六人牌桌上，其余5名玩家的在preflop轮的动作频率分布为：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">call</th>
-<th style="text-align:center">raise</th>
-<th style="text-align:center">fold</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">90%</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">10%</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>首先我们假设自己的bluff在被跟注之后能够实现的平均equity为10%（事实上这已经将这个情景乐观化了很多），因为对手行动空间上的概率分布已经固定，我们就可以计算出bluff的EV：</p>
-<script type="math/tex; mode=display">
-EV_{open.bluff}=1.5\times0.1^5+3.5(10\%\times5\times0.9-90\%\times1)(1-0.1^5)=-1.47BB</script><p>其中，$1.5\times0.1^5​$代表剩余5名玩家全部fold并直接获利的期望；$10\%\times5\times0.9​$表示二项分布的独立同分布实验的期望盈利；而$99\%.​$则表示在get called之后输掉的y用于open raise的下注大小。可以非常清楚的发现由于对手的range为固定值，我们的bluff永远都是一个负EV的操作。</p>
-<p>接着我们来计算在这样的牌桌中最大的open range是多少，假设自己的open raise中最差手牌需要具有的平均equity为$x$，则根据前文的假设最差手牌的EV应当接近于0，故而有：</p>
-<script type="math/tex; mode=display">
-EV_{open.worst}=1.5\times0.1^5+3.5(x\times5\times0.9-(1-x))(1-0.1^5)=0</script><p>解得$x=18.2\%$，而我们知道这里的$x$为平均需要具有的equity，而不是range本身。也就是说当equity近似于pot odds时我们就应该open raise，甚至条件还更加宽松。这一点其实和我们在牌桌上的体验是相同的：首先因为新手对于范围不敏感，所以当你open raise时，其余玩家的跟注等效于盲注大小变大，并没有将其余玩家排除在游戏之外。而且由于对手总体的弃牌率低，使得自己拿到池内盲注的immediate reward的EV降低，也就是说在这种情况下open的size并没有那么关键，所以作任何size的open都是一个0EV的选择。因此从数学上来说，是否做open是一件无关紧要的事，如何在flop轮之后榨取更多的价值，才是一件需要我们更多思考的事。</p>
+\pi^*_i=\arg\max_{\pi_i}E_{\tau\sim(\pi_A,\pi_B)}[R_i(\tau)]+\lambda H(\pi_i)</script><p>其中的$H(\pi_i)$是一个叫做entropy regularization term的东西，是为了鼓励agent在训练时去更多地explore，<em>这一块的内容需要进一步学习。</em></p>
+<h1 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h1><p>前两个实验的内容（<strong>Can self-interested agents learn to negotiate</strong> &amp; <strong>Can prosocial agents learn to coordinate?</strong> ）并没有特别有趣的，重点放在后面两个实验。</p>
+<h2 id="Analysis-of-Linguistic-Communication"><a href="#Analysis-of-Linguistic-Communication" class="headerlink" title="Analysis of Linguistic Communication"></a>Analysis of Linguistic Communication</h2><p>在self-interested agent和prosocial agent的协商实验中，通过分析symbol usage得出了以下结论：</p>
+<ul>
+<li>self-interested agent没有生成类似于自然语言一样的Zipfian distribution；而对于prosocial agent来说确生成了这样长尾效应的元组分布。</li>
+<li>在这两方的协商中文章认为形成了一种类似于speaker-listener的交流方式，也就是说self-interested agent会倾听对方的给出的reward的信息，而不会泄露自己的utility。而prosocial会通过linguistic channel编码自己的信息告诉对方自己的utility从而达成合作。<em>我对这个分析的怀疑在于：理性来说泄露自己的utility给一个完全self-interested agent来说是不会有反馈的，因为你只会帮助对方榨取自己的价值。只有一种情况有帮助：你utility高的item在对方的utility为0，对方才有让出利益的动机。这一点也需要验证。</em></li>
+</ul>
+<p><img src="https://i.loli.net/2019/08/15/gxPS9k2wB1OEqfu.png" alt="Screen Shot 2019-08-15 at 4.57.19 PM.png"></p>
+<p>接着文章验证了在linguistic channel中有存在关于自身utility的关键信息，通过一个LSTM去编码解码linguistic channel的内容来预测utility的信息。结果是self-interested无法用LSTM去做合理的预测，而prosocial确实是含有语义信息的。<em>但是疑问在于下图中的第二行为什么prosocial-prosocial的agent A也没有办法解码，文章没有给出解释。</em></p>
+<p><em>同时另外一个值得研究的问题在于，self-interested agent如果在channel中学会了欺骗行为，那么是否意味着拿LSTM去预测正确的标签是不合理的？这是未来需要讨论的一点。</em></p>
+<p><img src="https://i.loli.net/2019/08/15/M8WPVRaDTtrqkQG.png" alt="Screen Shot 2019-08-15 at 4.06.49 PM.png"></p>
+<h2 id="A-Society-of-Agents"><a href="#A-Society-of-Agents" class="headerlink" title="A Society of Agents"></a>A Society of Agents</h2><p>更加符合现实的情况是有一个社群的agents，并且每一个agent的亲社会性是不同等级的，因此一个agent为了最大化自己的目标需要学会去identify不同agent的亲社会性，判断其是否擅于合作。文章设置了10个不同亲社会等级的agent，通过固定某个agent，维护一个opponent embedding来实现对对手亲社会性的利用。发现opponent的行为属性能够完全反映在embedding向量中，以下的PCA降维可视化能够反映出这一点。</p>
+<p><img src="https://i.loli.net/2019/08/15/QpuwicqsP6ZY2FK.png" alt="Screen Shot 2019-08-15 at 4.26.37 PM.png"></p>
+<p>关于在community中的语言学现象，有以下的总结：</p>
+<ul>
+<li>In one of our experimental settings, a community of prosocial agents developed a language and were able to use this to achieve better negotiation success.</li>
+<li>Interestingly, the only situation when agents developed a language was when ID information was not provided.</li>
+<li>When prosocial agents make use of the linguistic channel, the communication protocol differs within the community. 这意味着尽管agent A都是固定的，不同的agent B和agent A会使用不同的language。（<em>疑问在于有没有做 the same level of prosociality但不同agent的实验？随机性如何消除的？</em>）文章使用的方法是计算不同agent的Spearman correlation。</li>
+</ul>
+<h1 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h1><p>未来的有趣研究方向是Language能否在self-interested agent interacting中产生。Recent encouraging results by <a href="https://arxiv.org/abs/1703.06207" target="_blank" rel="noopener">Crandall et al. (2018)</a> show that communication can help agents cooperate. However, their signalling mechanism is heavily engineered: the speech acts are predefined and the consequences of the speech acts on the observed behaviour are deterministically hard-coded. It would be interesting to see whether a learning algorithm, such as <a href="https://arxiv.org/abs/1709.04326" target="_blank" rel="noopener">Foerster et al. (2017)</a>, can discover the same result.</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">June 5th 2019, 5:34:29 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/05/AONLH-2-Preflop-Play/">June 15th 2019, 5:54:56 am</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">August 13th 2019, 3:06:11 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">August 15th 2019, 5:02:04 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -553,17 +489,12 @@ EV_{open.worst}=1.5\times0.1^5+3.5(x\times5\times0.9-(1-x))(1-0.1^5)=0</script><
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/06/11/AONLH-3-Preflop-Play-continued/" title="AONLH(3) - Preflop Play (part 2)">
-                    <div class="nextTitle">AONLH(3) - Preflop Play (part 2)</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/06/04/AONLH-Chap-NO-1-Basics/" title="AONLH(1) - Basics">
-                    <div class="prevTitle">AONLH(1) - Basics</div>
+                <a href="/2019/07/30/Google-Football-Warm-Start/" title="Google Football Warm Start">
+                    <div class="prevTitle">Google Football Warm Start</div>
                 </a>
             
         </li>
@@ -679,7 +610,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Preflop-3-4-5-betting-Frequencies"><span class="toc-number">2.</span> <span class="toc-text">Preflop (3,4,5)-betting Frequencies</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Preflop-Raise-First-in-Ranges"><span class="toc-number">3.</span> <span class="toc-text">Preflop Raise, First in Ranges</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Maximum-3-bet-Range"><span class="toc-number">4.</span> <span class="toc-text">Maximum 3-bet Range</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#About-Noob-Poker"><span class="toc-number">5.</span> <span class="toc-text">About Noob Poker</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">2.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Game-Setting"><span class="toc-number">3.</span> <span class="toc-text">Game Setting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Negotiation-Environment"><span class="toc-number">3.1.</span> <span class="toc-text">Negotiation Environment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Communication-Channels"><span class="toc-number">3.2.</span> <span class="toc-text">Communication Channels</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-Sociality-amp-Reward-Schemes"><span class="toc-number">3.3.</span> <span class="toc-text">Agent Sociality &amp; Reward Schemes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-Architecture-amp-Learning"><span class="toc-number">3.4.</span> <span class="toc-text">Agent Architecture &amp; Learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiment"><span class="toc-number">4.</span> <span class="toc-text">Experiment</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Analysis-of-Linguistic-Communication"><span class="toc-number">4.1.</span> <span class="toc-text">Analysis of Linguistic Communication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Society-of-Agents"><span class="toc-number">4.2.</span> <span class="toc-text">A Society of Agents</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Discussion"><span class="toc-number">5.</span> <span class="toc-text">Discussion</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
