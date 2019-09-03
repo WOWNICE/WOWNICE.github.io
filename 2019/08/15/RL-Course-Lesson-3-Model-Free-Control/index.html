@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Notes on Emergent Communication Through Negotiation · N1H111SM&#39;s Miniverse</title>
+    <title>RL Course Lesson (3) - Model-Free Control · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Notes on Emergent Communication Through Negotiation</a>
+                <a href="#" class="post-name">RL Course Lesson (3) - Model-Free Control</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Notes on Emergent Communication Through Negotiation
+            RL Course Lesson (3) - Model-Free Control
             <!-- 404 -->
             
         </h1>
@@ -268,20 +268,16 @@ height:50vh;
     
         <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="NLP">NLP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Negotiation">Negotiation</a>
-    
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/13</span>
+                    <span class="post-intro-time">2019/08/15</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -405,83 +401,87 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>原文地址：<a href="https://arxiv.org/abs/1804.03980" target="_blank" rel="noopener">Emergent Communication Through Negotiation</a></p>
-<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>这篇工作利用MARL (Multi-Agent Reinforcement Learning)来研究在谈判协商中的语言生成问题。文章设置了两种交流的protocol，第一种是和游戏本身内容高度相关的proposal，第二种是用于交换潜在信息的cheap talk。文章实验发现对于self-interested类型的agent来说，谈判过程不会导致语言的生成；而对于prosocial类型的agent来说，谈判过程生成了语言。文章的结论验证了“Cooperation is necessary for language to emerge”，即合作是语言生成的必须条件。</p>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>文章的动机在于探索交流 (Communication)是如何产生的。“Given these basic requirements, an interesting question to ask is what task structures aid the emergence of communication and how different communication protocols affect task success.” 在这篇文章之前有很多工作通过referential games的设置研究指代问题，本文指出人类语言并不简单是一个指代工具，而且人类很多情况下的沟通是非完全合作性质的，因此本文研究的是在这些非完全合作情境中语言的出现。文章中关于指代问题的文章链接贴在下面，未来可以研究一下。</p>
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>上一节主要内容是在没有Model的情况下如何去做Policy Evaluation，本章的重点是要没有Model的情况下去学会做决策，下一章将会介绍Value Function Approximation。学会优秀的策略需要应对以下两个问题，首先是Delayed Consequences，也就是说当前的决策可能需要在未来好几步才能够反映出好坏和价。其次就是要做到适当的Exploration，因为需要进行适当量的探索才能够发现较为优秀的策略。</p>
+<p>对于许多的MDP模型来说，以下两种问题需要我们使用Model-free Control去解决：</p>
 <ul>
-<li><a href="http://rbr.cs.umass.edu/shlomo/papers/GAZjaamas07.pdf" target="_blank" rel="noopener">Learning to communicate in a decentralized environment</a></li>
-<li><a href="https://arxiv.org/abs/1612.07182" target="_blank" rel="noopener">Multi-agent cooperation and the emergence of (natural) language</a></li>
-<li><a href="https://arxiv.org/abs/1705.10369" target="_blank" rel="noopener">Emergent language in a multi-modal, multi-step referential game</a></li>
+<li>MDP model is unknown but can be sampled.</li>
+<li>MDP model is known but it is computationally infeasible to use directly, except through sampling.</li>
 </ul>
-<p>文章采用了一个经典的谈判问题The bargaining problem来作为研究的环境。文章认为，有效的交流在该问题中是非常关键的，因为agent需要通过交流传达出自己的desire，以及通过交流推断对方的意图。原先的工作主要用offer/counter-offer这样的bargaining game形式来做，但是没有研究emergent communication这样的问题。而MARL在最近的发展为研究这类问题提供了非常好的方法。“By repeatedly interacting with other agents learning at the same time, agents can gradually bootstrap complex behaviour, including motor skills and linguistic communication.”关于motor skills和linguistic communication的引用已经列在下面。</p>
+<p>On-policy learning 和 Off-policy learning是两种学习的方法，前者在和环境的交互中直接进行学习，也就是当前的policy和当前的sample是对应的；而后者能够从另一个不同的policy中去进行Evaluation和参数的更新。</p>
+<h1 id="Generalized-Policy-Iteration"><a href="#Generalized-Policy-Iteration" class="headerlink" title="Generalized Policy Iteration"></a>Generalized Policy Iteration</h1><p>首先回顾一下PI的流程（此时的PI是有真正Model的）：初始化一个policy$\pi$；重复以下两步操作，首先进行Policy Evaluation，然后利用$\arg \max_{a} Q(s,a)$对当前policy进行更新（$Q$值计算用到了$P$）；直到拟合。在Model-free的情况下PI的流程也是一样的：重复Policy Evaluation + Policy Improvement。只是Policy Evaluation现在需要进行estimate Q来得到。</p>
+<p><strong>MC for On-policy Q Evalution</strong></p>
 <ul>
-<li><a href="https://arxiv.org/abs/1710.03748" target="_blank" rel="noopener">Emergent complexity via multi-agent competition</a></li>
-<li><a href="https://arxiv.org/abs/1612.07182" target="_blank" rel="noopener">Multi-agent cooperation and the emergence of (natural) language</a></li>
-<li><a href="https://arxiv.org/abs/1705.11192" target="_blank" rel="noopener">Learning to communicate with sequences of symbols.</a></li>
+<li>Initialize $N(s,a)=0, G(s,a)=0, Q^\pi(s,a)=0, \forall s \in S, \forall a \in A$</li>
+<li>Loop<ul>
+<li>Using policy $\pi$ sample episode $i=s<em>{i,1}, a</em>{i,1},r<em>{i,1},s</em>{i,2}, a<em>{i,2},r</em>{i,2}, \dots, s_{i,T_i}$</li>
+<li>$G<em>{i,t}=r</em>{i,t}+\gamma r<em>{i,t+1}+ \gamma^2 r</em>{i,t+2}+ \dots + \gamma^{T<em>i-1}r</em>{i,T_i}$</li>
+<li>Foreach (state,action) $(s,a)$ visited in episode $i$<ul>
+<li>For <strong>first or every</strong> time $t$ that $(s,a)$ is visited in episode $i$<ul>
+<li>$N(s,a)=N(s,a)+1, G(s,a)=G(s,a)+G_{i,t}$</li>
+<li>Update estimate $Q^\pi(s,a)=G(s,a)/N(s,a)$ </li>
 </ul>
-<p>文章在bargaining问题设置了两个交流通道，第一种通道是proposal，第二种通道是cheap talks。在一对一的实验中，文章发现selfish agent可以通过proposal通道和对方agent达成相对合理的分割，但是selfish agent却没有办法利用cheap talks的通道；相反prosocial agent却通过cheap talks的通道生成了语言，为了更好地和对方沟通达成相同目标。第二组实验是针对一个社群的agent进行的，先前关于社群的工作有以下几个观察：</p>
-<ul>
-<li>cheap talk can have a significant effect on the evolutionary dynamics of the population. (<a href="http://www.dklevine.com/archive/refs4540.pdf" target="_blank" rel="noopener">Efficiency in evolutionary games: Darwin, nash and the secret handshake</a>)</li>
-<li>cheap talk also influences the equilibria, stability, and basins of attractions. (<a href="http://www.socsci.uci.edu/~bskyrms/bio/papers/CheapTalk.pdf" target="_blank" rel="noopener">Signals, evolution and the explanatory power of transient information.</a>)</li>
-<li>unless trainned in a diverse environment, agents overfit to their specific opponent or teammate. (<a href="https://pdfs.semanticscholar.org/fbe9/950202a7fcc756369a38cb1ef4b9b994ae88.pdf" target="_blank" rel="noopener">A unified game-theoretic approach to multiagent reinforcement learning.</a>)</li>
+</li>
 </ul>
-<p>文章在这些观察上给出了自己的设置：一个agent去和不同等级的prosociality的agent进行交互的同时去identify and model other agents’ beliefs帮助谈判的成功。这一结果和基于Theory of Mind这篇文章的模型是相似的：boundedly rational agents can collectively benefit by making inferences about the sophistication levels and beliefs of their opponents (<a href="https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1000254&amp;type=printable" target="_blank" rel="noopener">Game theory of mind</a>).</p>
-<p><img src="https://i.loli.net/2019/08/15/XFW1ktdYVN6BKgI.png" alt="Screen Shot 2019-08-15 at 4.58.26 PM.png"></p>
-<h1 id="Game-Setting"><a href="#Game-Setting" class="headerlink" title="Game Setting"></a>Game Setting</h1><h2 id="Negotiation-Environment"><a href="#Negotiation-Environment" class="headerlink" title="Negotiation Environment"></a>Negotiation Environment</h2><p>基本设置有以下：</p>
-<ul>
-<li>三种item：[peppers, cherries, strawberries]</li>
-<li>每种item在[0,5]的整数区间内随机初始化数量</li>
-<li>相互隐藏的utility function对应不同的agent对不同item的喜好程度，分布在[0,10]的整数区间内</li>
-<li>每一次通信包括了proposal和cheap talk</li>
-<li>special action用于接受最近一次对方提出的proposal。如果接受的proposal为非法的（例如某个超出当前的最大数量）则双方同时获得0 reward</li>
-<li>如果在最后一轮依旧没有协议达成，双方同时获得0 reward</li>
-<li>最大协商轮数$N$不再是一个固定的自然数，而是一个在[4,10]整数范围内进行truncated Poisson distribution with mean 7的值。这么做是为了消除先手优势（先手方可以在最后一轮提出极大对自己有利的proposal）。这是参考了ultimatum game的问题进行的改进（<a href="http://www.dklevine.com/archive/refs4291.pdf" target="_blank" rel="noopener">An experimental analysis of ultimatum bargaining</a>）。</li>
+</li>
 </ul>
-<p><em>但这里的问题就是：其实我们也可以给出一个根据概率分布的策略来实现先手对后手的优势，例如在第4轮前保持proposal不变，随着谈判向后进行再逐步严格proposal，因为在之后轮terminate的概率会变高，因此后手尽快接受proposal的意图也会更加明显。所以这里我个人认为只需要<strong>先后手依次进行</strong>就能够消除所谓的问题ultimatum bargaining的问题。</em></p>
-<h2 id="Communication-Channels"><a href="#Communication-Channels" class="headerlink" title="Communication Channels"></a>Communication Channels</h2><p>Proposal channel就是一个提出的分割方案；Linguistic channel是本文对cheap talk这个沟通形式的一个具体方案，它在两个方面和Proposal channel不同：</p>
-<ul>
-<li>Non-bindingness: Messages sent via this channel do not commit the sender to any course of action, unlike directly transmitting a proposal which binds the sender to the proposal.</li>
-<li>Unverifiability: There is no inherent link between the linguistic utterance and the private proposal made, meaning that the agents could potentially lie.</li>
+</li>
 </ul>
-<p>文章关注的点在于：whether and under what circumstances the agents can make use of this channel to facilitate negotiation and establish a common ground for the symbols.</p>
-<h2 id="Agent-Sociality-amp-Reward-Schemes"><a href="#Agent-Sociality-amp-Reward-Schemes" class="headerlink" title="Agent Sociality &amp; Reward Schemes"></a>Agent Sociality &amp; Reward Schemes</h2><p>agent的社会性本质上是由奖励方案反应的，在本文中，prosocial agent就是为了最大化双方的共同价值，而selfish agent就是单纯地最大化自己的价值。在预期里，prosocial agent是需要communication的通道的因为他们需要交流各自的utility function才能达到总体的最大化。</p>
-<h2 id="Agent-Architecture-amp-Learning"><a href="#Agent-Architecture-amp-Learning" class="headerlink" title="Agent Architecture &amp; Learning"></a>Agent Architecture &amp; Learning</h2><p>每个时间步$t$, agent接受3个形式的input：</p>
-<ul>
-<li>item context $c^j=[i;u_j]$, 是item pool $i$ 和该agent的utility函数（也就是向量）</li>
-<li>utterance $m_{t-1}$, 是对方上一个时间步给的cheap talk</li>
-<li>proposal $p_{t-1}$, 是对方上一个时间步给的proposal</li>
-</ul>
-<p>关于agent参数的modeling并不是很重要，无非就是一些LSTM罢了。而每个agent需要独立地优化以下objective function：</p>
+<p>在此estimated Q value的基础上，我们只需要更新policy为：</p>
 <script type="math/tex; mode=display">
-\pi^*_i=\arg\max_{\pi_i}E_{\tau\sim(\pi_A,\pi_B)}[R_i(\tau)]+\lambda H(\pi_i)</script><p>其中的$H(\pi_i)$是一个叫做entropy regularization term的东西，是为了鼓励agent在训练时去更多地explore，<em>这一块的内容需要进一步学习。</em></p>
-<h1 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h1><p>前两个实验的内容（<strong>Can self-interested agents learn to negotiate</strong> &amp; <strong>Can prosocial agents learn to coordinate?</strong> ）并没有特别有趣的，重点放在后面两个实验。</p>
-<h2 id="Analysis-of-Linguistic-Communication"><a href="#Analysis-of-Linguistic-Communication" class="headerlink" title="Analysis of Linguistic Communication"></a>Analysis of Linguistic Communication</h2><p>在self-interested agent和prosocial agent的协商实验中，通过分析symbol usage得出了以下结论：</p>
+\pi_{i+1}(s)=\arg\max_a Q^{\pi_i}(s，a)</script><p>这样的estimation可能会有一些问题，例如如果$\pi$是deterministic的，那么我们就没有办法计算$Q(s,a)$ for any $a \neq \pi(s)$，因为在sample时不会采样到其余的action。并且我们希望对于Q值的estimation和policy improvement能够相互穿插，而不是现在的大量的estimation的sample和更新得到一次policy的参数更新。这些内容会在下文中cover。为了平衡exploration和exploitation，一个简单的想法就是使用$\epsilon$-greedy方法。</p>
+<script type="math/tex; mode=display">
+\pi(a|s) = 
+\begin{cases} 
+\arg\max_a Q^\pi(s,a), \text{with prob} (1-\epsilon) \\
+a, \text{with prob} ({ {\epsilon}\over{|A|} })
+
+\end{cases}</script><p>这里可以证明：For any $\epsilon$-greedy policy $\pi<em>i$, the $\epsilon$-greedy policy w.r.t $Q^{\pi_i}$, $\pi</em>{i+1}$ is a monotonic improvement $V^{\pi_{i+1}} \geq V^{\pi_i}$ .证明过程略去，这里放一张课程PPT的截图。</p>
+<p><img src="https://i.loli.net/2019/09/02/YCVG5TBrJlpStHL.png" alt="image.png"></p>
+<p><strong>Greedy in the Limit of Infinite Exploration (GLIE)</strong></p>
+<p>问题在于我们知道了每一次的improvement是monotonic之后，我们能够获得什么保证（guarantee）？答案是如果你sample所有的的state-action pair无限次，你的behavior policy会最终converge到greedy policy。GLIE的定义是，所有的state-action对被访问的次数在sample次数的数量趋向于无穷时也应当趋向于无穷：</p>
+<script type="math/tex; mode=display">
+\lim_{i \to \infty} N_i(s,a) \to \infty</script><p>那么就有：</p>
+<script type="math/tex; mode=display">
+\lim_{i \to \infty} \pi(a|s) \to \arg\max_a Q(s,a)</script><p>一个简单的GLIE strategy就是让探索的随机性系数$\epsilon$随着sample的样本改变：$\epsilon_i = 1/i$. 同时GLIE Monte-Carlo Control能够确保收敛到Optimal的state-action value function：$Q(s,a)\to Q^*(s,a)$.</p>
+<h1 id="Monte-Carlo-Online-Control"><a href="#Monte-Carlo-Online-Control" class="headerlink" title="Monte Carlo Online Control"></a>Monte Carlo Online Control</h1><p>结合上面的内容，在线的MC Control算法可以用以下的伪代码表示：</p>
+<p><img src="https://i.loli.net/2019/08/20/IA4Ble3zDxS7Pc6.png" alt="image.png"></p>
+<h1 id="Temporal-Difference-Methods-for-Control"><a href="#Temporal-Difference-Methods-for-Control" class="headerlink" title="Temporal Difference Methods for Control"></a>Temporal Difference Methods for Control</h1><p>通常情况下使用TD方法进行Model-free PI的框架可以被归纳为：随机初始化策略$\pi$；重复更新策略（和使用MC方法几乎相同）Policy Evaluation + Policy Improvement。 </p>
+<h2 id="SARSA"><a href="#SARSA" class="headerlink" title="SARSA"></a>SARSA</h2><p>SARSA算法的伪代码如下图所示，和MC方法的核心变化在于TD方法不需要等一个episode完结才能够进行更新，而是根据下一个step的观察可以直接进行更新，其依据就是利用Bellman方程的estimation：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+V^{\pi}(s)&=V^{\pi}(s)+\alpha\left[G_{i, t}-V^{\pi}(s)\right] \\
+V^{\pi}(s)&=V^{\pi}(s)+\alpha\left(\left[r_{t}+\gamma V^{\pi}\left(s_{t+1}\right)\right]-V^{\pi}(s)\right)
+\end{align}</script><p><img src="https://i.loli.net/2019/09/02/xwcHpnKIJhFESP6.png" alt="image.png"></p>
+<p>SARSA for finite-state &amp; finite-action MDPs 在以下两个条件成立时能够保证收敛到最优的action-value：</p>
 <ul>
-<li>self-interested agent没有生成类似于自然语言一样的Zipfian distribution；而对于prosocial agent来说确生成了这样长尾效应的元组分布。</li>
-<li>在这两方的协商中文章认为形成了一种类似于speaker-listener的交流方式，也就是说self-interested agent会倾听对方的给出的reward的信息，而不会泄露自己的utility。而prosocial会通过linguistic channel编码自己的信息告诉对方自己的utility从而达成合作。<em>我对这个分析的怀疑在于：理性来说泄露自己的utility给一个完全self-interested agent来说是不会有反馈的，因为你只会帮助对方榨取自己的价值。只有一种情况有帮助：你utility高的item在对方的utility为0，对方才有让出利益的动机。这一点也需要验证。</em></li>
+<li>策略序列$\pi_{t}(a | s)$满足上面所提及的GLIE条件</li>
+<li>步长$\alpha_t$满足Robbins-Munro序列要求：<ul>
+<li>$\sum<em>{t=1}^{\infty} \alpha</em>{t}=\infty$ 并且 $\sum<em>{t=1}^{\infty} \alpha</em>{t}^{2}&lt;\infty$</li>
 </ul>
-<p><img src="https://i.loli.net/2019/08/15/gxPS9k2wB1OEqfu.png" alt="Screen Shot 2019-08-15 at 4.57.19 PM.png"></p>
-<p>接着文章验证了在linguistic channel中有存在关于自身utility的关键信息，通过一个LSTM去编码解码linguistic channel的内容来预测utility的信息。结果是self-interested无法用LSTM去做合理的预测，而prosocial确实是含有语义信息的。<em>但是疑问在于下图中的第二行为什么prosocial-prosocial的agent A也没有办法解码，文章没有给出解释。</em></p>
-<p><em>同时另外一个值得研究的问题在于，self-interested agent如果在channel中学会了欺骗行为，那么是否意味着拿LSTM去预测正确的标签是不合理的？这是未来需要讨论的一点。</em></p>
-<p><img src="https://i.loli.net/2019/08/15/M8WPVRaDTtrqkQG.png" alt="Screen Shot 2019-08-15 at 4.06.49 PM.png"></p>
-<h2 id="A-Society-of-Agents"><a href="#A-Society-of-Agents" class="headerlink" title="A Society of Agents"></a>A Society of Agents</h2><p>更加符合现实的情况是有一个社群的agents，并且每一个agent的亲社会性是不同等级的，因此一个agent为了最大化自己的目标需要学会去identify不同agent的亲社会性，判断其是否擅于合作。文章设置了10个不同亲社会等级的agent，通过固定某个agent，维护一个opponent embedding来实现对对手亲社会性的利用。发现opponent的行为属性能够完全反映在embedding向量中，以下的PCA降维可视化能够反映出这一点。</p>
-<p><img src="https://i.loli.net/2019/08/15/QpuwicqsP6ZY2FK.png" alt="Screen Shot 2019-08-15 at 4.26.37 PM.png"></p>
-<p>关于在community中的语言学现象，有以下的总结：</p>
+</li>
+</ul>
+<p>在实践中我们的步长一般不遵从这里的限制，通常使用的是逐级递减的步长就可以。这里提到了SARSA采用的更新策略是实际sample出的下一个step的情况，这种方式对比Q-Learning来说是“相对客观”的。Q-Learning会过分乐观（因为更新策略中拿到的是max value），但是SARSA算法在Sutton and Barto的cliff walk example中表现会更好。关于这个问题，我们会在这章最后简单用代码实现一下。但是很多的问题都不会具有这样的性质。</p>
+<h2 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h2><p>Q-Learning也是一个Temporal Difference的方法，和SARSA相比，Q-Leaning不需要从policy当中sample出确切的action，而是更新时采用当前时间步最大期望的action-state值进行更新。虽然理论上Q-Learning能够确保收敛到和SARSA一样的最优值，但初始化的状态也依旧会产生一些影响。总体来说，optimistic initialization会比较有帮助。以下是两种算法的更新函数的比较。</p>
 <ul>
-<li>In one of our experimental settings, a community of prosocial agents developed a language and were able to use this to achieve better negotiation success.</li>
-<li>Interestingly, the only situation when agents developed a language was when ID information was not provided.</li>
-<li>When prosocial agents make use of the linguistic channel, the communication protocol differs within the community. 这意味着尽管agent A都是固定的，不同的agent B和agent A会使用不同的language。（<em>疑问在于有没有做 the same level of prosociality但不同agent的实验？随机性如何消除的？</em>）文章使用的方法是计算不同agent的Spearman correlation。</li>
+<li>SARSA：$Q\left(s<em>{t}, a</em>{t}\right) \leftarrow Q\left(s<em>{t}, a</em>{t}\right)+\alpha\left(\left(r<em>{t}+\gamma Q\left(s</em>{t+1}, a<em>{t+1}\right)\right)-Q\left(s</em>{t}, a_{t}\right)\right)$</li>
+<li>Q-Learning：$Q\left(s<em>{t}, a</em>{t}\right) \leftarrow Q\left(s<em>{t}, a</em>{t}\right)+\alpha\left(\left(r<em>{t}+\gamma \max </em>{a^{\prime}} Q\left(s<em>{t+1}, a^{\prime}\right)\right)-Q\left(s</em>{t}, a_{t}\right)\right)$</li>
 </ul>
-<h1 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h1><p>未来的有趣研究方向是Language能否在self-interested agent interacting中产生。Recent encouraging results by <a href="https://arxiv.org/abs/1703.06207" target="_blank" rel="noopener">Crandall et al. (2018)</a> show that communication can help agents cooperate. However, their signalling mechanism is heavily engineered: the speech acts are predefined and the consequences of the speech acts on the observed behaviour are deterministically hard-coded. It would be interesting to see whether a learning algorithm, such as <a href="https://arxiv.org/abs/1709.04326" target="_blank" rel="noopener">Foerster et al. (2017)</a>, can discover the same result.</p>
+<p><img src="https://i.loli.net/2019/09/02/nHQ1aRXSBvmDsV5.png" alt="image.png"></p>
+<h1 id="Maximization-Bias"><a href="#Maximization-Bias" class="headerlink" title="Maximization Bias"></a>Maximization Bias</h1><p>在以下的简单设置中，只有单一的state，action space为2，两个action给出的reward遵从以0为中心的正态分布。关于两个state-action的EV都是无偏估计，但是只要是有限的sample，就会导致最终的策略是有偏的。</p>
+<p><img src="https://i.loli.net/2019/09/02/H2DlqIgWAsCzYfO.png" alt="image.png"></p>
+<p>解决方法是采用Double Q-Learning。简单来说就是采用一个Q-function来进行estimation，另一个Q-function进行action sampling。以下为Double Q-Learning的完整伪代码：</p>
+<p><img src="https://i.loli.net/2019/09/02/TPFCzHwyOhiW42D.png" alt="image.png"></p>
+<p>这里是我不是非常理解的地方，就是为什么Double Q-Learning能够maximization bias，课程中的解释是这种方法使用了independent samples to estimate the value。而在现实中使用该算法时，可以以0.5的概率对这两个Q function进行交替的estimate和sample。Double Q-Learning只增加了内存开销，不会产生更大的计算开销，而且能够达到非常好的效果。以下的实验结果告诉我们Q-Learning在前期非常可能suffer在不是最优的策略中，但Double Q-Learning却能够很好地解决这个问题。</p>
+<p><img src="https://i.loli.net/2019/09/03/GrDQdLpaAq4KFTR.png" alt="image.png"></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">August 13th 2019, 3:06:11 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">August 20th 2019, 9:41:16 am</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">August 15th 2019, 3:50:58 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">September 3rd 2019, 11:25:40 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -489,17 +489,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/" title="RL Course Lesson (3) - Model-Free Control">
-                    <div class="nextTitle">RL Course Lesson (3) - Model-Free Control</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/07/30/Google-Football-Warm-Start/" title="Google Football Warm Start">
-                    <div class="prevTitle">Google Football Warm Start</div>
+                <a href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/" title="Notes on Emergent Communication Through Negotiation">
+                    <div class="prevTitle">Notes on Emergent Communication Through Negotiation</div>
                 </a>
             
         </li>
@@ -615,7 +610,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">2.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Game-Setting"><span class="toc-number">3.</span> <span class="toc-text">Game Setting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Negotiation-Environment"><span class="toc-number">3.1.</span> <span class="toc-text">Negotiation Environment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Communication-Channels"><span class="toc-number">3.2.</span> <span class="toc-text">Communication Channels</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-Sociality-amp-Reward-Schemes"><span class="toc-number">3.3.</span> <span class="toc-text">Agent Sociality &amp; Reward Schemes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-Architecture-amp-Learning"><span class="toc-number">3.4.</span> <span class="toc-text">Agent Architecture &amp; Learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiment"><span class="toc-number">4.</span> <span class="toc-text">Experiment</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Analysis-of-Linguistic-Communication"><span class="toc-number">4.1.</span> <span class="toc-text">Analysis of Linguistic Communication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Society-of-Agents"><span class="toc-number">4.2.</span> <span class="toc-text">A Society of Agents</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Discussion"><span class="toc-number">5.</span> <span class="toc-text">Discussion</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Preface"><span class="toc-number">1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generalized-Policy-Iteration"><span class="toc-number">2.</span> <span class="toc-text">Generalized Policy Iteration</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monte-Carlo-Online-Control"><span class="toc-number">3.</span> <span class="toc-text">Monte Carlo Online Control</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Temporal-Difference-Methods-for-Control"><span class="toc-number">4.</span> <span class="toc-text">Temporal Difference Methods for Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SARSA"><span class="toc-number">4.1.</span> <span class="toc-text">SARSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-Learning"><span class="toc-number">4.2.</span> <span class="toc-text">Q-Learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Maximization-Bias"><span class="toc-number">5.</span> <span class="toc-text">Maximization Bias</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
