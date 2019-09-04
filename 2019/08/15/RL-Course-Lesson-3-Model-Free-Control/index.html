@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.2k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -473,6 +473,13 @@ V^{\pi}(s)&=V^{\pi}(s)+\alpha\left(\left[r_{t}+\gamma V^{\pi}\left(s_{t+1}\right
 <p><img src="https://i.loli.net/2019/09/02/TPFCzHwyOhiW42D.png" alt="image.png"></p>
 <p>这里是我不是非常理解的地方，就是为什么Double Q-Learning能够maximization bias，课程中的解释是这种方法使用了independent samples to estimate the value。而在现实中使用该算法时，可以以0.5的概率对这两个Q function进行交替的estimate和sample。Double Q-Learning只增加了内存开销，不会产生更大的计算开销，而且能够达到非常好的效果。以下的实验结果告诉我们Q-Learning在前期非常可能suffer在不是最优的策略中，但Double Q-Learning却能够很好地解决这个问题。</p>
 <p><img src="https://i.loli.net/2019/09/03/GrDQdLpaAq4KFTR.png" alt="image.png"></p>
+<p><a href="https://medium.com/@ameetsd97/deep-double-q-learning-why-you-should-use-it-bedf660d5295" target="_blank" rel="noopener">这篇博客</a>对这个问题进行了一些阐述，最主要的观点是Q-Learning中的max函数导致了过于乐观的估计。如果Reward带上了随机性（例如遵从一个EV为负的分布），那么sample前期的正向结果都会导致模型得到错误的估计，估计导致策略向这个错误的方向偏移，会使得模型在未来的一段时间内都得出不好的结果。</p>
+<blockquote>
+<p>What is happening here is that, if an action’s value was overestimated, it will be chosen as the best action, and it’s overestimated value is used as the target. Instead, we can have two different action-value estimates as mentioned in the above equation, and the “best” action can be chosen based on the values of the first action-value estimate and the target can be decided by the second action-value estimate. How do we train though?</p>
+<p>Divide the samples into two halves. For the first half, we can use the above equation to train, and for the second half swap the “1” with the “2” in the equation. In practice, data keeps coming into the agent, and thus a coin is flipped to decide if the above equation should be used or the swapped one. How does this help?</p>
+<p>Since the samples are stochastic, it is less likely that both the halves of the samples are overestimating the <em>same</em> action. The above method separates two crucial parts of the algorithm, choosing the best action and using the estimate of that action, and hence works well.</p>
+</blockquote>
+<p>虽然我们仅仅是在非常简单的场景当中阐述了可能产生maximization bias的可能情况，也有研究者指出在Atari这样复杂的游戏中也会产生这样的问题。而同时，如果所有的action-values都受到了overestimation的影响，那么对于最终学习到的策略不会有任何影响；相反，如果不同的state所受到的影响不同（例如有些state的reward是恒定的），那么对最终的optimal policy会产生影响。</p>
 
     </article>
     <!-- license  -->
@@ -481,13 +488,18 @@ V^{\pi}(s)&=V^{\pi}(s)+\alpha\left(\left[r_{t}+\gamma V^{\pi}\left(s_{t+1}\right
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">August 15th 2019, 3:50:58 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">September 3rd 2019, 11:25:40 am</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">September 3rd 2019, 4:01:47 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/" title="RL Course Lesson (4) - Value Function Approximation">
+                    <div class="nextTitle">RL Course Lesson (4) - Value Function Approximation</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -785,18 +797,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 13
+        Total : 14
         </div>
         <!-- search  -->
         
@@ -806,6 +809,34 @@ top:50vh;
     
     
     
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL Course Lesson (4) - Value Function Approximation</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
@@ -868,20 +899,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2019/06/04/AONLH-Chap-NO-1-Basics/">AONLH(1) - Basics</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
         </li>
     
     </ul></div>
