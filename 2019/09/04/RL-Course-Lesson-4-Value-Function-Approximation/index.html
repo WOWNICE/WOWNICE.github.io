@@ -422,7 +422,7 @@ x(s)=\left(\begin{array}{c}{x_{1}(s)} \\ {x_{2}(s)} \\ {\ldots} \\ {x_{n}(s)}\en
 <script type="math/tex; mode=display">
 \hat{V}(s ; w)=\sum_{j=1}^{n} x_{j}(s) w_{j}=x(s)^{T} w</script><p>同样的，损失函数的表示和上一节相同：</p>
 <script type="math/tex; mode=display">
-J(w)=\mathbb{E}_{\pi}\left[\left(V^{\pi}(s)-\hat{V}(s ; w)\right)^{2}\right]</script><p>在MC方法中，Return value是Expected Return $V^{\pi}\left(s_{t}\right)$ 无偏但是有噪声的sample，因此我们可以将MC VFA降级到一个(state, return) pair上的监督学习：</p>
+J(w)=\mathbb{E}_{\pi}\left[\left(V^{\pi}(s)-\hat{V}(s ; w)\right)^{2}\right]</script><p>在MC方法中，return value是Expected Return $V^{\pi}\left(s_{t}\right)$ 无偏但是有噪声的sample，因此我们可以将MC VFA降级到一个(state, return) pair上的监督学习：</p>
 <script type="math/tex; mode=display">
 \begin{aligned} \Delta \boldsymbol{w} &=\alpha\left({G}_{t}-\hat{V}\left(s_{t} ; \boldsymbol{w}\right)\right) \nabla_{w} \hat{V}\left(s_{t} ; \boldsymbol{w}\right) \\ &=\alpha\left(G_{t}-\hat{V}\left(s_{t} ; \boldsymbol{w}\right)\right) {x}\left(s_{t}\right) \\ &=\alpha\left(G_{t}-{x}\left(s_{t}\right)^{T} \boldsymbol{w}\right) {x}\left(s_{t}\right) \end{aligned}</script><h2 id="Convergence-Guarantees-for-Linear-VFA-for-Policy-Evaluation"><a href="#Convergence-Guarantees-for-Linear-VFA-for-Policy-Evaluation" class="headerlink" title="Convergence Guarantees for Linear VFA for Policy Evaluation"></a>Convergence Guarantees for Linear VFA for Policy Evaluation</h2><p>一个MDP当其中的Policy固定之后就是一个对应的Markov Chain，而最终会converge到一个状态分布 $d(s)$，这分布 $d(s)$ 被称作stationary distribution over states of $\pi$. 关于这个分布有以下两个性质，第一个表示所有状态的分部之和为1；第二个为一个balance equation：</p>
 <script type="math/tex; mode=display">
@@ -453,7 +453,7 @@ x(s, a)=\left(\begin{array}{c}{x_{1}(s, a)} \\ {x_{2}(s, a)} \\ {\dots} \\ {x_{n
 <script type="math/tex; mode=display">
 \Delta \boldsymbol{w}=\alpha\left(r+\gamma \hat{Q}\left(s^{\prime}, a^{\prime} ; \boldsymbol{w}\right)-\hat{Q}(s, a ; \boldsymbol{w})\right) \nabla_{\boldsymbol{w}} \hat{Q}(s, a ; \boldsymbol{w})</script><p>在Q-Learning方法中，我们采用TD target $r+\gamma \max _{a^{\prime}} \hat{Q}\left(s^{\prime}, a^{\prime} ; w\right)$ ，这条式子利用了max of 当前经过近似的值：</p>
 <script type="math/tex; mode=display">
-\Delta \boldsymbol{w}=\alpha\left(r+\gamma \max _{a^{\prime}} \hat{Q}\left(s^{\prime}, a^{\prime} ; \boldsymbol{w}\right)-\hat{Q}(s, a ; \boldsymbol{w})\right) \nabla_{\boldsymbol{w}} \hat{Q}(s, a ; \boldsymbol{w})</script><p>需要注意的是，TD方法中我们没有采用gradient of an objective function。关于之前VFA的Convergence的总结如下图所示，需要注意的是，相比于算法是否拟合，更为重要的是算法最终达到的点表现如何。</p>
+\Delta \boldsymbol{w}=\alpha\left(r+\gamma \max _{a^{\prime}} \hat{Q}\left(s^{\prime}, a^{\prime} ; \boldsymbol{w}\right)-\hat{Q}(s, a ; \boldsymbol{w})\right) \nabla_{\boldsymbol{w}} \hat{Q}(s, a ; \boldsymbol{w})</script><p>需要注意的是，TD方法中我们没有采用gradient of an objective function。关于之前VFA的Convergence的总结如下图所示，相比于算法是否拟合，更为重要的是算法最终达到的点表现如何。</p>
 <p><img src="https://i.loli.net/2019/09/04/htpZ1JS6vzo5ueK.png" alt="image.png"></p>
 
     </article>
@@ -463,13 +463,18 @@ x(s, a)=\left(\begin{array}{c}{x_{1}(s, a)} \\ {x_{2}(s, a)} \\ {\dots} \\ {x_{n
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">http://www.shihaizhou.com/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">September 4th 2019, 4:21:23 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">September 4th 2019, 4:22:37 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">February 12th 2020, 5:20:35 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/02/11/Some-Maths/" title="Metric Space">
+                    <div class="nextTitle">Metric Space</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -767,9 +772,46 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 14
+        Total : 15
         </div>
         <!-- search  -->
         
@@ -780,6 +822,20 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Some-Maths/">Metric Space</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
     
@@ -787,29 +843,6 @@ top:50vh;
         <li class="archive-post-item">
             <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL Course Lesson (4) - Value Function Approximation</a>
         </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -871,6 +904,20 @@ top:50vh;
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2019/06/04/AONLH-Chap-NO-1-Basics/">AONLH(1) - Basics</a>
         </li>
     
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
     </ul></div>
   </div>
         <div class="sidebar-panel-tags">
@@ -878,21 +925,23 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
     
-        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
-    
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
     
         <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
+    
+        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
+    
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
-        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
     
         <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
     
-        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

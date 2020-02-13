@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>RL Course Lesson (3) - Model-Free Control · N1H111SM&#39;s Miniverse</title>
+    <title>N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">N1H111SM&#39;s Miniverse</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">RL Course Lesson (3) - Model-Free Control</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            RL Course Lesson (3) - Model-Free Control
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/15</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,138 +338,39 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>上一节主要内容是在没有Model的情况下如何去做Policy Evaluation，本章的重点是要没有Model的情况下去学会做决策，下一章将会介绍Value Function Approximation。学会优秀的策略需要应对以下两个问题，首先是Delayed Consequences，也就是说当前的决策可能需要在未来好几步才能够反映出好坏和价。其次就是要做到适当的Exploration，因为需要进行适当量的探索才能够发现较为优秀的策略。</p>
-<p>对于许多的MDP模型来说，以下两种问题需要我们使用Model-free Control去解决：</p>
-<ul>
-<li>MDP model is unknown but can be sampled.</li>
-<li>MDP model is known but it is computationally infeasible to use directly, except through sampling.</li>
-</ul>
-<p>On-policy learning 和 Off-policy learning是两种学习的方法，前者在和环境的交互中直接进行学习，也就是当前的policy和当前的sample是对应的；而后者能够从另一个不同的policy中去进行Evaluation和参数的更新。</p>
-<h1 id="Generalized-Policy-Iteration"><a href="#Generalized-Policy-Iteration" class="headerlink" title="Generalized Policy Iteration"></a>Generalized Policy Iteration</h1><p>首先回顾一下PI的流程（此时的PI是有真正Model的）：初始化一个policy$\pi$；重复以下两步操作，首先进行Policy Evaluation，然后利用$\arg \max_{a} Q(s,a)$对当前policy进行更新（$Q$值计算用到了$P$）；直到拟合。在Model-free的情况下PI的流程也是一样的：重复Policy Evaluation + Policy Improvement。只是Policy Evaluation现在需要进行estimate Q来得到。</p>
-<p><strong>MC for On-policy Q Evalution</strong></p>
-<ul>
-<li>Initialize $N(s,a)=0, G(s,a)=0, Q^\pi(s,a)=0, \forall s \in S, \forall a \in A$</li>
-<li>Loop<ul>
-<li>Using policy $\pi$ sample episode $i=s_{i,1}, a_{i,1},r_{i,1},s_{i,2}, a_{i,2},r_{i,2}, \dots, s_{i,T_i}$</li>
-<li>$G_{i,t}=r_{i,t}+\gamma r_{i,t+1}+ \gamma^2 r_{i,t+2}+ \dots + \gamma^{T_i-1}r_{i,T_i}$</li>
-<li>Foreach (state,action) $(s,a)$ visited in episode $i$<ul>
-<li>For <strong>first or every</strong> time $t$ that $(s,a)$ is visited in episode $i$<ul>
-<li>$N(s,a)=N(s,a)+1, G(s,a)=G(s,a)+G_{i,t}$</li>
-<li>Update estimate $Q^\pi(s,a)=G(s,a)/N(s,a)$ </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>在此estimated Q value的基础上，我们只需要更新policy为：</p>
-<script type="math/tex; mode=display">
-\pi_{i+1}(s)=\arg\max_a Q^{\pi_i}(s，a)</script><p>这样的estimation可能会有一些问题，例如如果$\pi$是deterministic的或者对某些action的probability为0，那么我们就没有办法计算$Q(s,a)$ for any $a \neq \pi(s)$，这是由于我们在sample时不会采样到其余的action。并且我们希望对于Q值的estimation和policy improvement能够相互穿插，而不是现在的大量的estimation的sample和更新得到一次policy的参数更新。这些内容会在下文中cover。为了平衡exploration和exploitation，一个简单的想法就是使用$\epsilon$-greedy方法。</p>
-<script type="math/tex; mode=display">
-\pi(a|s) = 
-\begin{cases} 
-\arg\max_a Q^\pi(s,a), \text{with prob} (1-\epsilon) \\
-a, \text{with prob} ({ {\epsilon}\over{|A|} })
-
-\end{cases}</script><p>这里可以证明：For any $\epsilon$-greedy policy $\pi_i$, the $\epsilon$-greedy policy w.r.t $Q^{\pi_i}$, $\pi_{i+1}$ is a monotonic improvement $V^{\pi_{i+1}} \geq V^{\pi_i}$ .证明过程略去，给出笔记中的截图。</p>
-<p><img src="https://i.loli.net/2020/02/12/78XCIdeNPOgvo1Z.png" alt="image.png"></p>
-<p><strong>Greedy in the Limit of Infinite Exploration (GLIE)</strong></p>
-<p>$\epsilon$-greedy策略是能够让每次策略更新依旧保持单调增长的一种方式。而我们可以对这个策略进行适当的refine从而让这种更新策略保证收敛。GLIE的定义由以下两个条件组成：</p>
-<p>首先，所有的state-action对被访问的次数在sample次数的数量趋向于无穷时也应当趋向于无穷：</p>
-<script type="math/tex; mode=display">
-\lim_{i \to \infty} N_i(s,a) \to \infty</script><p>第二，当sample数趋于无穷的时候，policy选择Q表中最优值的概率应当趋于1.</p>
-<script type="math/tex; mode=display">
-\lim_{i \to \infty} \pi(a|s) \to \arg\max_a Q(s,a)</script><p>一个满足GLIE条件的例子就是让$\epsilon$-greedy探索的随机性系数$\epsilon$随着sample的样本改变：$\epsilon_i = 1/i$. 同时GLIE Monte-Carlo Control能够确保收敛到Optimal的state-action value function：$Q(s,a)\to Q^*(s,a)$.</p>
-<h1 id="Monte-Carlo-Online-Control"><a href="#Monte-Carlo-Online-Control" class="headerlink" title="Monte Carlo Online Control"></a>Monte Carlo Online Control</h1><p>结合上面的内容，在线的MC Control算法可以用以下的伪代码表示：</p>
-<p><img src="https://i.loli.net/2020/02/12/YsSFuAb3Q5cOMjx.png" alt="image.png"></p>
-<h1 id="Temporal-Difference-Methods-for-Control"><a href="#Temporal-Difference-Methods-for-Control" class="headerlink" title="Temporal Difference Methods for Control"></a>Temporal Difference Methods for Control</h1><p>通常情况下使用TD方法进行Model-free PI的框架可以被归纳为：随机初始化策略$\pi$；重复更新策略（和使用MC方法几乎相同）Policy Evaluation + Policy Improvement。 </p>
-<h2 id="SARSA"><a href="#SARSA" class="headerlink" title="SARSA"></a>SARSA</h2><p>SARSA算法的伪代码如下图所示，和MC方法的核心变化在于TD方法不需要等一个episode完结才能够进行更新，而是根据下一个step的观察可以直接进行更新，其依据就是利用Bellman方程的estimation：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-V^{\pi}(s)&=V^{\pi}(s)+\alpha\left[G_{i, t}-V^{\pi}(s)\right] \\
-V^{\pi}(s)&=V^{\pi}(s)+\alpha\left(\left[r_{t}+\gamma V^{\pi}\left(s_{t+1}\right)\right]-V^{\pi}(s)\right)
-\end{align}</script><p><img src="https://i.loli.net/2020/02/12/Icz5XLaUYQxBP8O.png" alt="image.png"></p>
-<p>SARSA for finite-state &amp; finite-action MDPs 在以下两个条件成立时能够保证收敛到最优的action-value：</p>
-<ul>
-<li>策略序列$\pi_{t}(a | s)$满足上面所提及的GLIE条件</li>
-<li>步长$\alpha_t$满足Robbins-Munro序列要求：<ul>
-<li>$\sum_{t=1}^{\infty} \alpha_{t}=\infty$ </li>
-<li>$\sum_{t=1}^{\infty} \alpha_{t}^{2}&lt;\infty$</li>
-</ul>
-</li>
-</ul>
-<p>在实践中我们的步长一般不遵从这里的限制，通常使用的是逐级递减的步长就可以。这里提到了SARSA采用的更新策略是实际sample出的下一个step的情况，这种方式对比Q-Learning来说是“相对客观”的。Q-Learning会过分乐观（因为更新策略中拿到的是max value），但是SARSA算法在Sutton and Barto的cliff walk example中表现会更好。关于这个问题，我们会在这章最后简单用代码实现一下。但是很多的问题都不会具有这样的性质。</p>
-<h2 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h2><p>Q-Learning也是一个Temporal Difference的方法，和SARSA相比，Q-Leaning不需要从policy当中sample出确切的action，而是更新时采用当前时间步最大期望的action-state值进行更新，因此Q-Learning也被认为是一种off-policy的算法。虽然理论上Q-Learning能够确保收敛到和SARSA一样的最优值，但初始化的状态也依旧会产生一些影响。总体来说，optimistic initialization会比较有帮助。以下是两种算法更新函数的比较。</p>
-<ul>
-<li>SARSA：$Q\left(s_{t}, a_{t}\right) \leftarrow Q\left(s_{t}, a_{t}\right)+\alpha\left(\left(r_{t}+\gamma Q\left(s_{t+1}, a_{t+1}\right)\right)-Q\left(s_{t}, a_{t}\right)\right)$</li>
-<li>Q-Learning：$Q\left(s_{t}, a_{t}\right) \leftarrow Q\left(s_{t}, a_{t}\right)+\alpha\left(\left(r_{t}+\gamma \max _{a^{\prime}} Q\left(s_{t+1}, a^{\prime}\right)\right)-Q\left(s_{t}, a_{t}\right)\right)$</li>
-</ul>
-<p><img src="https://i.loli.net/2020/02/12/RXLWOgA1ivYUrTx.png" alt="image.png"></p>
-<h1 id="Maximization-Bias"><a href="#Maximization-Bias" class="headerlink" title="Maximization Bias"></a>Maximization Bias</h1><p>课程笔记中举了一个扔硬币的例子：</p>
-<p><img src="https://i.loli.net/2020/02/12/JSmkK34ByURY2MZ.png" alt="image.png"></p>
-<p><img src="https://i.loli.net/2020/02/12/MuXIcNPvUzsmO2g.png" alt="image.png"></p>
-<p>为什么会导致这样的偏差？原因在于我们将estimate的过程和control的过程放在了一起，导致了对于结果过于乐观的估计。在扔硬币的例子中为了回答第二个问题我们其实完全可以重新estimate选择出来的硬币，这样就可以避免了这样的bias。那么通过这个经验，我们就可以将estimation和control的过程进行分离从而保证估计的无偏性。</p>
-<p>关于这个问题的更加数学化的例子：</p>
-<p><img src="https://i.loli.net/2020/02/12/quaWcGDZIA53rpO.png" alt="image.png"></p>
-<p>为了解决这个问题，研究者找到了Double Q-Learning算法。简单来说就是采用一个Q-function来进行estimation，另一个Q-function进行action sampling。以下为Double Q-Learning的伪代码：</p>
-<p><img src="https://i.loli.net/2020/02/12/soWFqnbldNgHCfa.png" alt="image.png"></p>
-<p>这种方法使用了independent samples to estimate the value。而在现实中使用该算法时，可以以0.5的概率对这两个Q function进行交替的estimate和sample。Double Q-Learning只增加了内存开销，不会产生更大的计算开销，而且能够达到非常好的效果。以下的实验结果告诉我们Q-Learning在前期非常可能suffer在不是最优的策略中，但Double Q-Learning却能够很好地解决这个问题。</p>
-<p><img src="https://i.loli.net/2019/09/03/GrDQdLpaAq4KFTR.png" alt="image.png"></p>
-<p><a href="https://medium.com/@ameetsd97/deep-double-q-learning-why-you-should-use-it-bedf660d5295" target="_blank" rel="noopener">这篇博客</a>对这个问题进行了一些阐述，最主要的观点是Q-Learning中的max函数导致了过于乐观的估计。如果Reward带上了随机性（例如遵从一个EV为负的分布），那么sample前期的正向结果都会导致模型得到错误的估计，估计导致策略向这个错误的方向偏移，会使得模型在未来的一段时间内都得出不好的结果。</p>
-<blockquote>
-<p>What is happening here is that, if an action’s value was overestimated, it will be chosen as the best action, and it’s overestimated value is used as the target. Instead, we can have two different action-value estimates as mentioned in the above equation, and the “best” action can be chosen based on the values of the first action-value estimate and the target can be decided by the second action-value estimate. How do we train though?</p>
-<p>Divide the samples into two halves. For the first half, we can use the above equation to train, and for the second half swap the “1” with the “2” in the equation. In practice, data keeps coming into the agent, and thus a coin is flipped to decide if the above equation should be used or the swapped one. How does this help?</p>
-<p>Since the samples are stochastic, it is less likely that both the halves of the samples are overestimating the <em>same</em> action. The above method separates two crucial parts of the algorithm, choosing the best action and using the estimate of that action, and hence works well.</p>
-</blockquote>
-<p>虽然我们仅仅是在非常简单的场景当中阐述了可能产生maximization bias的可能情况，也有研究者指出在Atari这样复杂的游戏中也会产生这样的问题。而同时，如果所有的action-values都受到了overestimation的影响，那么对于最终学习到的策略不会有任何影响；相反，如果不同的state所受到的影响不同（例如有些state的reward是恒定的），那么对最终的optimal policy会产生影响。</p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">August 15th 2019, 3:50:58 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">February 12th 2020, 5:08:56 pm</a>
-            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/02/11/Some-Maths/">
+            
+                <span>Metric Space</span>
+        </a>
+        <div class="abstract-content">
+            Some math concepts that might help in the future.
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/" title="RL Course Lesson (4) - Value Function Approximation">
-                    <div class="nextTitle">RL Course Lesson (4) - Value Function Approximation</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/" title="Notes on Emergent Communication Through Negotiation">
-                    <div class="prevTitle">Notes on Emergent Communication Through Negotiation</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -612,24 +452,6 @@ V^{\pi}(s)&=V^{\pi}(s)+\alpha\left(\left[r_{t}+\gamma V^{\pi}\left(s_{t+1}\right
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Preface"><span class="toc-number">1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generalized-Policy-Iteration"><span class="toc-number">2.</span> <span class="toc-text">Generalized Policy Iteration</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monte-Carlo-Online-Control"><span class="toc-number">3.</span> <span class="toc-text">Monte Carlo Online Control</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Temporal-Difference-Methods-for-Control"><span class="toc-number">4.</span> <span class="toc-text">Temporal Difference Methods for Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SARSA"><span class="toc-number">4.1.</span> <span class="toc-text">SARSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-Learning"><span class="toc-number">4.2.</span> <span class="toc-text">Q-Learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Maximization-Bias"><span class="toc-number">5.</span> <span class="toc-text">Maximization Bias</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1039,8 +861,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
