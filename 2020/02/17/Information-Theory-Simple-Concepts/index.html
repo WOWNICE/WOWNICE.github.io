@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>Information Theory · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Information Theory</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Information Theory
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.9k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/02/17</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,41 +399,125 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">
-            
-                <span>Google Research Football - RL Environment</span>
-        </a>
-        <div class="abstract-content">
-            Novel Google Football Virtual Environment paper notes.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="paper">paper</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>Materials</strong></p>
+<ul>
+<li><p><a href="https://arxiv.org/pdf/1708.07459.pdf" target="_blank" rel="noopener">arxiv文章 “Divergence, Entropy, Information”</a></p>
+</li>
+<li><p><a href="http://colah.github.io/posts/2015-09-Visual-Information/" target="_blank" rel="noopener">博客文章 “Visual Information Theory”</a></p>
+</li>
+<li><p><a href="http://www.cs.cmu.edu/~aarti/Class/10704/lecs.html" target="_blank" rel="noopener">CMU课程</a></p>
+</li>
+</ul>
+<h1 id="Divergence"><a href="#Divergence" class="headerlink" title="Divergence"></a>Divergence</h1><p>散度divergence $d(p,q)$通常被用来表征”surprise”的程度：你相信一个分布为$q$，经过试验却发现它实际上是$p$的惊讶程度。为了引出KL-Divergence，我们首先定义概率单纯型(Probability Simplex).</p>
+<p><strong>Definition</strong>  (Probability Simplex). For any finite alphabet $\mathcal{X}$ with $|\mathcal{X}|=m$, the probability simplex $\mathcal P^{\mathcal X}$ is the set</p>
+<script type="math/tex; mode=display">
+\mathcal{P}^{\mathcal X} \triangleq\left\{q \in \mathbb{R}^{m} | \sum_{i} q_{i}=1, q_{i} \geq 0 \quad \forall i\right\}</script><p>注意：Probability Simplex是一个维度为$m-1$的空间，因为这个空间上的向量需要满足$\sum_{i} q_{i}=1$，从而导致其少了一个自由度。</p>
+<p><strong>Definition</strong> (Kullback-Leibler Divergence). For $p, q \in \mathcal{P}^{\mathcal X}$, the <strong>Kullback-Leibler (KL) divergence</strong> of $q$ from $p$ is</p>
+<script type="math/tex; mode=display">
+d(p, q) \triangleq \sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)}</script><p>where we are using the conventions that $\log \infty=\infty$, $\log 0=-\infty$, $0/0=0$, and $0\times \infty=0$.</p>
+<p>注意：同entropy不同，KL divergence不仅仅局限于离散型变量，对于连续型变量也是适用的：</p>
+<script type="math/tex; mode=display">
+D_{K L}(p(x) \| q(x))=\int_{-\infty}^{\infty} p(x) \ln \frac{p(x)}{q(x)} d x</script><p>以上也是为什么作者会从KL divergence开始介绍Information Theory，因为KL divergence是一个更加广泛的定义。在实际计算两个分布的的KL divergence时，因为采样会不完全，所以需要用到以上数值的习惯性定义，或者使用function approximation来拟合观察到的分布；另一种做法是在计算的时候使用平滑策略：为两个变量missing $x$值赋予一个小的频率常数$\epsilon$，这部分多出来的频率由其他采样过的$x$支付，这样就保证了所有的频率都是非零的。</p>
+<p><strong>Theorem</strong> (Gibbs’ Inequality). For all $p, q \in \mathcal{P}^{\mathcal{X}}$ , it holds that $d(p, q) \geq 0$, with equality iff $p = q$.</p>
+<p>证明这个定理的思路：</p>
+<ul>
+<li>等价于对于任意的真实分布$p$，$\min d(p,q) = 0$，且等号成立条件为$q=p$.</li>
+<li>使用拉格朗日乘数法计算梯度为0的点即可.</li>
+</ul>
+<p>注意：这条定理告诉我们为什么KL divergence和距离的定义非常相似，因为它满足了距离中的正则性。而同时我们需要注意的是它并不满足距离的对称性以及距离的三角不等式性质。</p>
+<p>在机器学习中，我们经常需要做极大似然估计：</p>
+<script type="math/tex; mode=display">
+\theta^{*}=\underset{\theta}{\operatorname{argmax}} \prod_{i=1}^{n} p_{X}^{\theta}\left(x_{i}\right)</script><p>其中，$p_{X}^{\theta}$表示的是由参数$\theta$决定的在随机变量$X$上的概率分布。而其实我们可以证明，极大似然估计的等价就是极小KL divergence函数的优化：</p>
+<script type="math/tex; mode=display">
+\theta^{*} = \arg\min_\theta d(\hat{p}_X,p^\theta_X)</script><h1 id="Entropy"><a href="#Entropy" class="headerlink" title="Entropy"></a>Entropy</h1><p><strong>Definition</strong> (Shannon Entropy). The <strong>Shannon entropy</strong> of $p \in \mathcal{P}^{\mathcal X}$ is</p>
+<script type="math/tex; mode=display">
+H(p) \triangleq-\sum_{x \in \mathcal{X}} p(x) \log p(x)</script><p>我们也使用 $H(X)$ 来表示随机变量$X$的熵。</p>
+<p><strong>Theorem</strong> The Shannon entropy is related to the divergence according to the formula</p>
+<script type="math/tex; mode=display">
+H(p) = \log |X| - d(p,u)</script><p>其中$u$表示在集合$X$上的均匀分布。通过这条定理我们可以知道一个分布的熵和你相信这个分布是均匀分布时得到的surprise是负相关的，同时因为Gibbs’ Inequality，我们知道当一个分布是均匀分布的时候熵取到最大。另外，这条定理也告诉我们熵是不能够在连续型随机变量上定义的，因为在$\mathbb R$上是没有“均匀分布的”.</p>
+<p>而对于更加常规的信息论学习，通常是先介绍Entropy的定义，然后转而介绍KL divergence等。Entropy翻译作信息熵，也就是一个离散型随机变量的不确定性。不确定性的定义可以被表示成一个编码问题：一个alphabet中的每个事件已知其发生的概率分布，该如何对每个事件进行编码从而能够复出最小的代价？以下为结论：如果事件$x$发生的概率为$p(x)$，最优编码位数为$-\log_2{p(x)}$，则该事件的总代价为$-p(x)\log_2{p(x)}$。从而有了以上的Entropy定义。均匀分布的时候拥有最大的不确定性，也就是对其编码的代价最大。</p>
+<h2 id="Conditional-Entropy"><a href="#Conditional-Entropy" class="headerlink" title="Conditional Entropy"></a>Conditional Entropy</h2><p>概率论中最美妙的就是引入了Conditional Probability $P(A|B)$，也就是$B$事件发生的前提下$A$事件发生的概率。同样的在信息论中我们也会关注到多变量分布的情况。为了表述清晰，以下是我们会用到的符号及其意义：</p>
+<ul>
+<li>$p_{X} \in \mathcal{P}^{\mathcal X}$: 一个在alphabet $\mathcal X$上的随机变量$X$的分布$p$</li>
+<li>$p_{Y} \in \mathcal{P}^{\mathcal Y}$: 一个在alphabet $\mathcal Y$上的随机变量$Y$的分布$p$</li>
+<li>$p_{X,Y} \in \mathcal{P}^{\mathcal X \times \mathcal Y}$: 一个在他们上面的联合分布$p$</li>
+<li>$p_{X} \otimes p_{Y} \in \mathcal{P}^{\mathcal{X} \times \mathcal Y}$: 定义为边缘分布的乘积，也即$\left(p_{X} \otimes p_{Y}\right)(x, y)= p_{X}(x) p_{Y}(y)$.</li>
+</ul>
+<p><strong>Definition</strong> (Conditional Entropy). The <strong>conditional entropy</strong> of $X$ given $Y$ is</p>
+<script type="math/tex; mode=display">
+H(X | Y) \triangleq \sum_{x, y \in \mathcal{X} \times \mathcal{Y}} p_{X, Y}(x, y) \log p_{X | Y}(x | y)</script><p>注意：有人可能会觉得为了维持对称性，需要将条件熵定义为：</p>
+<script type="math/tex; mode=display">
+\tilde{H}(X | Y)=\sum_{x, y \in \mathcal{X} \times \mathcal{Y}} p_{X | Y}(x | y) \log p_{X | Y}(x | y)</script><blockquote>
+<p>However, a quick think makes clear that this definition isn’t appropriate, because it doesn’t include any information about the distribution of $Y$. If $Y$ is concentrated around some very informative (or uninformative) values, then $\tilde H$ won’t notice that some values are more valuable than others. </p>
+</blockquote>
+<p><strong>Theorem</strong> The conditional entropy is related to the unconditional entropy as</p>
+<script type="math/tex; mode=display">
+H(X|Y)= H(X,Y)-H(Y)</script><p>where $H(X,Y)$ is the entropy of the joint distribution $p_{X,Y}$. </p>
+<p>这一条定理非常容易记住，只需要和条件概率公式进行比对：</p>
+<script type="math/tex; mode=display">
+p_{X|Y}(x|y)={p_{X,Y}(x,y)\over p_Y(y)}</script><p>或者用更加通俗易懂的语言来解释它：</p>
+<blockquote>
+<p>The uncertainty you have about $X$ given that you’ve been told $Y$ is equal to the uncertainty you had about both $X$ and $Y$ , less the uncertainty that was resolved when you learned $Y$.</p>
+</blockquote>
+<p><strong>Theorem</strong> (Side Information reduces uncertainty). </p>
+<script type="math/tex; mode=display">
+H(X|Y) \leq H(X)</script><p>该定理：额外的信息不会增加一个随机变量的不确定性。提供额外的信息$Y$造成的增益$H(X)-H(X|Y) \geq 0$，增益为0时就是$Y$和$X$互不相关(Y carries no information about X)。</p>
+<h1 id="Information"><a href="#Information" class="headerlink" title="Information"></a>Information</h1><p><strong>Definition</strong> (Mutual Information). The <strong>mutual information</strong> $I(X,Y)$ in $Y$ about $X$ is </p>
+<script type="math/tex; mode=display">
+I(X,Y) \triangleq H(X) - H(X|Y).</script><p><strong>Theorem</strong> The mutual information may also be written as</p>
+<script type="math/tex; mode=display">
+\begin{align}
+I(X,Y) &= d(p_{X,Y}, p_{X} \otimes p_{Y}) \\
+&= \mathbb E _Y[d(p_{X|Y}, p_X)]
+\end{align}</script><p>以上的两个表示方法能够通过简单的代数推导得出，而根据第一条等式我们互换$XY$变量可以得到以下推论</p>
+<p><strong>Corrolary</strong> The mutual information is symmetric:</p>
+<script type="math/tex; mode=display">
+I(X,Y) = I(Y,X)</script><p>而第二条等式的含义则是如果你选择无视$Y$给出的side information并还是认为分布是按照$p_X$的，那么mutual information或者就等于你选择忽视和接受Y之间的surprise。</p>
+<p><strong>Theorem</strong> (Data Processing Inequality). Let $X$ and $Y$ be random variables, and let $Z = g(Y)$, where $g$ is any function $g : Y \rightarrow Z$. Then,</p>
+<script type="math/tex; mode=display">
+I(X,Z) \leq I(X,Y)</script><p>这条定理告诉我们，对于一个作为side information的随机变量，对这个变量（或者该变量的估计）进行任意的函数映射操作，所得到的结果作为新的side information，其提供的mutual information一定不会超过原来的随机变量。</p>
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">February 17th 2020, 3:59:39 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">February 17th 2020, 4:39:52 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/02/11/Some-Maths/" title="Metric Space">
+                    <div class="prevTitle">Metric Space</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -454,6 +599,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Divergence"><span class="toc-number">1.</span> <span class="toc-text">Divergence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Entropy"><span class="toc-number">2.</span> <span class="toc-text">Entropy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Conditional-Entropy"><span class="toc-number">2.1.</span> <span class="toc-text">Conditional Entropy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Information"><span class="toc-number">3.</span> <span class="toc-text">Information</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -745,6 +908,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
