@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.8k</span>阅读时长: <span class="post-count reading-time">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -409,6 +409,8 @@ height:50vh;
 <li><a href="https://www.zhihu.com/question/26822364" target="_blank" rel="noopener">Laplacian explanation on Zhihu</a></li>
 <li><a href="http://www.norbertwiener.umd.edu/Research/lectures/2014/MBegue_Prelim.pdf" target="_blank" rel="noopener">Graph Fourier Transformation Tutorial</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/67336297" target="_blank" rel="noopener">拉普拉斯算子和拉普拉斯矩阵</a></li>
+<li><a href="https://arxiv.org/abs/1606.09375" target="_blank" rel="noopener">paper “Chebyshev Spectral CNN (ChebNet)”</a> </li>
+<li><a href="https://arxiv.org/abs/0912.3848" target="_blank" rel="noopener">paper “Wavelets on Graphs via Spectral Graph Theory”</a></li>
 </ul>
 <h1 id="Notations"><a href="#Notations" class="headerlink" title="Notations"></a>Notations</h1><p><strong>Definition 1</strong> (Graph). A <strong>graph</strong> is represented as $G=(V,E)$, where $V$ is the set of vertices or nodes, and $E$ is the set of edges. In the graph, let $v_i \in V$ to denote a node and $e_{ij}=(v_i, v_j) \in E$ to denote an edge pointing from $v_i$ to $v_j$. （文章中写的是$v_j$ to $v_i$）</p>
 <p><strong>Definition 2</strong> (Adjacency matrix &amp; degree matrix). The <strong>adjacency matrix</strong> $A$ of a graph is a $n\times n$ matrix with</p>
@@ -420,7 +422,8 @@ A_{ij} = \left\{
     \end{array}
 \right.</script><p>The <strong>degree matrix</strong> $D$ is a $n\times n$ diagonal matrix with</p>
 <script type="math/tex; mode=display">
-D_{ii}=\sum_{j=1}^n A_{ij} .</script><p><strong>Definition 3</strong> (Neighborhood of a node). The <strong>neighborhood of a node</strong> $v$ is defined as </p>
+D_{ii}=\sum_{j=1}^n A_{ij} .</script><p><strong>Lemma 1</strong> (Power of adjacency matrix). Let $G$ be a weighted graph, with binary adjacency matrix $A$.  Let $\tilde A$ be the adjacency matrix with unit loops added on every vertex, e.g. $A_{m,n} =\tilde A_{m,n}$ for $m\neq n$ and $\tilde A_{m,n} =1$ for $m=n$. Then for each $s &gt; 0$, $(\tilde A^s)_{m,n}$ equals the number of paths of length s connecting $m$ and $n$, and $(\tilde A^s)_{m,n}$ equals the number of all paths of length $r \leq s$ connecting m and n. <strong>（注意：这条引理对于GNN之后推导Locality非常重要）</strong></p>
+<p><strong>Definition 3</strong> (Neighborhood of a node). The <strong>neighborhood of a node</strong> $v$ is defined as </p>
 <script type="math/tex; mode=display">
 N(v)=\{u \in V | (u,v) \in E\}</script><p><strong>Definition 4</strong> (Node attributes). The <strong>node attributes of the graph</strong> is represented as $X$, where $X \in \mathbb R ^{n\times d}$ is called as node feature matrix. $x_v \in \mathbb R^d$ represents the feature vector of node $v$. </p>
 <p><strong>Definition 5</strong> (Edge attributes). The <strong>edge attributes of the graph</strong> is represented as $X^e$, where $X^e \in \mathbb R^{m\times c}$ is an edge feature matrix with $x_{v,u}^e ∈ \mathbb R^c$ representing the feature vector of an edge $(v, u)$.</p>
@@ -490,10 +493,11 @@ L = KK^T=D-A</script><p>where $K$, $A$ and $D$ is the incidence matrix, adjacenc
 E(f)=\frac{1}{2}\sum_{u∼v}w_{uv}(f(u)-f(v))^2=\|K^Tf\|^2=f^TLf</script><p>在单位球面（$f^Tf=1​$）上能够minimize Dirichlet energy的 $f​$ 就是 $L​$ 的smallest nonzero eigenvector。关于这部分的内容在<a href="https://www.quora.com/Whats-the-intuition-behind-a-Laplacian-matrix-Im-not-so-much-interested-in-mathematical-details-or-technical-applications-Im-trying-to-grasp-what-a-laplacian-matrix-actually-represents-and-what-aspects-of-a-graph-it-makes-accessible" target="_blank" rel="noopener">Graph Laplacian explanation on Quora</a>有更多的解释。</p>
 <h1 id="Graph-Convolution"><a href="#Graph-Convolution" class="headerlink" title="Graph Convolution"></a>Graph Convolution</h1><p><strong>Definition 11</strong> (Normalized Graph Laplacian Matrix). The <strong>normalized graph laplacian matrix</strong> $L_n$ is defined as</p>
 <script type="math/tex; mode=display">
-L_n =I-D^{- \frac{1}{2} } A D^{- \frac{1}{2} }</script><p><strong>Lemma 1</strong> (Spectral Decomposition). If $A$ is a real symetric matrix, then it can be decomposed as</p>
+L_n =I-D^{- \frac{1}{2} } A D^{- \frac{1}{2} }</script><p><strong>Lemma 1*</strong> (Locality of High Power of Laplacian matrix). Let $G$ be a weighted graph, $L$ the graph Laplacian (normalized or non-normalized) and $s &gt; 0$ an integer. For any two vertices $m$ and $n$, if $d_G(m, n) &gt; s$ then $(L^s)_{m,n} = 0​$. 这条引理告诉我们高次的graph laplacian具有高次的局部连通性，具体的证明参考<a href="https://arxiv.org/abs/0912.3848" target="_blank" rel="noopener">paper “Wavelets on Graphs via Spectral Graph Theory”</a>。</p>
+<p><strong>Lemma 2</strong> (Spectral Decomposition). If $A$ is a real symetric matrix, then it can be decomposed as</p>
 <script type="math/tex; mode=display">
 A =Q\Lambda Q^T</script><p>where $Q$ is an orthogonal matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix whose entries are the eigenvalues of $A$.</p>
-<p>利用<strong>Lemma 1</strong>，我们可以将normalized graph Laplacian $L_n$分解为</p>
+<p>利用<strong>Lemma 2</strong>，我们可以将normalized graph Laplacian $L_n$分解为</p>
 <script type="math/tex; mode=display">
 L_n=U\Lambda U^T</script><p>其中 $U$ 是由$L_n$的特征向量作为列向量构成的$n\times n$方阵，$U$构成了一个orhonormal space，即$U^TU=I$。$\Lambda$是对角元素为$U$对应的特征值的对角阵，$\Lambda$也被称为谱（spectrum）。</p>
 <p><strong>Definition 12</strong> (Graph Fourier Transform). The <strong>graph Fourier transform</strong> is defined by</p>
@@ -509,8 +513,16 @@ L_n=U\Lambda U^T</script><p>其中 $U$ 是由$L_n$的特征向量作为列向量
 <script type="math/tex; mode=display">
 \begin{aligned} \mathbf{x} *_{G} \mathbf{g} &=\mathscr{F}^{-1}(\mathscr{F}(\mathbf{x}) \odot \mathscr{F}(\mathbf{g})) \\ &=\mathbf{U}\left(\mathbf{U}^{T} \mathbf{x} \odot \mathbf{U}^{T} \mathbf{g}\right) \end{aligned}</script><p>If we denote a filter as $g_\theta = \text{diag}(U^Tg)$, then the spectral graph convolution is simplified as</p>
 <script type="math/tex; mode=display">
-\mathbf{x} *_{G} \mathbf{g}_{\theta}=\mathbf{U} \mathbf{g}_{\theta} \mathbf{U}^{T} \mathbf{x}</script><p>所有的Spectral-based ConvGNNs都遵循这个convolution的定义，主要的区别就在于选取不同的filter $g$. </p>
-
+\begin{align}
+\mathbf{x} *_{G} \mathbf{g} _{\theta}
+&= \mathbf{U}\left(\mathbf{U}^{T} \mathbf{x} \odot \mathbf{U}^{T} \mathbf{g}\right) \\
+&= \mathbf{U}\left(\mathbf{U}^{T} \mathbf{g} \odot \mathbf{U}^{T} \mathbf{x}\right) \\
+&= \mathbf{U}\left(\text{diag}(\mathbf{U}^{T} \mathbf{g}) (\mathbf{U}^{T} \mathbf{x}\right)) \\
+&= \mathbf{U} \mathbf{g}_{\theta} \mathbf{U}^{T} \mathbf{x}
+\end{align}</script><p>所有的Spectral-based ConvGNNs都遵循这个convolution的定义，主要的区别就在于选取不同的filter $g$. 这里我们可以看到，因为$U$是orthonormal basis，所以$U^T$是一个可逆矩阵，也是一个可逆映射。因此当我们参数化$g$的时候可以将这一步矩阵乘法省略，用一个简单的对角矩阵来代替即可。</p>
+<p>如果我们将spectrum $\Lambda$作为$g_\theta$的参数，那么我们称满足以下条件的filter称为non-parametric filter，也就是这个filter的自由度就是自身的维度。</p>
+<script type="math/tex; mode=display">
+g_{\theta}(\Lambda)=\operatorname{diag}(\theta)</script>
     </article>
     <!-- license  -->
     
@@ -518,13 +530,18 @@ L_n=U\Lambda U^T</script><p>其中 $U$ 是由$L_n$的特征向量作为列向量
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/22/Graph-Neural-Networks-Basics/">http://www.shihaizhou.com/2020/02/22/Graph-Neural-Networks-Basics/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/22/Graph-Neural-Networks-Basics/">February 22nd 2020, 11:28:57 am</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/22/Graph-Neural-Networks-Basics/">February 22nd 2020, 12:37:32 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/22/Graph-Neural-Networks-Basics/">February 22nd 2020, 6:50:34 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/02/23/Algorithms-and-Grammar-of-java/" title="Grammar of Java">
+                    <div class="nextTitle">Grammar of Java</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -774,9 +791,14 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 10
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -787,22 +809,13 @@ top:50vh;
     
     
     
-    <div class="archive-year"> Invalid date </div>
+    <div class="archive-year"> 2020 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">Grammar of Java</a>
         </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -839,6 +852,29 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">08/13</span><a class="archive-post-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">Emergent Communication Through Negotiation</a>
         </li>
@@ -867,21 +903,23 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
     
-        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
-    
         <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
     
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
+    
+        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+    
         <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
-        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
+        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
     
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
-        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Metric Space · N1H111SM&#39;s Miniverse</title>
+    <title>N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">N1H111SM&#39;s Miniverse</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">Metric Space</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            Metric Space
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">269</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/02/11</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,125 +338,45 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="度量空间"><a href="#度量空间" class="headerlink" title="度量空间"></a>度量空间</h1><p>度量空间也叫做距离空间（metric space）。这是一种拓扑空间，其上的拓扑由指定的距离决定。在一个空间中引入距离是为了刻画“收敛”这个概念，同时距离也能够定义在向量空间中的（准）范数。</p>
-<h3 id="距离空间"><a href="#距离空间" class="headerlink" title="距离空间"></a>距离空间</h3><p>距离空间$\mathscr{X}$是指非空集$\mathscr{X}$上定义了一个双变量的实值函数$\rho(x,y)$，该函数满足以下三个条件：</p>
-<ul>
-<li>$\rho(x,y) \geq 0$，等号成立条件当且仅当$x=y$ （非负）</li>
-<li>$\rho(x,y)=\rho(y,x)$ （可交换）</li>
-<li>$\rho(x,y)\leq \rho(x,z) + \rho(z,y)$ （三角不等式）</li>
-</ul>
-<p>以$\rho$为距离的度量空间记作$(\mathscr{X}, \rho)$。“距离”的概念是对欧式空间距离的抽象，不难发现欧式空间两点间的距离满足以上的条件。</p>
-<h3 id="空间-C-a-b"><a href="#空间-C-a-b" class="headerlink" title="空间$C[a,b]$"></a>空间$C[a,b]$</h3><p>空间$C[a,b]$定义为在区间$[a.b]$上的连续函数全体（即这个空间内的点就是函数）。在其上定义距离</p>
-<script type="math/tex; mode=display">
-\rho(x,y) \triangleq \max_{a<t<b}|x(t)-y(t)|</script><p>距离空间$(C[a,b], \rho)$在以后简记为$C[a,b]$.</p>
-<h3 id="收敛"><a href="#收敛" class="headerlink" title="收敛"></a>收敛</h3><p>距离空间$(\mathscr{X}, \rho)$上的点列$\{x_n\}$叫做收敛到$x_0$指的是：</p>
-<script type="math/tex; mode=display">
-\rho\left(x_{n}, x_{0}\right) \rightarrow 0(n \rightarrow \infty)</script><p>这时也记作$\lim _{n \rightarrow \infty} x_{n}=x_{0}$，或者简单记作$x_n \rightarrow x_0$.</p>
-<p>而在函数空间$C[a,b]$中的点列$\{x_n\}$收敛到$x_0$指的是$\{x_n(t)\}$一致收敛到$x_0(t)$.</p>
-<h3 id="完备"><a href="#完备" class="headerlink" title="完备"></a>完备</h3><p>基本列（柯西列）：点列$\{x_n\}$是基本列，如果 $\rho\left(x_{n}, x_{m}\right) \rightarrow 0(n, m \rightarrow \infty)$。</p>
-<p>如果空间中的所有基本列都是收敛列，那么这个空间就是完备的。</p>
-<h3 id="连续映射"><a href="#连续映射" class="headerlink" title="连续映射"></a>连续映射</h3><p>设$T:(\mathscr{X}, \rho) \rightarrow(\mathscr{Y}, r)$ 是一个映射。如果对于$\mathscr{X}$中的任意点列$\{x_n\}$和点$x_0$，都有：</p>
-<script type="math/tex; mode=display">
-\rho\left(x_{n}, x\right) \rightarrow 0 \Rightarrow r\left(T x_{n}, T x_{0}\right) \rightarrow 0 \quad(n \rightarrow \infty)</script><p>则称映射$T$是连续的。</p>
-<h3 id="压缩映射"><a href="#压缩映射" class="headerlink" title="压缩映射"></a>压缩映射</h3><p>设$T:(\mathscr{X}, \rho) \rightarrow(\mathscr{X}, \rho)$ 是一个到自身的映射。如果存在$0&lt;\alpha&lt;1$，使得对于任意的$x,y \in \mathscr{X}$，都有：</p>
-<script type="math/tex; mode=display">
-\rho(T x, T y) \leqslant \alpha \rho(x, y)</script><p>则称映射$T$为一个压缩映射。</p>
-<h3 id="Banach不动点定理（压缩映射原理）"><a href="#Banach不动点定理（压缩映射原理）" class="headerlink" title="Banach不动点定理（压缩映射原理）"></a>Banach不动点定理（压缩映射原理）</h3><p>假设$(\mathscr{X}, \rho)$是一个完备的距离空间，$T$是这个距离空间上到自身的一个压缩映射，则在该空间上存在唯一的不动点$x^<em>$，使得$Tx^</em>=x^*$.</p>
-<h1 id="线性赋范空间"><a href="#线性赋范空间" class="headerlink" title="线性赋范空间"></a>线性赋范空间</h1><p>距离空间中只有拓扑结构，但是在分析函数空间的时候还需要考虑元素之间的代数运算。</p>
-<h2 id="线性空间"><a href="#线性空间" class="headerlink" title="线性空间"></a>线性空间</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>设$\mathscr{X}$为一个非空集，$\mathbb{K}$为实（复）数域，如果下列条件满足，则称$\mathscr{X}$为实（复）线性空间。</p>
-<ul>
-<li>$\mathscr{X}$是一个加法交换群，也即：<ul>
-<li>$x+y=y+x$ （加法交换律）</li>
-<li>$(x+y)+z = x+(y+z)$ （加法结合律）</li>
-<li>存在唯一的$\theta \in \mathscr{X}$，使得$\forall x \in \mathscr{X}, x+\theta=\theta+x$ （唯一零元）</li>
-<li>对$\forall x \in \mathscr{X}$, 存在唯一的$ x^{\prime} \in \mathscr{X}$，使得$x+x^\prime=\theta$，记为$-x$（唯一负元）</li>
-</ul>
-</li>
-<li>定义了数域$\mathbb{K}$中的数$a$和$x\in \mathscr{X}$的数乘运算，满足以下条件：<ul>
-<li>$a(\beta x)=(a \beta) x $ （数乘的结合律）</li>
-<li>$1 \cdot x=x$ （乘法零元）</li>
-<li>$(a+\beta) x=a x+\beta x$ （分配率）</li>
-<li>$a(x+y)=a x+a y$ （分配率）</li>
-</ul>
-</li>
-</ul>
-<h3 id="线性空间上的距离"><a href="#线性空间上的距离" class="headerlink" title="线性空间上的距离"></a>线性空间上的距离</h3><p>线性空间上的距离定义一共需要满足两个关键条件：</p>
-<p><strong>一、平移的不变性：</strong></p>
-<script type="math/tex; mode=display">
-\rho(x+z, y+z)=\rho(x, y) \quad(\forall x, y, z \in \mathscr{X})</script><p>而通过平移的不变性能够推出距离函数是对加法连续的，即：</p>
-<script type="math/tex; mode=display">
-\left.\begin{array}{l}{\rho\left(x_{n}, x\right) \rightarrow 0} \\ {\rho\left(y_{n}, y\right) \rightarrow 0}\end{array}\right\} \Rightarrow \rho\left(x_{n}+y_{n}, x+y\right) \rightarrow 0</script><p>证明步骤只需要根据平移不变形的定义就可，在此省略。事实上，这两者是相互等价的。</p>
-<p><strong>二、数乘的连续性：</strong></p>
-<p>数乘连续性定义为以下：</p>
-<ul>
-<li>$\rho\left(x_{\mathfrak{n}}, x\right) \rightarrow 0 \Rightarrow \rho\left(a x_{\mathfrak{n}}, a x\right) \rightarrow 0 \quad(\forall a \in \mathbb{K})$</li>
-<li>$a_{n} \rightarrow a(\mathbb{K}) \Rightarrow \rho\left(a_{n} x, a x\right) \rightarrow 0 \quad(\forall x \in \mathscr{X})$</li>
-</ul>
-<h3 id="线性空间上的准范数（模）"><a href="#线性空间上的准范数（模）" class="headerlink" title="线性空间上的准范数（模）"></a>线性空间上的准范数（模）</h3><p>在距离的基础上定义一个单值函数$p$：</p>
-<script type="math/tex; mode=display">
-p: \mathscr{X} \rightarrow \mathbb{R}^{1}, \quad p(x) \triangleq \rho(x, \theta) \quad(\forall x \in \mathscr{X})</script><p>通过距离函数本身的3个性质，我们能够得出这个单值函数$p$的性质（略过）。而事实上，这个单值函数是我们刻画一个点大小的量，也就是准范数。</p>
-<p>线性空间$\mathscr{X}$上的准范数定义为该空间上的的一个函数$|\cdot|: \mathscr{X} \rightarrow \mathbb{R}^{1}$，满足以下条件：</p>
-<ul>
-<li>$|x| \geqslant 0 \quad(\forall x \in \mathscr{X});|x|=0 \Leftrightarrow x=\theta$ （正定性）</li>
-<li>$| x+y|\leqslant| x|+| y | \quad(\forall x, y \in \mathscr{X})$ （三角不等式）</li>
-<li>$|-x|=|x| \quad(\forall x \in \mathscr{X})$ （逆元范数相等）</li>
-<li>$\lim _{a_n \rightarrow 0}\left|a_{n} x\right|=0, \lim _{|x_n| \rightarrow 0}\left|a x_{n}\right|=0(\forall x \in \mathscr{X}, \quad \forall a \in \mathbb{R})$ （对数乘连续）</li>
-</ul>
-<p>如果在赋准范数空间$\mathscr{X}$上用准范数来定义收敛，即：</p>
-<script type="math/tex; mode=display">
-\|x_n-x\|\rightarrow 0 \triangleq x_n \rightarrow x</script><p>那么这个空间就称作<strong>${F^*}$空间</strong>；如果这个空间同时又是完备的，那么这个空间就称作<strong>$F$空间</strong>。</p>
-<h3 id="Banach空间与范数"><a href="#Banach空间与范数" class="headerlink" title="Banach空间与范数"></a>Banach空间与范数</h3><p>在准范数的基础上增加齐次性条件，准范数便成为了范数。其中齐次性条件指的是：</p>
-<script type="math/tex; mode=display">
-\|a x\|=|a|\|x\| \quad(\forall a \in \mathbb{K}, \quad \forall x \in \mathscr{X})</script><p>当赋准范数的线性空间中的准范数是范数时，这个线性空间称为$B^<em>$空间；完备的$B^</em>$空间称作$B$空间，也就是Banach空间。我们也叫该空间为线性赋范空间。</p>
-<h3 id="线性赋范空间上的模等价"><a href="#线性赋范空间上的模等价" class="headerlink" title="线性赋范空间上的模等价"></a>线性赋范空间上的模等价</h3><p>和开头所介绍的一样，引入距离和范数是为了研究一种收敛性。因此我们可以认为导致同一种收敛性的不同范数是等价的。更加准确地说：</p>
-<p>假设在线性空间$\mathscr{X}$上定义了两个范数$|\cdot|_1$以及$|\cdot|_2$，如果在$n\rightarrow \infty$时，$\left|x_{n}\right|_{2} \rightarrow 0 \Rightarrow\left|x_{n}\right|_{1} \rightarrow 0$，则我们认为$|\cdot|_1$比$|\cdot|_2$强。而如果两个范数互相都比对方强，则我们认为两个范数等价。</p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/11/Some-Maths/">http://www.shihaizhou.com/2020/02/11/Some-Maths/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/11/Some-Maths/">February 11th 2020, 3:58:43 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/11/Some-Maths/">February 13th 2020, 7:52:20 pm</a>
-            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">
+            
+                <span>Google Research Football - RL Environment</span>
+        </a>
+        <div class="abstract-content">
+            Novel Google Football Virtual Environment paper notes.
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="paper">paper</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2020/02/17/Information-Theory-Simple-Concepts/" title="Information Theory">
-                    <div class="nextTitle">Information Theory</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/" title="RL(4) - Value Function Approximation">
-                    <div class="prevTitle">RL(4) - Value Function Approximation</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
+    </nav>
     
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -599,24 +458,6 @@ p: \mathscr{X} \rightarrow \mathbb{R}^{1}, \quad p(x) \triangleq \rho(x, \theta)
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#度量空间"><span class="toc-number">1.</span> <span class="toc-text">度量空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#距离空间"><span class="toc-number">1.0.1.</span> <span class="toc-text">距离空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间-C-a-b"><span class="toc-number">1.0.2.</span> <span class="toc-text">空间$C[a,b]$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#收敛"><span class="toc-number">1.0.3.</span> <span class="toc-text">收敛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完备"><span class="toc-number">1.0.4.</span> <span class="toc-text">完备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连续映射"><span class="toc-number">1.0.5.</span> <span class="toc-text">连续映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#压缩映射"><span class="toc-number">1.0.6.</span> <span class="toc-text">压缩映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Banach不动点定理（压缩映射原理）"><span class="toc-number">1.0.7.</span> <span class="toc-text">Banach不动点定理（压缩映射原理）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线性赋范空间"><span class="toc-number">2.</span> <span class="toc-text">线性赋范空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性空间"><span class="toc-number">2.1.</span> <span class="toc-text">线性空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">2.1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性空间上的距离"><span class="toc-number">2.1.2.</span> <span class="toc-text">线性空间上的距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性空间上的准范数（模）"><span class="toc-number">2.1.3.</span> <span class="toc-text">线性空间上的准范数（模）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Banach空间与范数"><span class="toc-number">2.1.4.</span> <span class="toc-text">Banach空间与范数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性赋范空间上的模等价"><span class="toc-number">2.1.5.</span> <span class="toc-text">线性赋范空间上的模等价</span></a></li></ol></li></ol></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -937,8 +778,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
