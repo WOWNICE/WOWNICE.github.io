@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Google Research Football - RL Environment · N1H111SM&#39;s Miniverse</title>
+    <title>N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">N1H111SM&#39;s Miniverse</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">Google Research Football - RL Environment</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -231,76 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            Google Research Football - RL Environment
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="paper">paper</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/06/12</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -401,109 +338,70 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>源github地址：<a href="https://github.com/google-research/football" target="_blank" rel="noopener">google football research github page</a></p>
-<p>源paper地址：<a href="https://github.com/google-research/football/blob/master/paper.pdf" target="_blank" rel="noopener">google football research paper</a></p>
-<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>文章提出了一个新的Google Research Football Environment，该环境是一个基于物理引擎的足球环境，非常容易迁移，并且是基于开源licence的。文章同时提出了三个不同难度的full-game sceario，提出了Football Benchmarks来标定模型的表现。同时文章测试了3个常用的强化学习模型（IMPALA, PPO, Ape-X DQN）。最后文章还提出了稍微简单一些的scenario，Football Academy。</p>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>文章的主要贡献为：</p>
-<blockquote>
-<ul>
-<li>provide the Football Engine, a highly-optimized game engine that simulates the game of football,</li>
-<li>propose the Football Benchmarks, a versatile set of benchmark tasks of varying difficulties that can be used to compare different algorithms,</li>
-<li>propose the Football Academy, a set of progressively<br>harder and diverse reinforcement learning scenarios,</li>
-<li>evaluate state-of-the-art algorithms on both the Football<br>Benchmarks and the Football Academy, providing an extensive set of reference results for future comparison, and</li>
-<li>sprovide a simple API to completely customize and define<br>new football reinforcement learning scenarios.</li>
-</ul>
-</blockquote>
-<h1 id="Football-Engine"><a href="#Football-Engine" class="headerlink" title="Football Engine"></a>Football Engine</h1><p>本文的Football Environment是基于另一个工作<em>GameplayFootball</em> simulator.引擎模拟了整个足球游戏，它接收来自两方球队的input action。该引擎实现了足球比赛的众多方面，包括开球，进球，犯规，角球，点球以及边线球。</p>
-<h2 id="支持的足球规则"><a href="#支持的足球规则" class="headerlink" title="支持的足球规则"></a>支持的足球规则</h2><p>几乎所有的足球规则，甚至包括换人。游戏长度是按照frame来进行计算的，默认的整场游戏是3000 frames，但是这一点可以进行customize，初始player数量以及他们的位置也可以被调整。每方的球员会随着时间变长而疲倦，而每一方只能最多进行3次换人。</p>
-<h2 id="内置AI对手"><a href="#内置AI对手" class="headerlink" title="内置AI对手"></a>内置AI对手</h2><p>内置的AI对手是rule based AI，由<em>GameplayFootball</em> simulator开发。困难指数$\theta$是通过调节对手的决策反应时间来影响对手的难度的。推荐的三个难度等级easy, medium, hard的$\theta$值分别为0.05, 0.6, 0.95，我们还能够将内置的AI对手换为我们自己的算法。然后文章介绍了我们最关心的问题：</p>
-<blockquote>
-<p>Moreover, by default, our non-active players are also con- trolled by another rule-based bot. In this case, the behav- ior is simple and corresponds to reasonable football actions and strategies, such as running towards the ball when we are not in possession, or move forward together with our active player. In particular, this type of behavior can be turned off for future research on cooperative multi-agents if desired.</p>
-</blockquote>
-<p>也就是说除了当前的player是自己控制的，其余的player现阶段是通过rule-based的方式被控制的，但是未来我们可以将这个特性关掉从而借助该环境进行multi-agents的研究。</p>
-<h2 id="State-amp-Observation"><a href="#State-amp-Observation" class="headerlink" title="State &amp; Observation"></a>State &amp; Observation</h2><p>文章定义state为游戏当前的所有状态信息的集合（complete set of data returned by the environment after actions are performed），包括ball position/possession, coordinates of all players, the active player, game state(球员疲惫程度，黄牌，比分等等) and current pixel frame. </p>
-<p>同时文章定义observataion指的是state进行任意一种转换后的结果，该结果是作为input传递给control algorithm的。文章提出了三种representation：</p>
-<ul>
-<li>Pixels： 1280$\times$720 RGB 图像</li>
-<li>Super Mini Map：SMM由四个96$\times$72的矩阵组成，编码了包括了主队、客队、足球以及active player的信息。矩阵是binary的形式，简单来说就是bitmap，表征该位置上是否有上述的物体。</li>
-<li>Floats：一个更加紧凑的representation，115维向量用于表征所有的比赛信息，包括players coordinates, ball possession and direction, active player, or game mode.</li>
-</ul>
-<h2 id="Actions-amp-Accessibility"><a href="#Actions-amp-Accessibility" class="headerlink" title="Actions &amp; Accessibility"></a>Actions &amp; Accessibility</h2><p>动作空间为16个离散化动作，包括八种移动动作对应八个方向、三种传球方向（Short, High, Long）、一种射门动作（Shot）、冲刺动作（Sprint，会影响球员体力值）、停止移动动作（Stop-Moving）、停止冲刺动作（Stop-Sprint）以及不进行动作（Do-Nothing）。</p>
-<p>环境可以用于直接进行玩家和玩家之间的对抗，也可以dueling algorithms。同时游戏可以使用键盘或者gamepad进行。另外replays of several rendering qualities在训练时会被自动保存，便于研究者进行观察。</p>
-<h2 id="随机性"><a href="#随机性" class="headerlink" title="随机性"></a>随机性</h2><p>游戏具有两种模式，可以是随机的或者是确定的。随机性在于同样的状态同样的action可能的导致不同的后果，而确定的模式在同样的策略和同样的状态下总是得到相同的结果。</p>
-<h2 id="API-amp-Performance"><a href="#API-amp-Performance" class="headerlink" title="API &amp; Performance"></a>API &amp; Performance</h2><p>这套Engine是和OpenAI Gym的API兼容的，也就是RL中常见的<code>reset()</code>以及<code>obs, reward, done, info = step(action)</code> 那一套接口，以后有空或许可以对其做一个简单的记录。</p>
-<p>整个Engine是写在经过大量优化的C++代码上的，可以使用GPU进行渲染。实验中在单机16核的机器（Intel Xeon E5-1650 v2 CPU3.5GHz）上每天能够跑25M个step。</p>
-<h1 id="Football-Benchmarks"><a href="#Football-Benchmarks" class="headerlink" title="Football Benchmarks"></a>Football Benchmarks</h1><blockquote>
-<p>Similar to the Atari games in the Arcade Learning Environment, in these tasks, the agent has to interact with a fixed environment and maximize its episodic reward by sequentially choosing suitable actions based on observations of the environment.</p>
-</blockquote>
-<h2 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h2><p>Football Benchmarks的游戏目标是对抗Engine提供的opponent bot取得全场比赛的胜利。同样的，这些benchmarks被分为easy medium 以及 hard三个level。文章采取了三个现阶段比较常用的算法来cover不同的研究场景。PPO用来模拟单机多进程的训练；IMPALA则采用了集群，500个actor的setting；以及Ape-X DQN。这几个算法未来几天有时间可以研究一下。</p>
-<h3 id="IMPALA"><a href="#IMPALA" class="headerlink" title="IMPALA"></a>IMPALA</h3><p>原文地址：<a href="https://arxiv.org/abs/1802.01561" target="_blank" rel="noopener">IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architecture</a></p>
-<p>该算法将learning和acting进行了解耦：单机worker不是将当前policy的gradient传回，而是将experience trajectories传输给center learner，而为了解决off-policy的问题，IMPALA提出了一种actor-critic的更新方法V-trace。本文采用了500个actor，Adam optimizer，进行500M step的训练。</p>
-<h3 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h3><p>原文地址：<a href="https://arxiv.org/abs/1707.06347" target="_blank" rel="noopener">Proximal Policy Optimization Algorithms</a></p>
-<p>该算法是一个online policy gradient算法，它优化一个clipped surrogate objective。本文实验采用了OpenAI的baseline，在16个并行worker上进行实验。同时采用了CNN。</p>
-<h3 id="Ape-X-DQN"><a href="#Ape-X-DQN" class="headerlink" title="Ape-X DQN"></a>Ape-X DQN</h3><p>原文地址：<a href="https://arxiv.org/abs/1803.00933" target="_blank" rel="noopener">Distributed Prioritized Experience Replay</a></p>
-<p>Ape-X DQN是一个高度scalable的DQN版本，和IMPALA相同的是，该算法也将learning和acting解耦，但是它采用了distributed replay buffer和Q-learning variant consisting of dueling network architectures &amp; double Q-learning。很多超参和IMPALA设置得相同（为了更好比较）。</p>
-<h2 id="Reward"><a href="#Reward" class="headerlink" title="Reward"></a>Reward</h2><p>文章提出了两种设置reward的方法，分别为SCORING和CHECKPOINT。SCORING方法就是全场胜负进行+1/-1的奖励反馈。CHECKPOINT是为了解决sparsity问题而提出的。首先将对手的场地划分为10个区域，越接近对手的球门就说明越有利，当一名球员带球穿越region时就会获得+0.1的reward。</p>
-<blockquote>
-<p>First time our player steps into one region with the ball, the reward coming from that region and all previously unvisited further ones will be collected. In to- tal, the extra reward can be up to +1, the same as scoring a goal. To avoid penalizing an agent that would not go through all the checkpoints before scoring, any non-collected checkpoint reward is added to the scoring reward. Checkpoint rewards are only given once per episode.</p>
-</blockquote>
-<p>文章指出，在绝大部分的representation下这种reward的奖励方式是非马尔科夫的，这种CHECKPOINT的奖励设置方法基于我们自己的domain knowledge：越靠近球门越容易进球。</p>
-<h1 id="Football-Academy"><a href="#Football-Academy" class="headerlink" title="Football Academy"></a>Football Academy</h1><p>文章总共提出了11个mini-games：</p>
-<ul>
-<li>Empty Goal Close. 玩家在box中起始，面对空门将球打进。</li>
-<li>Empty Goal. 玩家在场地中间起始，面对空门将球打进。</li>
-<li>Run to Score. 玩家在场地中间起始带球，身后有5名对手追，面对空门将球打进.</li>
-<li>Run to Score with Keeper. 在Run to Score基础上加上Keeper.</li>
-<li>Pass and Shoot with Keeper. 带球者在远端，有人防守；另一玩家在center，无人防守面对门将，需将球打进。</li>
-<li>Run, Pass and Shoot with Keeper. 在Pass and Shoot基础上交换防守者的位置（不带球的玩家有人防守）。</li>
-<li>3 versus 1 with Keeper. 前场三打一，有门将。</li>
-<li>Corner. 标准角球设置，除了允许开角球者进行带球。</li>
-<li>Easy Counter-Attack. 四打一防守，其余无关球员都向球跑动。</li>
-<li>Hard Counter-Attack. 四打二防守。</li>
-<li>11 versus 11 with Lazy Opponents. 全场游戏，只是对手站着不动，只会拦截离自己距离较近的球。</li>
-</ul>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/06/12/Google-Research-Football-RL-Environment/">http://www.shihaizhou.com/2019/06/12/Google-Research-Football-RL-Environment/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/06/12/Google-Research-Football-RL-Environment/">June 12th 2019, 3:08:18 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/06/12/Google-Research-Football-RL-Environment/">June 13th 2019, 10:53:35 am</a>
-            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/02/25/Graph-Convolutional-Neural-Networks/">
+            
+                <span>Graph Convolutional Neural Networks</span>
+        </a>
+        <div class="abstract-content">
+            notes on paper "Semi-Supervised Classification with Graph Convolutional Networks".
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/25</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2020/02/22/Graph-Neural-Networks-Basics/">
+            
+                <span>Graph Neural Networks Basics</span>
+        </a>
+        <div class="abstract-content">
+            Basic Knowledge to understand GNNs.
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/" title="RL(1) - MP, MRP, MDP">
-                    <div class="nextTitle">RL(1) - MP, MRP, MDP</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -585,24 +483,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">2.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Football-Engine"><span class="toc-number">3.</span> <span class="toc-text">Football Engine</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#支持的足球规则"><span class="toc-number">3.1.</span> <span class="toc-text">支持的足球规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置AI对手"><span class="toc-number">3.2.</span> <span class="toc-text">内置AI对手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#State-amp-Observation"><span class="toc-number">3.3.</span> <span class="toc-text">State &amp; Observation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Actions-amp-Accessibility"><span class="toc-number">3.4.</span> <span class="toc-text">Actions &amp; Accessibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机性"><span class="toc-number">3.5.</span> <span class="toc-text">随机性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API-amp-Performance"><span class="toc-number">3.6.</span> <span class="toc-text">API &amp; Performance</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Football-Benchmarks"><span class="toc-number">4.</span> <span class="toc-text">Football Benchmarks</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithms"><span class="toc-number">4.1.</span> <span class="toc-text">Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IMPALA"><span class="toc-number">4.1.1.</span> <span class="toc-text">IMPALA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPO"><span class="toc-number">4.1.2.</span> <span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ape-X-DQN"><span class="toc-number">4.1.3.</span> <span class="toc-text">Ape-X DQN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward"><span class="toc-number">4.2.</span> <span class="toc-text">Reward</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Football-Academy"><span class="toc-number">5.</span> <span class="toc-text">Football Academy</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -970,8 +850,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
