@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shihaizhou.com/"/>
-  <updated>2020-02-27T11:55:55.308Z</updated>
+  <updated>2020-02-28T05:55:11.223Z</updated>
   <id>http://www.shihaizhou.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Graph Attention Networks</title>
+    <link href="http://www.shihaizhou.com/2020/02/28/Graph-Attention-Networks/"/>
+    <id>http://www.shihaizhou.com/2020/02/28/Graph-Attention-Networks/</id>
+    <published>2020-02-28T04:57:44.000Z</published>
+    <updated>2020-02-28T05:55:11.223Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Materials</strong></p><ul><li><a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener">paper “Graph Attention Networks”</a></li></ul><h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>之前的GCN方法将中心节点的信息和K-th neighborhood进行传播，但是认为每个邻接节点的权重是相同的。这篇工作enables (implicitly) specifying different weights to different nodes in a neighborhood, without requiring any kind of costly matrix operation (such as inversion) or depending on knowing the graph structure upfront. In this way, we address several key challenges of spectral-based graph neural networks simultaneously, and make our model readily applicable to <strong>inductive as well as transductive</strong> problems. </p><p>其中的inductive learning problem 包括了 tasks where the model has to generalize to completely unseen graphs. 广义的inductive learning和deductive learning相对：前者指的是给出例子进行归纳从而找到规律；后者指的是给出规则，让学习者运用规则到特定的例子上。</p><h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>在GAT中，这章描述的Graph Attention Layer会从始至终被使用。首先文章采用了一个在节点空间中共享的映射矩阵$W$，两个节点之间的相关性$e_{ij}$通过这个矩阵加上一个函数$a$进行度量，其中$a$是一个参数化的函数：</p><script type="math/tex; mode=display">e_{i j}=a\left(\mathbf{W} \vec{h}_{i}, \mathbf{W} \vec{h}_{j}\right)</script><p>需要注意的是，我们可以将这个相关性计算apply到图中的任意两个节点上而不去考虑图本身的结构。但是一般来说Attention机制被应用在1st-order neighborhood（需要注意的是<strong>中心节点在本文也被定义在1st-order  neighborhood内</strong>）上，经过归一化我们有：</p><script type="math/tex; mode=display">\alpha_{i j}=\operatorname{softmax}_{j}\left(e_{i j}\right)=\frac{\exp \left(e_{i j}\right)}{\sum_{k \in \mathcal{N}_{i}} \exp \left(e_{i k}\right)}</script><p>最后输出层的节点表示$\vec{h}_{i}^{\prime}$为：</p><script type="math/tex; mode=display">\vec{h}_{i}^{\prime}=\sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j} \mathbf{W} \vec{h}_{j}\right)</script><p>为了让self-attention在训练的时候更加稳定，可以使用Multi-head的技术。最后的表示就是多个头结果的concatenation：</p><script type="math/tex; mode=display">\vec{h}_{i}^{\prime}=\|_{k=1}^{K} \sigma\left(\sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p>特别地，在整个网络的最后一层预测层再进行concatenation是不make sense的。通过average和延后的non-linear层我们有：</p><script type="math/tex; mode=display">\vec{h}_{i}^{\prime}=\sigma\left(\frac{1}{K} \sum_{k=1}^{K} \sum_{j \in \mathcal{N}_{i}} \alpha_{i j}^{k} \mathbf{W}^{k} \vec{h}_{j}\right)</script><p><img src="https://i.loli.net/2020/02/28/dWKEa3iwVjNFpJh.png" alt="image.png"></p><p><strong>Discussion and Future Work</strong></p><p>The time complexity of a <strong>single GAT attention head</strong> computing $F^\prime$ features may be expressed as $O(|V|FF^\prime + |E|F^\prime)​$, where F is the number of input features. 因为这仅仅是一个head的计算复杂度，可以看到还是相对较高的。</p><p>未来可以关注的方向有：</p><ul><li>overcoming the practical problems to be able to handle larger batch sizes.</li><li>take advantage of the attention mechanism to perform a thorough analysis on the model interpretability.</li><li>extend the model to incorporate edge features (possibly indicating relationship among nodes) . </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;Materials&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1710.10903&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;paper “Graph Attention 
+      
+    
+    </summary>
+    
+    
+      <category term="GNN" scheme="http://www.shihaizhou.com/tags/GNN/"/>
+    
+  </entry>
   
   <entry>
     <title>Graph Convolutional Neural Networks</title>
