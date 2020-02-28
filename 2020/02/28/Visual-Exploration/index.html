@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>RL(1) - MP, MRP, MDP · N1H111SM&#39;s Miniverse</title>
+    <title>Visual Exploration · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">RL(1) - MP, MRP, MDP</a>
+                <a href="#" class="post-name">Visual Exploration</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            RL(1) - MP, MRP, MDP
+            Visual Exploration
             <!-- 404 -->
             
         </h1>
@@ -266,18 +266,18 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="RL">RL</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="CV">CV</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">3.5k</span>阅读时长: <span class="post-count reading-time">14 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/07/10</span>
+                    <span class="post-intro-time">2020/02/28</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -401,137 +401,58 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="Markov-Property"><a href="#Markov-Property" class="headerlink" title="Markov Property"></a>Markov Property</h1><p>马尔科夫性质指的是状态转移的方程与历史状态无关而仅仅和当前状态相关。用数学表达马尔科夫状态$s_t$：</p>
-<script type="math/tex; mode=display">
-p(s_{t+1}|s_t,a_t)=p(s_{t+1}|h_t,a_t)</script><h1 id="Markov-Process"><a href="#Markov-Process" class="headerlink" title="Markov Process"></a>Markov Process</h1><p>马尔科夫过程也可以被称作马尔科夫链，是一种具有马尔科夫性质的无记忆随机过程。马尔科夫过程由一个有限状态集$S$以及一个状态转移模型$P$构成，其中$P$指定了从某个特定状态转移到另一个状态的概率:</p>
-<script type="math/tex; mode=display">
-P(s_{t+1}=s'|s_t=s)</script><p>需要注意的是在马尔科夫过程的设定中还没有reward或者action，这两项元素会逐步被加进来。如果状态集$S$是有限的，那么我们可以将$P$用一个矩阵表示：</p>
-<script type="math/tex; mode=display">
-P = \left[\matrix{P(s_1|s_1) & P(s_2|s_1) & \ldots & P(s_N|s_1)\\
-                P(s_1|s_2) & P(s_2|s_2) & \ldots & P(s_N|s_2)\\
-                \vdots & \vdots & \ddots & \vdots \\
-                P(s_1|s_N) & P(s_2|s_N) & \ldots & P(s_N|s_N)\\}\right]</script><h1 id="Markov-Reward-Process"><a href="#Markov-Reward-Process" class="headerlink" title="Markov Reward Process"></a>Markov Reward Process</h1><p>马尔科夫奖励过程其实就是马尔科夫链（Markov Chain）加上rewards。马尔科夫奖励过程由以下四项元素组成：</p>
+        <p><strong>Materials</strong></p>
 <ul>
-<li>$S$：代表环境或者世界的一个有限状态集</li>
-<li>$P$：一个状态转移模型，声明了$P(s_{t+1}=s’|s_t=s)$</li>
-<li>$R$：一个奖励函数，声明了在某一状态下agent收到的奖励，$R(s_t=s)=E[r_t|s_t=s]$ </li>
-<li>$\gamma$：对于未来奖励进行加权的折扣因子，$\gamma \in [0,1]$ </li>
+<li><a href="https://arxiv.org/pdf/2001.02192.pdf" target="_blank" rel="noopener">paper “An Exploration of Embodied Visual Exploration”</a></li>
 </ul>
-<h2 id="Parameter-Explanation"><a href="#Parameter-Explanation" class="headerlink" title="Parameter Explanation"></a>Parameter Explanation</h2><h3 id="Horizon"><a href="#Horizon" class="headerlink" title="Horizon"></a>Horizon</h3><p>注意这个名词很少在项目中被提到，简单来说它就是一个episode的time step数目。horizon可以是无限的，如果任意一个horizon都是有限的，那么我们可以将这样的MRP称作Finite MRP。</p>
-<h3 id="Return"><a href="#Return" class="headerlink" title="Return"></a>Return</h3><p>Return $G_t$ 的中文译名我没有关注，在数学上的含义就是从某个时间步$t$开始沿着某个状态$s$的序列获得的奖励之和：</p>
-<script type="math/tex; mode=display">
-G_t=r_t+\gamma r_{t+1}+\gamma^{2}r_{t+2}+\gamma^{3}r_{t+3}+\ldots</script><h3 id="State-Value-Function"><a href="#State-Value-Function" class="headerlink" title="State Value Function"></a>State Value Function</h3><p>状态$s$的状态价值函数指的是从状态$s$出发取得的return的期望值：</p>
-<script type="math/tex; mode=display">
-V(s)=E[G_t|s_t=s]=E[r_t+\gamma r_{t+1}+\gamma^{2}r_{t+2}+\gamma^{3}r_{t+3}+\ldots|s_t=s]</script><h3 id="Discount-Factor"><a href="#Discount-Factor" class="headerlink" title="Discount Factor"></a>Discount Factor</h3><p>折扣因子是小于等于1的正数，这个参数的提出基于两个考虑。第一是能够带来数学上的便利：在其小于1时保证每个状态的状态价值函数的值保证收敛；第二就是符合人在行动时的常见模式：比起远处的reward人们更在意immediate reward。当$\gamma=0$时，意味着模型只考虑immediate reward，成为完全的贪婪模型；当$\gamma=1$时则适用于有限马尔科夫过程，认为未来和当前的reward有相同的重要性。</p>
-<h2 id="Computing-State-Value-Function-for-MRP"><a href="#Computing-State-Value-Function-for-MRP" class="headerlink" title="Computing State Value Function for MRP"></a>Computing State Value Function for MRP</h2><h3 id="Via-simulation"><a href="#Via-simulation" class="headerlink" title="Via simulation"></a>Via simulation</h3><p>首先最直观的方法是通过模拟（simulation）的方法求得每个状态的state value，得到大量的episodes，将所有的return值进行加和求平均即可，<strong>这样做不需要整个环境是符合马尔科夫假设的</strong>。</p>
-<h3 id="Via-matrix-equation"><a href="#Via-matrix-equation" class="headerlink" title="Via matrix equation"></a>Via matrix equation</h3><p>如果马尔科夫假设在应用场景中是合理的，那么我们可以写出一条state value之间的关系式，其含义是 状态$s$的value = 当前状态的immediate reward + 经过折扣的各个状态的价值期望。</p>
-<script type="math/tex; mode=display">
-V(s)=R(s)+\gamma \sum_{s'\in S}{P(s'|s)V(s')}</script><p>因为对于所有的状态都成立，所以我们可以将上面针对某个状态的等式写成矩阵形式（依然只适用于有限马尔科夫过程）：</p>
-<script type="math/tex; mode=display">
-\left[\matrix{V(s_1)\\ \vdots \\ V(s_N)}\right] = 
-\left[\matrix{R(s_1)\\ \vdots \\ R(s_N)}\right] + \gamma 
-\left[\matrix{P(s_1|s_1) & \ldots & P(s_N|s_1)\\
-                P(s_1|s_2) & \ldots & P(s_N|s_2)\\
-                \vdots & \ddots & \vdots \\
-                P(s_1|s_N) & \ldots & P(s_N|s_N)\\}\right] 
-\left[\matrix{V(s_1)\\ \vdots \\ V(s_N)}\right]</script><p>更进一步地简化矩阵内部的元素，得到：</p>
-<script type="math/tex; mode=display">
-V=R+\gamma PV</script><p>最终目标是算出$V$向量，通过矩阵解方程方法，得到：</p>
-<script type="math/tex; mode=display">
-V=(I-\gamma P)^{-1}R</script><p>根据数值分析中的知识，我们知道矩阵求逆是$O(N^3)$的复杂度。</p>
-<h3 id="Via-dynamic-programming"><a href="#Via-dynamic-programming" class="headerlink" title="Via dynamic programming"></a>Via dynamic programming</h3><p>其实我们可以通过递推的方式来解得最终的表示，不过我们需要证明整个递推表达式是收敛的。</p>
-<script type="math/tex; mode=display">
-V_{k}(s)=R(s)+ \gamma \sum_{s'\in S}{P(s'|s)V_{k-1}(s')}</script><p>Dynamic Programming with tolerence $\epsilon$：</p>
-<p><img src="https://i.loli.net/2020/02/05/wy6EUtMYGgoKW7m.png" alt="image.png"></p>
-<p>每一次iteration的时间复杂度为$O(|S|^2)$，也就是$O(|N|^2)$。事实上我们可以证明这个算法最终收敛到真实的$V$上，并且我们还能够给出误差估计值为<script type="math/tex">\left\|V^{\prime}-V\right\|_{\infty} \leq \frac{\epsilon \gamma}{1-\gamma}</script>。证明分为以下步骤：</p>
+<h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>本文提出了Embodied Visual Exploration这一概念：how might a robot equipped with a camera scope out a new environment? 关于Visual Exploration，有三个问题需要解决：</p>
 <ul>
-<li>定义Bellman Operator，证明这个算子是strict contraction的。</li>
-<li>根据引理得知，strict contraction的算子只有一个不动点，而$BV=R+\gamma PV=V$，则这个不动点就是真实的$V$。</li>
-<li>利用三角不等式和Bellman Operator 的性质得到，严格证明式为以下：</li>
+<li>What does it mean for an agent to explore its environment well?</li>
+<li>Which methods work well, and under which assumptions and environmental settings?</li>
+<li>Where do current approaches fall short, and where might future work seek to improve?</li>
 </ul>
-<script type="math/tex; mode=display">
-\begin{aligned}\left\|V_{k}-V\right\|_{\infty} & \leq\left\|V_{k}-V_{k+1}\right\|_{\infty}+\left\|V_{k+1}-V\right\|_{\infty}=\left\|V_{k}-V_{k+1}\right\|_{\infty}+\left\|B V_{k}-B V\right\|_{\infty} \\ & \leq\left\|V_{k}-V_{k+1}\right\|_{\infty}+\gamma\left\|V_{k}-V\right\|_{\infty}=\epsilon+\gamma\left\|V_{k}-V\right\|_{\infty} \end{aligned}</script><h1 id="Markov-Decision-Process"><a href="#Markov-Decision-Process" class="headerlink" title="Markov Decision Process"></a>Markov Decision Process</h1><p>马尔科夫决策过程（MDP）是马尔科夫奖励过程（MRP）+actions。类似的，MDP由以下5组元素构成：</p>
+<p>首先，CV中的问题分为三个层次：第一层是模型被动地学习人为收集和标注好的数据；第二层是embodied active perception，学习task-specific controls；第三层是embodied visual exploration, the goal is inherently more open-ended and task-agnostic: how does an agent learn to move around in an environment to gather information that will be useful for a variety of tasks that it may have to perform in the future?</p>
+<p>Embodied Visual Exploration的算法比较难以横向进行比较，因为不同的工作之间的重心不同，因此测试的evaluation metric也选择不同：overcoming sparse rewards, pixelwise reconstruction of environments, area covered in the environment, object interactions,information gathering for solving downstream tasks such as navigation/recognition/pose estimation. 因此这篇工作提出了一个unified view of exploration algorithms for visually rich 3D environments, and a common evaluation framework to understand their strengths andweaknesses.</p>
+<h1 id="Problem-Setting"><a href="#Problem-Setting" class="headerlink" title="Problem Setting"></a>Problem Setting</h1><p>首先Embodied Visual Exploration定义为：agent在环境中进行一定轮数的observe-action-update循环，其中<strong>action的选择目标是最大化information gain</strong>。本质上就是一个Partially Observable Markov Decision Process (POMDP)。</p>
+<h2 id="POMDP"><a href="#POMDP" class="headerlink" title="POMDP"></a>POMDP</h2><p>A discrete-time <a href="https://en.wikipedia.org/wiki/Partially_observable_Markov_decision_process" target="_blank" rel="noopener">POMDP</a> models the relationship between an agent and its environment. Formally, a POMDP is a 7-tuple $(S,A,T,R,\Omega ,O,\gamma )$:</p>
 <ul>
-<li>$S$：代表环境或者世界的一个有限状态集，$s\in S$</li>
-<li>$A$：代表agent能够执行的有限动作集，$a\in A$</li>
-<li>$P$：一个状态转移模型。和MRP不同的是，MDP中的状态转移模型是一个同时关于当前状态$s$和当前行动$a$的函数，声明了$P(s_{t+1}=s’|s_t=s,a_t=a)$</li>
-<li>$R$：一个奖励函数。同样的奖励函数也接受了动作$a$作为其中一个变量，声明了在某一状态下采取某一动作agent收到的奖励，$R(s_t=s,a_t=a)=E[r_t|s_t=s,a_t=a]$ 。需要注意的是这仅仅是这门课程中的表示方法，仔细想一下其实$R$是一个仅关于状态的函数也是正确的。</li>
-<li>$\gamma$：对于未来奖励进行加权的折扣因子，$\gamma \in [0,1]$ </li>
+<li>$S$ is a set of states,</li>
+<li>$A$ is a set of actions,</li>
+<li>$T$ is a set of conditional transition probabilities between states,</li>
+<li>$R:S\times A\to \mathbb {R} $ is the reward function,</li>
+<li>$\Omega$ is a set of observations,</li>
+<li>$O$ is a set of conditional observation probabilities, and</li>
+<li>$\gamma \in [0,1]$ is the discount factor.</li>
 </ul>
-<p>综上我们可以将MDP简化写为一个五元组$(S,A,P,R,\gamma)$。</p>
-<h2 id="MDP-Policy"><a href="#MDP-Policy" class="headerlink" title="MDP + Policy"></a>MDP + Policy</h2><p>对于给定的Policy（这里的给定指的是policy为一个<strong>stationary policy</strong>，即不随着time step的变化而变化的），MDP会退化成一个MRP，因为给定的Policy导致了给定的状态转移概率分布，同时也导致了给定的奖励函数分布。</p>
+<p>POMDP和MDP唯一不同的地方在于，PDMDP多了agent接受到的observation. 对于当前世界的state $s\in S$，agent采取了action $a\in A$，接着世界的state进入到了$s^\prime$，agent接受到的observation 遵从分布$O(o|s^\prime ,a)$. </p>
+<h1 id="Exploration-Paradigms"><a href="#Exploration-Paradigms" class="headerlink" title="Exploration Paradigms"></a>Exploration Paradigms</h1><h2 id="Curiosity"><a href="#Curiosity" class="headerlink" title="Curiosity"></a>Curiosity</h2><p>In the curiosity paradigm, the agent is encouraged to visit states where its predictive model of the environment is uncertain. Dynamics-based formulation of curiosity指的是通过学习一个forward-dynamics model $\mathcal F$，模型每一次选择和当前state最大差异的下一个state。也就是该模型预测下一个state会是怎样的表示： $\hat{\boldsymbol{s}}_{t+1}=\mathcal{F}\left(\boldsymbol{s}_{t}, a_{t}\right)$ ，通过定义reward function $R$即可：</p>
 <script type="math/tex; mode=display">
-\begin{align}
-R^\pi(s) &= \sum_{a\in A}\pi(a|s)R(s,a) \\
-P^\pi(s'|s) &= \sum_{a\in A}\pi(a|s)P(s'|s,a)
-\end{align}</script><p>以上的退化形式告诉我们能够利用MRP中的评价方法对于某个特定的policy $\pi$ 进行评价，即计算每个状态的价值函数。Iterative的方法递推公式如下所示，这被称作某个特定policy的Bellman Backup，关于Bellman Operator，我们现在只需要知道这是一个用于辅助证明迭代方法最终能够收敛的手段，在未来如果有机会可以进行更详细的了解。</p>
+r_{t} \propto\left\|\hat{s}_{t+1}-s_{t+1}\right\|_{2}^{2}</script><p>这个forward-dynamics model是通过online training的方式进行学习的，只需要在两个state之间最小化$\left|F\left(s_{t}, a_{t}\right)-s_{t+1}\right|_{2}^{2}$. </p>
+<h2 id="Novelty"><a href="#Novelty" class="headerlink" title="Novelty"></a>Novelty</h2><p>Novelty reward直接硬记录到达每一个state的次数，然后让reward function和该次数成负相关即可。其中需要对3D环境的平面进行网格化建模，含义是是同一个地点不要来很多次。</p>
 <script type="math/tex; mode=display">
-V_{k}^{\pi}(s)=r(s,\pi(s)) + \gamma \sum_{s'\in S}{P(s'|s,\pi(s))V_{k-1}^{\pi}(s')}</script><h1 id="MDP-Control"><a href="#MDP-Control" class="headerlink" title="MDP Control"></a>MDP Control</h1><p>MDP Control目的在于找到一个最优的策略$\pi^*$使得在该策略下的状态价值函数最大化。</p>
+r_{t} \propto \frac{1}{\sqrt{n\left(s_{t}\right)}}</script><h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>Coverage则认为Novelty的判断过于武断，因为在3D环境中不同位置的信息量是不一样的，这和该位置的周围structure相关。Whereas novelty encourages explicitly visiting all locations, coverage encourages <strong>observing</strong> all of the environment. 换句话说，到的地方越多不等价于observe到的信息越大。</p>
+<p>The coverage reward consists of the increment in some observed quantity of interest: </p>
 <script type="math/tex; mode=display">
-\pi^*(s)=\arg\max_{\pi}V^{\pi}(s)</script><p>课程中提到这种情况下一定存在一个唯一的最优价值函数，但这里还需要再进一步研究。对于Infinite Horizon problem，最优策略一定是deterministic &amp; stationary的，也就是最终会坍缩到不依赖于time step。</p>
-<p>寻找最优的Policy即Policy Search有三种思想，除去最简单的Enumeration的暴力方法（如果是Deterministic Policy的话可以将所有的Policy都罗列出来，复杂度为$|A|^{|S|}$），最为重要的两种方法为策略迭代（Policy Iteration，PI）和价值迭代（Value Iteration，VI）。</p>
-<h2 id="Policy-Iteration"><a href="#Policy-Iteration" class="headerlink" title="Policy Iteration"></a>Policy Iteration</h2><p>策略迭代的想法是找到最优的value &amp; policy。</p>
-<p>定义State-Action Value $Q$，其含义为在当前状态$s$下采取动作$a$之后再follow策略$\pi$收获的价值：</p>
+r_{t} \propto I_{t}-I_{t-1}</script><p>其中$I_t$指的是在时间步$t$是观测到interesting object的数目。可供选择的”things”可以为aera/object/landmark/random view. 其中random view指的是我们可以随机在这个环境中指定viewpoint作为奖励，如果agent看到了这个viewpoint，那么就可以获得相应的reward. This method is similar to the <a href="https://arxiv.org/abs/1803.00653" target="_blank" rel="noopener">“goal agnostic” baseline.</a></p>
+<h2 id="Reconstruction"><a href="#Reconstruction" class="headerlink" title="Reconstruction"></a>Reconstruction</h2><p>Reconstruction-based methods use the objective of active observation completion to learn exploration policies. The reconstruction reward scores the quality of the predicted outputs:</p>
 <script type="math/tex; mode=display">
-Q^\pi(s,a) = R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^\pi(s')</script><p>上述公式实际上是采取了未来一步的探索。将这条式子应用于迭代模型，对于当前迭代轮次$i$：每个$(s,a)$ pair都可以算出相应的$Q$值并且可以更新到下一个迭代轮次：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-Q^{\pi_i}(s,a) &= R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s') \\
-\pi_{i+1}(s) &= \arg \max_{a} Q^{\pi_i}(s,a), \forall s \in S
-\end{align}</script><p>需要证明这样的更新方法最终是一定能够收敛到全局最优解的，也就是说需要证明这是一个Monotonic Improvement。定义策略价值函数的序关系之后再进行一些简单的放缩即可得到整个更新的过程是单调的。</p>
-<script type="math/tex; mode=display">
-V^{\pi_1} \geq V^{\pi_2}:V^{\pi_1}(s) \geq V^{\pi_2}(s), \forall s \in S</script><p>因为策略更新是单调的，所以整个策略迭代的过程的停止终点就是策略的更新为零的时候，即：</p>
-<script type="math/tex; mode=display">
-||\pi_i - \pi_{i-1}||_1=0</script><p>同时策略的更新次数是有界的，也就是在之前提到的Enumeration方法的复杂度$|A|^{|S|}$之内一定能够达到最优点。</p>
-<h2 id="Value-Iteration"><a href="#Value-Iteration" class="headerlink" title="Value Iteration"></a>Value Iteration</h2><p>价值迭代的核心思想在于“Maintain optimal value of starting in a state $s$ if have a finite number of steps k left in the episode.”也就是说首先假设未来只有k步，通过迭代不断地将k往后推，从而达到拟合。</p>
-<p>首先介绍Bellman Equation，一个策略的价值函数必须满足以下等式：</p>
-<script type="math/tex; mode=display">
-V^{\pi}(s)=R^{\pi}(s)+\gamma\sum_{s'\in S}P^{\pi}(s'|s)V^{\pi}(s')</script><p>Bellman Operator也被称作Bellman Backup Operator。算子（Operator）就是作用在一个函数上将函数再进行一次映射。Bellman Operator作用在这里的value function上同时返回一个新的映射到所有状态的函数。</p>
-<script type="math/tex; mode=display">
-BV(s)=\max_{a}R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V(s')</script><p>Value Iteration的算法中的迭代部分公式为：</p>
-<script type="math/tex; mode=display">
-V_{k+1}(s)=\max_{a}R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_{k}(s')</script><p>从整个迭代从Bellman Backup的角度来看，每一次迭代的过程就是做了以下的操作：</p>
-<script type="math/tex; mode=display">
-V_{k+1}=BV_k\\
-\pi_{k+1}(s)=\arg \max_aR(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_k(s')</script><p><strong>这里，每个迭代轮次$k$对应的价值$V_k$其实代表了从当前状态向后行动$k$个时间步的最大价值。</strong>对于FInite Horizon问题来说迭代不需要等到Converge，只需要运行最大Horizon步长即可。</p>
-<p>回到策略迭代，同样可以用Bellman Operator来表达策略迭代的过程，$B^\pi$是针对于某个特定的策略$\pi$的Bellman算子：</p>
-<script type="math/tex; mode=display">
-B^{\pi}V(s)=R^{\pi}(s)+\gamma \sum_{s'\in S}P^{\pi}(s'|s)V(s)</script><p>Policy Evaluation相当于计算$B^\pi$的不动点，只需要不断地进行Bellman Operator的变换直到$V$不再变化即可。</p>
-<script type="math/tex; mode=display">
-\begin{align}
-V^\pi &= B^\pi B^\pi \ldots B^\pi V\\
-\pi_{k+1}(s) &= \arg\max_{a}R(s,a)+\gamma \sum_{s'\in S} P(s'|s,a)V^{\pi_k}(s')
-\end{align}</script><p>下面介绍Bellman Operator是一个压缩算子（Contraction）。压缩算子$O$指的是对于任何形式的norm，都有以下不等式成立。如果$V’$是上次迭代的结果，那么该不等式是迭代过程收敛的一个充分条件，表明最终的结果会收敛到一个不动点。</p>
-<script type="math/tex; mode=display">
-|OV-OV'|\leq|V-V'|</script><p>可以证明当折扣因子$\gamma &lt; 1$，Bellman Operator是一个压缩算子，因此说明我们的迭代过程是收敛的。证明过程如下：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-||BV_k - BV_j||&=||\max_a{(R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_k(s'))} - \max_{a'}{(R(s,a')+\gamma \sum_{s'\in S}P(s'|s,a)V_j(s'))}||\\
-&\leq ||\max_a(R(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V_k(s') - R(s,a)-\gamma \sum_{s'\in S}P(s'|s,a)V_j(s'))|| \\
-&= ||\max_a \gamma \sum_{s' \in S}P(s'|s,a)(V_k(s')-V_j(s'))||\\
-&\leq ||\max_a (\gamma \sum_{s' \in S}P(s'|s,a)||V_k(s')-V_j(s')||)||\\
-&=\gamma||V_k - V_j||
-\end{align}</script><h2 id="VI-v-s-PI"><a href="#VI-v-s-PI" class="headerlink" title="VI v.s. PI"></a>VI v.s. PI</h2><p>VI算法依次计算Horizon为$k$的最优值，PI则被用于计算一个策略的Infinite Horizon值，并用于选择一个更好的策略，和未来即将介绍的RL重要算法Policy Gradient有非常紧密的联系。<strong>简单来说，PI算法首先随机初始化一个策略，通过evaluate这个策略得到关于这个策略的价值函数，然后再不断优化这个策略（取得更大的价值函数值）达到拟合；而VI则是将价值函数初始化为0向量，每一次迭代计算当前价值函数的Bellman Optimality Operator，由于该算子是一个压缩算子，因此具有唯一的不动点，并且该不动点是最优点，最后通过价值函数来取得最优的策略。</strong></p>
-<h2 id="Policy-Improvement"><a href="#Policy-Improvement" class="headerlink" title="Policy Improvement"></a>Policy Improvement</h2><p>最后再formulate一下利用Policy Iteration进行Policy Improvement的具体流程：</p>
-<p>首先计算当前策略$\pi_i$的$Q$值：</p>
-<script type="math/tex; mode=display">
-Q^{\pi_i}(s,a) = R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s')</script><p>因为有以下不等式成立：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\max_aQ^{\pi_i}(s,a)&=\max_aR(s,a)+\gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s')\\
-&\geq R(s,\pi_i(s))+\gamma \sum_{s'\in S}P(s'|s,\pi_i(s))V^{\pi_i}(s')\\
-&= V^{\pi_i}(s)
-\end{align}</script><p>意味着state-action value是严格非减的，通过迭代就能够不断优化策略。定义下一个迭代轮次$i+1$的策略：</p>
-<script type="math/tex; mode=display">
-\pi_{i+1}(s) = \arg\max_aQ^{\pi_i}(s,a),\forall s\in S</script>
+r_{t} \propto-d\left(V(\mathcal{P}), \hat{V}_{t}(\mathcal{P})\right)</script><p>其中$V(\mathcal P)$是camera view在pose $\mathcal P$处的true query view，$\hat V_t(\mathcal P)$是agent在时间步$t$时的view reconstructions，$d$ 是定义在view上的distance function. Whereas curiosity rewards views that are individually surprising, reconstruction rewards views that bolster the agent’s correct hallucination of all other views. </p>
+<h1 id="Evaluation-Framework"><a href="#Evaluation-Framework" class="headerlink" title="Evaluation Framework"></a>Evaluation Framework</h1><p>第一种Evaluation Metric比较简单，可以计算Model在Exploration期间访问了多少”interesting things”，其中如上文所述，interesting things可以是area, objects, and landmarks。</p>
+<p>第二种Evaluation Metric测试Exploration在Downstream task transfer上的性能。最近被拿来广泛测试的主要downstream task包括了以下三种：</p>
+<ul>
+<li><strong>PointNav</strong>: how to quickly navigate from point A to point B?</li>
+<li><strong>View localization</strong>: where was this photo taken?</li>
+<li><strong>Reconstruction</strong>: what can I expect to see at point B?</li>
+</ul>
+
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">July 10th 2019, 6:16:03 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">February 18th 2020, 8:22:01 pm</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/28/Visual-Exploration/">http://www.shihaizhou.com/2020/02/28/Visual-Exploration/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/28/Visual-Exploration/">February 28th 2020, 4:59:35 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/28/Visual-Exploration/">February 29th 2020, 12:15:04 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -539,17 +460,12 @@ Q^{\pi_i}(s,a) = R(s,a) + \gamma \sum_{s'\in S}P(s'|s,a)V^{\pi_i}(s')</script><p
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/" title="RL(2) - Model-Free Policy Evaluation">
-                    <div class="nextTitle">RL(2) - Model-Free Policy Evaluation</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/06/12/Google-Research-Football-RL-Environment/" title="Google Research Football - RL Environment">
-                    <div class="prevTitle">Google Research Football - RL Environment</div>
+                <a href="/2020/02/28/Graph-Neural-Networks/" title="Graph Neural Networks - Survey">
+                    <div class="prevTitle">Graph Neural Networks - Survey</div>
                 </a>
             
         </li>
@@ -665,7 +581,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Property"><span class="toc-number">1.</span> <span class="toc-text">Markov Property</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Process"><span class="toc-number">2.</span> <span class="toc-text">Markov Process</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Reward-Process"><span class="toc-number">3.</span> <span class="toc-text">Markov Reward Process</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Parameter-Explanation"><span class="toc-number">3.1.</span> <span class="toc-text">Parameter Explanation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Horizon"><span class="toc-number">3.1.1.</span> <span class="toc-text">Horizon</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Return"><span class="toc-number">3.1.2.</span> <span class="toc-text">Return</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#State-Value-Function"><span class="toc-number">3.1.3.</span> <span class="toc-text">State Value Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Discount-Factor"><span class="toc-number">3.1.4.</span> <span class="toc-text">Discount Factor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Computing-State-Value-Function-for-MRP"><span class="toc-number">3.2.</span> <span class="toc-text">Computing State Value Function for MRP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Via-simulation"><span class="toc-number">3.2.1.</span> <span class="toc-text">Via simulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Via-matrix-equation"><span class="toc-number">3.2.2.</span> <span class="toc-text">Via matrix equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Via-dynamic-programming"><span class="toc-number">3.2.3.</span> <span class="toc-text">Via dynamic programming</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Decision-Process"><span class="toc-number">4.</span> <span class="toc-text">Markov Decision Process</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MDP-Policy"><span class="toc-number">4.1.</span> <span class="toc-text">MDP + Policy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MDP-Control"><span class="toc-number">5.</span> <span class="toc-text">MDP Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Policy-Iteration"><span class="toc-number">5.1.</span> <span class="toc-text">Policy Iteration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Value-Iteration"><span class="toc-number">5.2.</span> <span class="toc-text">Value Iteration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VI-v-s-PI"><span class="toc-number">5.3.</span> <span class="toc-text">VI v.s. PI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Policy-Improvement"><span class="toc-number">5.4.</span> <span class="toc-text">Policy Improvement</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-number">1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Problem-Setting"><span class="toc-number">2.</span> <span class="toc-text">Problem Setting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#POMDP"><span class="toc-number">2.1.</span> <span class="toc-text">POMDP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Exploration-Paradigms"><span class="toc-number">3.</span> <span class="toc-text">Exploration Paradigms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Curiosity"><span class="toc-number">3.1.</span> <span class="toc-text">Curiosity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Novelty"><span class="toc-number">3.2.</span> <span class="toc-text">Novelty</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coverage"><span class="toc-number">3.3.</span> <span class="toc-text">Coverage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reconstruction"><span class="toc-number">3.4.</span> <span class="toc-text">Reconstruction</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Evaluation-Framework"><span class="toc-number">4.</span> <span class="toc-text">Evaluation Framework</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

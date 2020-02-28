@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shihaizhou.com/"/>
-  <updated>2020-02-28T08:50:34.323Z</updated>
+  <updated>2020-02-28T16:15:04.581Z</updated>
   <id>http://www.shihaizhou.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Visual Exploration</title>
+    <link href="http://www.shihaizhou.com/2020/02/28/Visual-Exploration/"/>
+    <id>http://www.shihaizhou.com/2020/02/28/Visual-Exploration/</id>
+    <published>2020-02-28T08:59:35.000Z</published>
+    <updated>2020-02-28T16:15:04.581Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Materials</strong></p><ul><li><a href="https://arxiv.org/pdf/2001.02192.pdf" target="_blank" rel="noopener">paper “An Exploration of Embodied Visual Exploration”</a></li></ul><h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>本文提出了Embodied Visual Exploration这一概念：how might a robot equipped with a camera scope out a new environment? 关于Visual Exploration，有三个问题需要解决：</p><ul><li>What does it mean for an agent to explore its environment well?</li><li>Which methods work well, and under which assumptions and environmental settings?</li><li>Where do current approaches fall short, and where might future work seek to improve?</li></ul><p>首先，CV中的问题分为三个层次：第一层是模型被动地学习人为收集和标注好的数据；第二层是embodied active perception，学习task-specific controls；第三层是embodied visual exploration, the goal is inherently more open-ended and task-agnostic: how does an agent learn to move around in an environment to gather information that will be useful for a variety of tasks that it may have to perform in the future?</p><p>Embodied Visual Exploration的算法比较难以横向进行比较，因为不同的工作之间的重心不同，因此测试的evaluation metric也选择不同：overcoming sparse rewards, pixelwise reconstruction of environments, area covered in the environment, object interactions,information gathering for solving downstream tasks such as navigation/recognition/pose estimation. 因此这篇工作提出了一个unified view of exploration algorithms for visually rich 3D environments, and a common evaluation framework to understand their strengths andweaknesses.</p><h1 id="Problem-Setting"><a href="#Problem-Setting" class="headerlink" title="Problem Setting"></a>Problem Setting</h1><p>首先Embodied Visual Exploration定义为：agent在环境中进行一定轮数的observe-action-update循环，其中<strong>action的选择目标是最大化information gain</strong>。本质上就是一个Partially Observable Markov Decision Process (POMDP)。</p><h2 id="POMDP"><a href="#POMDP" class="headerlink" title="POMDP"></a>POMDP</h2><p>A discrete-time <a href="https://en.wikipedia.org/wiki/Partially_observable_Markov_decision_process" target="_blank" rel="noopener">POMDP</a> models the relationship between an agent and its environment. Formally, a POMDP is a 7-tuple $(S,A,T,R,\Omega ,O,\gamma )$:</p><ul><li>$S$ is a set of states,</li><li>$A$ is a set of actions,</li><li>$T$ is a set of conditional transition probabilities between states,</li><li>$R:S\times A\to \mathbb {R} $ is the reward function,</li><li>$\Omega$ is a set of observations,</li><li>$O$ is a set of conditional observation probabilities, and</li><li>$\gamma \in [0,1]$ is the discount factor.</li></ul><p>POMDP和MDP唯一不同的地方在于，PDMDP多了agent接受到的observation. 对于当前世界的state $s\in S$，agent采取了action $a\in A$，接着世界的state进入到了$s^\prime$，agent接受到的observation 遵从分布$O(o|s^\prime ,a)$. </p><h1 id="Exploration-Paradigms"><a href="#Exploration-Paradigms" class="headerlink" title="Exploration Paradigms"></a>Exploration Paradigms</h1><h2 id="Curiosity"><a href="#Curiosity" class="headerlink" title="Curiosity"></a>Curiosity</h2><p>In the curiosity paradigm, the agent is encouraged to visit states where its predictive model of the environment is uncertain. Dynamics-based formulation of curiosity指的是通过学习一个forward-dynamics model $\mathcal F$，模型每一次选择和当前state最大差异的下一个state。也就是该模型预测下一个state会是怎样的表示： $\hat{\boldsymbol{s}}_{t+1}=\mathcal{F}\left(\boldsymbol{s}_{t}, a_{t}\right)$ ，通过定义reward function $R$即可：</p><script type="math/tex; mode=display">r_{t} \propto\left\|\hat{s}_{t+1}-s_{t+1}\right\|_{2}^{2}</script><p>这个forward-dynamics model是通过online training的方式进行学习的，只需要在两个state之间最小化$\left|F\left(s_{t}, a_{t}\right)-s_{t+1}\right|_{2}^{2}$. </p><h2 id="Novelty"><a href="#Novelty" class="headerlink" title="Novelty"></a>Novelty</h2><p>Novelty reward直接硬记录到达每一个state的次数，然后让reward function和该次数成负相关即可。其中需要对3D环境的平面进行网格化建模，含义是是同一个地点不要来很多次。</p><script type="math/tex; mode=display">r_{t} \propto \frac{1}{\sqrt{n\left(s_{t}\right)}}</script><h2 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h2><p>Coverage则认为Novelty的判断过于武断，因为在3D环境中不同位置的信息量是不一样的，这和该位置的周围structure相关。Whereas novelty encourages explicitly visiting all locations, coverage encourages <strong>observing</strong> all of the environment. 换句话说，到的地方越多不等价于observe到的信息越大。</p><p>The coverage reward consists of the increment in some observed quantity of interest: </p><script type="math/tex; mode=display">r_{t} \propto I_{t}-I_{t-1}</script><p>其中$I_t$指的是在时间步$t$是观测到interesting object的数目。可供选择的”things”可以为aera/object/landmark/random view. 其中random view指的是我们可以随机在这个环境中指定viewpoint作为奖励，如果agent看到了这个viewpoint，那么就可以获得相应的reward. This method is similar to the <a href="https://arxiv.org/abs/1803.00653" target="_blank" rel="noopener">“goal agnostic” baseline.</a></p><h2 id="Reconstruction"><a href="#Reconstruction" class="headerlink" title="Reconstruction"></a>Reconstruction</h2><p>Reconstruction-based methods use the objective of active observation completion to learn exploration policies. The reconstruction reward scores the quality of the predicted outputs:</p><script type="math/tex; mode=display">r_{t} \propto-d\left(V(\mathcal{P}), \hat{V}_{t}(\mathcal{P})\right)</script><p>其中$V(\mathcal P)$是camera view在pose $\mathcal P$处的true query view，$\hat V_t(\mathcal P)$是agent在时间步$t$时的view reconstructions，$d$ 是定义在view上的distance function. Whereas curiosity rewards views that are individually surprising, reconstruction rewards views that bolster the agent’s correct hallucination of all other views. </p><h1 id="Evaluation-Framework"><a href="#Evaluation-Framework" class="headerlink" title="Evaluation Framework"></a>Evaluation Framework</h1><p>第一种Evaluation Metric比较简单，可以计算Model在Exploration期间访问了多少”interesting things”，其中如上文所述，interesting things可以是area, objects, and landmarks。</p><p>第二种Evaluation Metric测试Exploration在Downstream task transfer上的性能。最近被拿来广泛测试的主要downstream task包括了以下三种：</p><ul><li><strong>PointNav</strong>: how to quickly navigate from point A to point B?</li><li><strong>View localization</strong>: where was this photo taken?</li><li><strong>Reconstruction</strong>: what can I expect to see at point B?</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;Materials&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/pdf/2001.02192.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;paper “An Explorati
+      
+    
+    </summary>
+    
+    
+      <category term="CV" scheme="http://www.shihaizhou.com/tags/CV/"/>
+    
+  </entry>
   
   <entry>
     <title>Graph Neural Networks - Survey</title>
