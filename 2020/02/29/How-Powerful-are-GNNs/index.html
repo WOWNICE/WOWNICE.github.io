@@ -438,8 +438,8 @@ h_{G}=\operatorname{READOUT}\left(\left\{h_{v}^{(K)} | v \in G\right\}\right)</s
 <h1 id="Building-Powerful-GNN"><a href="#Building-Powerful-GNN" class="headerlink" title="Building Powerful GNN"></a>Building Powerful GNN</h1><p><img src="https://i.loli.net/2020/03/03/uaJFxjKdsMvW1PS.png" alt="image.png"></p>
 <p>A natural follow-up question is whether there exist GNNs that are, in principle, as powerful as the WL test? Our answer, in Theorem 3, is yes: if the neighbor aggregation and graph-level readout functions are injective, then the resulting GNN is as powerful as the WL test.</p>
 <p><img src="https://i.loli.net/2020/03/03/eufvlm7iCjrdoFY.png" alt="image.png"></p>
-<p><strong>For countable sets, injectiveness well characterizes whether a</strong><br><strong>function preserves the distinctness of inputs.</strong> Uncountable sets, where node features are continuous, need some further considerations. In addition, it would be interesting to characterize how close together the learned features lie in a function’s image.</p>
-<p>上面虽然讨论了GNN和WL test在鉴别不同拓扑结构的图时的能力比较，但是GNN<strong>还需要将相似的neighborhood映射到相似的embedding上，这是为了GNN的泛化能力</strong>。In contrast, a<br>GNN satisfying the criteria in Theorem 3 generalizes the WL test by learning to embed the subtrees to low-dimensional space. This enables GNNs to not only discriminate different structures, but also to learn to map similar graph structures to similar embeddings and capture dependencies between graph structures.</p>
+<p><strong>For countable sets, injectiveness well characterizes whether a function preserves the distinctness of inputs.</strong> Uncountable sets, where node features are continuous, need some further considerations. In addition, it would be interesting to characterize how close together the learned features lie in a function’s image.</p>
+<p>上面虽然讨论了GNN和WL test在鉴别不同拓扑结构的图时的能力比较，但是GNN<strong>还需要将相似的neighborhood映射到相似的embedding上，这是为了GNN的泛化能力</strong>。In contrast, a GNN satisfying the criteria in Theorem 3 generalizes the WL test by learning to embed the subtrees to low-dimensional space. This enables GNNs to not only discriminate different structures, but also to learn to map similar graph structures to similar embeddings and capture dependencies between graph structures.</p>
 <h2 id="Graph-Isomorphism-Network"><a href="#Graph-Isomorphism-Network" class="headerlink" title="Graph Isomorphism Network"></a>Graph Isomorphism Network</h2><p>本文提出的GIN网络结构和WL test有着同样的鉴别不同网络结构的能力。Our next lemma states that <strong>sum aggregators can represent injective</strong>, in fact, universal functions over multisets.</p>
 <p><img src="https://i.loli.net/2020/03/03/SafujK4kymWeAVL.png" alt="image.png"></p>
 <p>这条引理告诉我们存在一个作用在可数元素的函数，使得经过该函数变换后再加权的函数是一个单射。拿GNN网络来做类比，也就是函数$f$作用在节点feature上，$h(X)$就是中心节点的聚合函数，那么我们知道存在这样的一个函数$f$能够让GNN的聚合函数为单射。更进一步地，任何一个定义在multiset上的函数$g$都能够被解构成关于某个函数的和的形式：</p>
@@ -451,7 +451,7 @@ h_{v}^{(k)}=\operatorname{MLP}^{(k)}\left(\left(1+\epsilon^{(k)}\right) \cdot h_
 <p><img src="https://i.loli.net/2020/03/03/fsvM2R14LAicjwD.png" alt="image.png"></p>
 <p><img src="https://i.loli.net/2020/03/03/9VCag32ZJBORvn1.png" alt="image.png"></p>
 <p>第一张图表示了三种aggregator表达能力的不同，其表达能力的强弱顺序依次为sum&gt;mean&gt;max。而第二张图给出了一些简单的mean/max失败的案例。</p>
-<h3 id="MEAN-LEARNS-DISTRIBUTIONS"><a href="#MEAN-LEARNS-DISTRIBUTIONS" class="headerlink" title="MEAN LEARNS DISTRIBUTIONS"></a>MEAN LEARNS DISTRIBUTIONS</h3><p>很容易想到，当一个multiset包括了另一个multiset若干份copy时，mean aggregation会无法分辨，从而得出结论：Mean learns distributions. The mean aggregator may perform well if, for the task, the statistical and distributional information in the graph is more important than the exact structure. Moreover, when node features are diverse and rarely repeat, the mean aggregator is as powerful as the sum aggregator. This may explain why,<br>despite the limitations identified, GNNs with mean aggregators are effective for node classification tasks, such as classifying article subjects and community detection, where node features are rich and the distribution of the neighborhood features provides a strong signal for the task.</p>
+<h3 id="MEAN-LEARNS-DISTRIBUTIONS"><a href="#MEAN-LEARNS-DISTRIBUTIONS" class="headerlink" title="MEAN LEARNS DISTRIBUTIONS"></a>MEAN LEARNS DISTRIBUTIONS</h3><p>很容易想到，当一个multiset包括了另一个multiset若干份copy时，mean aggregation会无法分辨，从而得出结论：Mean learns distributions. The mean aggregator may perform well if, for the task, the statistical and distributional information in the graph is more important than the exact structure. Moreover, when node features are diverse and rarely repeat, the mean aggregator is as powerful as the sum aggregator. This may explain why, despite the limitations identified, GNNs with mean aggregators are effective for node classification tasks, such as classifying article subjects and community detection, where node features are rich and the distribution of the neighborhood features provides a strong signal for the task. </p>
 <h3 id="MAX-POOLING-LEARNS-SETS-WITH-DISTINCT-ELEMENTS"><a href="#MAX-POOLING-LEARNS-SETS-WITH-DISTINCT-ELEMENTS" class="headerlink" title="MAX-POOLING LEARNS SETS WITH DISTINCT ELEMENTS"></a>MAX-POOLING LEARNS SETS WITH DISTINCT ELEMENTS</h3><p>Max-pooling captures neither the exact structure nor the distribution. However, it may be suitable for tasks where it is important to identify representative elements or the “skeleton”, rather than to distinguish the exact structure or distribution. Qi et al. (2017) empirically show that the max-pooling aggregator learns to identify the skeleton of a 3D point cloud and that it is robust to noise and outliers. </p>
 <h1 id="OpenReview-Discussion"><a href="#OpenReview-Discussion" class="headerlink" title="*OpenReview Discussion"></a><a href="https://openreview.net/forum?id=ryGs6iA5Km" target="_blank" rel="noopener">*OpenReview Discussion</a></h1><h3 id="Review1"><a href="#Review1" class="headerlink" title="Review1."></a>Review1.</h3><p>My chief concern is equating the Weisfeiler-Lehman test (WL-test) with Weisfeiler-Lehman-type GNNs (WL-GNNs). The WL-test relies on countable set inputs and injective hash functions. Here, the paper is oversimplifying the WL-GNN problem. After the first layer, a WL-GNN is operating on uncountable sets. On uncountable sets, saying that a function is injective does not tells us much about it; we need a measure of how closely packed we find the points in the function’s image (a measure in measure theory, a density in probability). On countable sets, saying a function is injective tells us much about the function. Moreover, the WL-test hash function does not even need to operate over sets with total or even partial orders. As a neural network, the WL-GNN “hash” ( in the paper) must operate over a totally ordered set (\mathbb{R}^n, n &gt; 0). Porting the WL-test argument of “convergence to unique isomorphic fingerprints” to a WL-GNN requires a <strong>measure-theoretic analysis of the output</strong> of the WL-GNN layers, and careful analysis if the total order of the set does not create attractors when they are applied recursively. </p>
 <p><strong>Reply. Validity of equating the WL test operating on countable sets to the WL-GNN operating on uncountable sets.</strong> The reviewer makes a great observation that countability of node features is essential and necessary for our theory, and we acknowledge that our current Theorem 3 and Lemma 5 are built on the common assumption that input node features are from a countable universe. We have now made this clear in our paper. We also filled in a technical gap/detail to address R1’s concern that after the first iteration, we are in an uncountable universe: this actually does not happen. We can show that for a fixed aggregation function, hidden node features also form a countable universe, because the countability of input node features recursively propagates into deeper layers. We also added a rigorous proof for this (Lemma 4 in our revised paper). As the reviewer nicely suggests, for the uncountable setting, it would be useful to have measure-theoretic analysis, which we leave for future work. <strong>Often input node features in graph classification applications (e.g., chemistry, bioinformatics, social)</strong> come from a countable (in fact, finite) universe, so our assumption is realistic. In the revised version, we clearly stated our assumptions at the beginning of Section 3 and have added further discussion on the relation between the WL test and WL-GNN after Theorem 3.</p>
@@ -467,7 +467,7 @@ h_{v}^{(k)}=\operatorname{MLP}^{(k)}\left(\left(1+\epsilon^{(k)}\right) \cdot h_
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/29/How-Powerful-are-GNNs/">http://www.shihaizhou.com/2020/02/29/How-Powerful-are-GNNs/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/29/How-Powerful-are-GNNs/">February 29th 2020, 1:31:29 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/29/How-Powerful-are-GNNs/">March 3rd 2020, 10:22:03 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/29/How-Powerful-are-GNNs/">March 3rd 2020, 10:34:44 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -808,6 +808,20 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 17
@@ -831,12 +845,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
@@ -857,6 +871,16 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/23</span><a class="archive-post-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">Grammar of Java</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href="/2020/02/22/Graph-Neural-Networks-Basics/">Graph Neural Networks - Basics</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/17</span><a class="archive-post-title" href="/2020/02/17/Information-Theory-Simple-Concepts/">Information Theory</a>
         </li>
     
     
@@ -881,16 +905,6 @@ top:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/22</span><a class="archive-post-title" href="/2020/02/22/Graph-Neural-Networks-Basics/">Graph Neural Networks - Basics</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/17</span><a class="archive-post-title" href="/2020/02/17/Information-Theory-Simple-Concepts/">Information Theory</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -941,31 +955,31 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
+    
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+    
+        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
+    
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
+    
         <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
     
         <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
-        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
-    
-        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
-    
         <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
     
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
         <span class="sidebar-tag-name" data-tags="CV"><span class="iconfont-archer">&#xe606;</span>CV</span>
-    
-        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
-    
-        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
-    
-        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
-    
-        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
