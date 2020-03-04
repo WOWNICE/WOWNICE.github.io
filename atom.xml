@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shihaizhou.com/"/>
-  <updated>2020-03-03T14:34:44.491Z</updated>
+  <updated>2020-03-04T15:45:18.626Z</updated>
   <id>http://www.shihaizhou.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Subgraph Related</title>
+    <link href="http://www.shihaizhou.com/2020/03/03/Graph-Problems/"/>
+    <id>http://www.shihaizhou.com/2020/03/03/Graph-Problems/</id>
+    <published>2020-03-03T15:51:40.000Z</published>
+    <updated>2020-03-04T15:45:18.626Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Materials</strong></p><ul><li><a href="https://en.wikipedia.org/wiki/Graph_theory/" target="_blank" rel="noopener">Wikipedia Graph Theory</a></li></ul><h2 id="Subgraph-isomorphism-problem"><a href="#Subgraph-isomorphism-problem" class="headerlink" title="Subgraph isomorphism problem"></a>Subgraph isomorphism problem</h2><p>In theoretical computer science, the <a href="https://en.wikipedia.org/wiki/Subgraph_isomorphism_problem" target="_blank" rel="noopener"><strong>subgraph isomorphism</strong></a> problem is a computational task in which two graphs $G$ and $H$ are given as input, and one must determine whether $G$ contains a subgraph that is isomorphic to $H$. </p><p>One reason to be interested in such a question is that many graph properties are hereditary for subgraphs, which means that a graph has the property if and only if all subgraphs have it too. Unfortunately, finding maximal subgraphs of a certain kind is often an NP-complete problem.</p><h2 id="Induced-subgraph"><a href="#Induced-subgraph" class="headerlink" title="Induced subgraph"></a>Induced subgraph</h2><p>In graph theory, an <a href="https://en.wikipedia.org/wiki/Induced_subgraph" target="_blank" rel="noopener"><strong>induced subgraph</strong></a> of a graph is another graph, formed from a subset of the vertices of the graph and all of the edges connecting pairs of vertices in that subset. </p><p>Formally, let $G = (V, E)$ be any graph, and let $S\in V$ be any subset of vertices of $G$. Then the induced subgraph $G[S]$ is the graph whose vertex set is $S$ and <strong>whose edge set consists of all of the edges in $E$ that have both endpoints in $S$.</strong> The same definition works for undirected graphs, directed graphs, and even multigraphs.</p><h2 id="Edge-contraction"><a href="#Edge-contraction" class="headerlink" title="Edge contraction"></a>Edge contraction</h2><p>In graph theory, an <a href="https://en.wikipedia.org/wiki/Edge_contraction" target="_blank" rel="noopener">edge contraction</a> is an operation which removes an edge from a graph while simultaneously merging the two vertices that it previously joined. Edge contraction is a fundamental operation in the theory of graph minors.</p><p>Contractions are useful in structures where we wish to simplify a graph by identifying vertices that represent essentially equivalent entities. One of the most common examples is the reduction of a general directed graph to an acyclic directed graph by contracting all of the vertices in each strongly connected component. If the relation described by the graph is transitive, no information is lost as long as we label each vertex with the set of labels of the vertices that were contracted to form it.</p><h2 id="Graph-minor"><a href="#Graph-minor" class="headerlink" title="Graph minor"></a>Graph minor</h2><p>In graph theory, an undirected graph $H$ is called a <strong><a href="https://en.wikipedia.org/wiki/Graph_minor" target="_blank" rel="noopener">minor</a></strong> of the graph $G$ if $H$ can be formed from $G$ by deleting edges and vertices and by contracting edges. Many graph properties are hereditary for minors, which means that a graph has a property if and only if all minors have it too. </p><h2 id="Graph-clique"><a href="#Graph-clique" class="headerlink" title="Graph clique"></a>Graph clique</h2><p>In the mathematical area of graph theory, a <strong>clique</strong>is a subset of vertices of an undirected graph such that every two distinct vertices in the clique are adjacent; that is, its induced subgraph is complete.</p><p>A <strong>maximal clique</strong> is a clique that cannot be extended by including one more adjacent vertex, that is, a clique which does not exist exclusively within the vertex set of a larger clique. Some authors define cliques in a way that requires them to be maximal, and use other terminology for complete subgraphs that are not maximal.</p><p>A <strong>maximum clique</strong> of a graph, $G$, is a clique, such that there is no clique with more vertices. Moreover, the <strong>clique number</strong> $\omega (G)$ of a graph $G$ is the number of vertices in a maximum clique in $G$.</p><h2 id="Graphlets"><a href="#Graphlets" class="headerlink" title="Graphlets"></a>Graphlets</h2><p><a href="https://en.wikipedia.org/wiki/Graphlets#Graphlet_degree_vectors_(signatures" target="_blank" rel="noopener"><strong>Graphlets</strong></a>_and_signature_similarities) are small connected non-isomorphic induced subgraphs of a large network. Graphlets differ from <a href="https://en.wikipedia.org/wiki/Network_motif" target="_blank" rel="noopener">network motifs</a>, since they must be induced subgraphs, whereas motifs are partial subgraphs. Graphlets were first introduced by Nataša Pržulj, when they were used as a basis for designing two new highly sensitive measures of network local structural similarities: <strong>the relative graphlet frequency distance (RGF-distance)</strong> and the <strong>graphlet degree distribution agreement (GDD-agreement)</strong>.</p><ul><li>Relative graphlet frequency distance</li><li>Graphlet degree distribution agreement</li><li>Graphlet degree vectors (signatures) and signature similarities</li></ul><h2 id="GRAph-ALigner-GRAAL"><a href="#GRAph-ALigner-GRAAL" class="headerlink" title="GRAph ALigner (GRAAL)"></a>GRAph ALigner (GRAAL)</h2><p><a href="https://en.wikipedia.org/wiki/GRAph_ALigner_(GRAAL" target="_blank" rel="noopener"><strong>GRAaph ALigner (GRAAL)</strong></a>) is an algorithm for global network alignment that is based solely on network topology. GRAAL matches pairs of nodes originating in different networks based on their <a href="https://en.wikipedia.org/wiki/Graphlets#Graphlet_degree_vectors_(signatures" target="_blank" rel="noopener">graphlet degree signature similarities</a>_and_signature_similarities), where a higher similarity between two nodes corresponds to a higher topological similarity between their extended neighborhoods (out to distance 4). GRAAL produces global alignments, i.e., <strong>it aligns each node in the smaller network to exactly one node in the larger network</strong>. The matching proceeds using a technique analogous to the “seed and extend” approach of the popular <a href="https://en.wikipedia.org/wiki/BLAST" target="_blank" rel="noopener">BLAST</a> algorithm for <a href="https://en.wikipedia.org/wiki/Sequence_alignment" target="_blank" rel="noopener">sequence alignment</a>: it first chooses a single “seed” pair of nodes (one node from each network) with high graphlet degree signature similarity. It then expands the alignment radially outward around the seed as far as practical using a greedy algorithm for details).</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;Materials&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Graph_theory/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Wikipedia Gr
+      
+    
+    </summary>
+    
+    
+      <category term="GNN" scheme="http://www.shihaizhou.com/tags/GNN/"/>
+    
+      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
+    
+  </entry>
   
   <entry>
     <title>How Powerful are GNNs?</title>
@@ -210,9 +237,9 @@
     </summary>
     
     
-      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
-    
       <category term="GNN" scheme="http://www.shihaizhou.com/tags/GNN/"/>
+    
+      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
     
   </entry>
   
