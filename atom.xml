@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.shihaizhou.com/"/>
-  <updated>2020-03-04T15:45:18.626Z</updated>
+  <updated>2020-03-06T07:19:58.523Z</updated>
   <id>http://www.shihaizhou.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RSA Algorithm</title>
+    <link href="http://www.shihaizhou.com/2020/03/06/RSA-Algorithm/"/>
+    <id>http://www.shihaizhou.com/2020/03/06/RSA-Algorithm/</id>
+    <published>2020-03-06T06:27:00.000Z</published>
+    <updated>2020-03-06T07:19:58.523Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Materials</strong></p><ul><li><a href="https://zh.wikipedia.org/wiki/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">RSA wikipedia</a></li><li><a href="https://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html" target="_blank" rel="noopener">阮一峰网络日志</a></li><li><a href="https://en.wikipedia.org/wiki/Euler%27s_totient_function" target="_blank" rel="noopener">Euler’s totient function</a></li><li><a href="https://en.wikipedia.org/wiki/Euler%27s_theorem" target="_blank" rel="noopener">Euler’s theorem</a></li></ul><h1 id="Euler’s-totient-function"><a href="#Euler’s-totient-function" class="headerlink" title="Euler’s totient function"></a>Euler’s totient function</h1><p><strong>Definition</strong> (Euler’s totient function). In number theory, <strong>Euler’s totient function</strong> $\phi(n)$ counts the positive integers up to a given integer $n$ that are relatively prime to $n$. The Euler’s totient function is computed by the following formula:</p><script type="math/tex; mode=display">\varphi (n)=n\prod _{p\mid n}\left(1-{\frac {1}{p}}\right)</script><p>where the product is over the distinct prime numbers dividing $n$.</p><h2 id="Derivation"><a href="#Derivation" class="headerlink" title="Derivation"></a>Derivation</h2><p>When $(n=1)$：</p><script type="math/tex; mode=display">\varphi(1)=1</script><p>When $(n=p)$：</p><script type="math/tex; mode=display">\varphi(n)=p-1</script><p>When $(n=p^k)$：</p><script type="math/tex; mode=display">\varphi(n)=p^k-p^{k-1}</script><p>When $(n=p_1p_2)$：</p><script type="math/tex; mode=display">\varphi(n)=\varphi(p_1)\phi(p_2)</script><p>因为任意一个整数$n$都能够表示成$n=p_1^{k_1}p_2^{k_2}\cdots p_m^{k_m}$的形式，所以根据以上四种情况的结论我们有：</p><script type="math/tex; mode=display">\begin{align}\varphi(n) &= \varphi(p_1^{k_1}p_2^{k_2}\cdots p_m^{k_m}) \\&= \varphi(\prod_{i=1}^mp_i^{k_i}) \\&= \prod_{i=1}^m \varphi(p_i^{k_i}) \\&= \prod_{i=1}^m (p_i^{k_i}-p_i^{k_i-1}) \\&= n\prod _{p\mid n}\left(1-{\frac {1}{p}}\right)\end{align}</script><h1 id="Euler’s-theorem"><a href="#Euler’s-theorem" class="headerlink" title="Euler’s theorem"></a>Euler’s theorem</h1><p>In number theory, <strong>Euler’s theorem</strong> (also known as the <strong>Fermat–Euler theorem</strong> or <strong>Euler’s totient theorem</strong>) states that if $n$ and $a$ are coprime positive integers, then</p><script type="math/tex; mode=display">a^{\varphi (n)} \equiv 1 \pmod{n}</script><h1 id="RSA-Algorithm"><a href="#RSA-Algorithm" class="headerlink" title="RSA Algorithm"></a>RSA Algorithm</h1><p>The RSA algorithm involves four steps: <strong>key generation, key distribution, encryption and decryption.</strong></p><p>A basic principle behind RSA is the observation that it is practical to find three very large positive integers $e$, $d$ and $n$ such that with modular exponentiation for all integers $ m$ (with 0 ≤ <em>m</em> &lt; <em>n</em>):</p><script type="math/tex; mode=display">{\displaystyle (m^{e})^{d}\equiv m{\pmod {n}}}</script><p>上面的式子里，$e$ 是进行加密的public key, $d$ 是用来解密的private key。</p><h2 id="Key-generation"><a href="#Key-generation" class="headerlink" title="Key generation"></a>Key generation</h2><p>假设Alice和Bob是需要加密通信的两个主人公。Alice可以通过以下步骤生成public key &amp; private key：</p><ul><li>选取两个大质数 $p$ 和 $q$，计算$N=pq$</li><li>计算 $N$ 的欧拉函数值 $r=\varphi(N)=(p-1)(q-1)$</li><li>找到一个小于 $r$ 并与 $r$ 互质的整数 $e$，同时求出 $e$ 关于 $r$ 的模的逆元，即 $ed \equiv 1 \pmod r$</li><li>将两个大质数 $p, q$ 的记录销毁</li><li>得到公钥$(N,e)$和私钥$(N,d)$。</li><li>将公钥发送给Bob，Alice自己保管私钥不被公开。</li></ul><h2 id="Encryption"><a href="#Encryption" class="headerlink" title="Encryption"></a>Encryption</h2><p>Bob对明文 $m$ 通过公钥$(N,e)$进行加密并发送给Alice：</p><script type="math/tex; mode=display">c\equiv m^e\pmod N</script><h2 id="Decryption"><a href="#Decryption" class="headerlink" title="Decryption"></a>Decryption</h2><p>Alice将收到的密文 $c$ 通过私钥 $(N,d)$ 进行解密：</p><script type="math/tex; mode=display">\begin{align}m&=c^d \\&\equiv m^{ed}\pmod N \\&\equiv m^{1+k\varphi(N)} \pmod N \\&\equiv m \pmod N\end{align}</script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;Materials&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/RSA%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95&quot; target=&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
+    
+  </entry>
   
   <entry>
     <title>Subgraph Related</title>
