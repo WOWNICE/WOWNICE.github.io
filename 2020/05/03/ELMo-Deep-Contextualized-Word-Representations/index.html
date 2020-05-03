@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>ELMo - Deep Contextualized Word Representations · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">ELMo - Deep Contextualized Word Representations</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -220,24 +231,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            ELMo - Deep Contextualized Word Representations
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="NLP">NLP</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">842</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/05/03</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,315 +401,103 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">
-            
-                <span>ELMo - Deep Contextualized Word Representations</span>
-        </a>
-        <div class="abstract-content">
-            Materials
-paper: Deep Contextualized Word Representations
-Motivation提出新的deep contextualized word representation，能够同时model：
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>Materials</strong></p>
+<p><a href="https://arxiv.org/abs/1802.05365" target="_blank" rel="noopener">paper: Deep Contextualized Word Representations</a></p>
+<h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>提出新的deep contextualized word representation，能够同时model：</p>
+<ol>
+<li>Complex characteristics of word use (syntax &amp; semantics)</li>
+<li>how these uses vary across linguistic contexts (polysemy)</li>
+</ol>
+<p>该工作的词表示是一个parameterized function：从一个language model内部状态映射到向量。通过在large corpus上预训练得到的词表示能够在现有的模型中达到更好的提升。We also present an analysis showing that exposing the deep internals of the pre-trained network is crucial, allowing downstream models to mix different types of semi-supervision signals.</p>
+<h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><p>Unlike most widely used word embeddings, ELMo word representations are functions of the entire input sentence, as described in this section. </p>
+<h2 id="Bidirectional-Language-Model"><a href="#Bidirectional-Language-Model" class="headerlink" title="Bidirectional Language Model"></a>Bidirectional Language Model</h2><p>将token映射到向量的参数$\Theta_x$以及最后softmax层的参数$\Theta_s$在$L$层的双向LSTM中参数共享的，除此之外前向LSTM和后向LSTM的参数是独立的。Our formulation jointly maximizes the log likelihood of the forward and backward directions:</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}\sum_{k=1}^{N}\left(\log p\left(t_{k} | t_{1}, \ldots, t_{k-1} ; \Theta_{x}, \overrightarrow{\Theta}_{L S T M}, \Theta_{s}\right)\right. \\ \left.\quad+\log p\left(t_{k} | t_{k+1}, \ldots, t_{N} ; \Theta_{x}, \overleftarrow{\Theta}_{L S T M}, \Theta_{s}\right)\right)\end{array}</script><h2 id="ELMo"><a href="#ELMo" class="headerlink" title="ELMo"></a>ELMo</h2><p>对于一个token $t_k$，经过L-layer biLM之后会得到$2L+1$层的representation $R_k$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+R_{k} &=\left\{\mathbf{x}_{k}, \overrightarrow{\mathbf{h}}_{k, j}, \overleftarrow{\mathbf{h}}_{k, j} | j=1, \ldots, L\right\}
+\end{aligned}</script><p>For inclusion in a downstream model, ELMo collapses all layers in $R$ into a single vector：</p>
+<script type="math/tex; mode=display">
+\mathbf{E L M o}_{k}=E\left(R_{k} ; \mathbf{\Theta}_{e}\right)</script><p>可以对于不同的任务学习task-specific weighting：</p>
+<script type="math/tex; mode=display">
+\mathbf{E} \mathbf{L} \mathbf{M} \mathbf{o}_{k}^{t a s k}=E\left(R_{k} ; \Theta^{t a s k}\right)=\gamma^{t a s k} \sum_{j=0}^{L} s_{j}^{t a s k} \mathbf{h}_{k, j}^{L M}</script><p>其中的$s_j^{task}$是softmax-normalized weights，$\gamma^{task}$能够scale the entire ELMo vector.</p>
+<h2 id="biLMs-for-supervised-NLP-tasks"><a href="#biLMs-for-supervised-NLP-tasks" class="headerlink" title="biLMs for supervised NLP tasks"></a>biLMs for supervised NLP tasks</h2><p>给定一个pre-trained biLM和一个supervised architecture for a target NLP task. 只需要用这个biLM来做一次前向传播就可以拿到一个词L层的context-dependent representation。</p>
+<p>文章概括了普遍的supervised NLP task的解决方式：首先将word token通过预训练得到的词向量（context-independent）进行映射，然后forms context-sensitive representation $h_k$。为了将ELMo加入到supervised model中：</p>
+<ol>
+<li>freeze the weights of the biLM and then </li>
+<li>concatenate the ELMo vector $\mathbf{E L M o}_{k}^{\text {task}}$  with $x_k$ and pass the ELMo enhanced representation $[x_k ; \mathbf{E L M o}_{k}^{\text {task}}]$ into the task RNN. </li>
+</ol>
+<h2 id="Final-Model"><a href="#Final-Model" class="headerlink" title="Final Model"></a>Final Model</h2><ol>
+<li>The final model uses L = 2 biLSTM layers with 4096 units and 512 dimension projections and a residual connection from the first to second layer.</li>
+<li>The context insensitive type representation uses 2048 character n-gram convolutional filters followed by two highway layers and a linear projection down to a 512 representation.</li>
+</ol>
+<p>In contrast, traditional word embedding methods only provide one layer of representation for tokens in a fixed vocabulary.</p>
+<p>Once pretrained, the biLM can compute representations for any task. In some cases, fine tuning the biLM on domain specific data leads to significant drops in perplexity and an increase in downstream task performance.</p>
+<h1 id="Experimental-Results"><a href="#Experimental-Results" class="headerlink" title="Experimental Results"></a>Experimental Results</h1><p>在以下的任务中测试ELMo的有效性：</p>
+<ol>
+<li><strong>Question Answering</strong></li>
+<li><strong>Textual Entailment</strong>: Textual entailment is the task of determining whether a “hypothesis” is true, given a “premise”.</li>
+<li><strong>Semantic Role Labeling</strong>: A semantic role labeling (SRL) system models the predicate-argument structure of a sentence, and is often described as answering “Who did what to whom”.</li>
+<li><strong>Coreference Resolution</strong>: Coreference resolution is the task of clustering mentions in text that refer to the same underlying real world entities.</li>
+<li><strong>Named Entity Extraction</strong></li>
+<li><strong>Sentiment Analysis</strong></li>
+</ol>
+<p>进行的实验：</p>
+<ol>
+<li><p>Alternate layer weighting schemes. </p>
+</li>
+<li><p>Where to include ELMo? （在output也可以将ELMo和internal state进行连接，而不仅仅是在input上）</p>
+</li>
+<li><p>What information is captured by the biLM’s representations? （Intuitively, the biLM must be disambiguating the meaning of words using their context.）</p>
+<p><img src="https://i.loli.net/2020/05/03/miTJoxrI9cVSW1k.png" alt="image.png"></p>
+</li>
+<li><p>Sample efficiency (In addition, ELMo-enhanced models use smaller training sets more efficiently than models without ELMo.)</p>
+</li>
+<li><p>Visualization of learned weights</p>
+</li>
+</ol>
 
-Complex characteristics of word use (syntax &amp; semantics)
-how these uses vary across linguistic contexts (polysemy)
-
-该工作的词表示是一个parameterized function：从一个language model内部状...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="NLP">NLP</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/03/06/RSA-Algorithm/">
-            
-                <span>RSA Algorithm</span>
-        </a>
-        <div class="abstract-content">
-            RSA algorithm in cryptology.
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">http://www.shihaizhou.com/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">May 3rd 2020, 9:25:04 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">May 3rd 2020, 9:25:04 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/03/03/Graph-Problems/">
-            
-                <span>Subgraph Related</span>
-        </a>
-        <div class="abstract-content">
-            Intriguing definitions of subgraphs.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/29/How-Powerful-are-GNNs/">
-            
-                <span>How Powerful are GNNs?</span>
-        </a>
-        <div class="abstract-content">
-            notes on paper "How Powerful are GNNs"
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/28/Visual-Exploration/">
-            
-                <span>Visual Exploration</span>
-        </a>
-        <div class="abstract-content">
-            notes on paper "An Exploration of Embodied Visual Exploration"
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="CV">CV</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/28/Graph-Neural-Networks/">
-            
-                <span>Graph Neural Networks - Survey</span>
-        </a>
-        <div class="abstract-content">
-            Survey and understanding about GNNs.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/28/Graph-Attention-Networks/">
-            
-                <span>Graph Attention Networks</span>
-        </a>
-        <div class="abstract-content">
-            notes on paper "Graph Attention Networks"
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/25/Graph-Convolutional-Neural-Networks/">
-            
-                <span>Graph Convolutional Neural Networks</span>
-        </a>
-        <div class="abstract-content">
-            notes on paper "Semi-Supervised Classification with Graph Convolutional Networks".
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/24/Transformer-Basics/">
-            
-                <span>Transformer Basics</span>
-        </a>
-        <div class="abstract-content">
-            notes on paper "Attention Is All You Need".
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">
-            
-                <span>Grammar of Java</span>
-        </a>
-        <div class="abstract-content">
-            Grammar of Java for job hunting.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="reality">reality</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/03/06/RSA-Algorithm/" title="RSA Algorithm">
+                    <div class="prevTitle">RSA Algorithm</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &#62;</a>
-    </nav>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -728,6 +579,24 @@ how these uses vary across linguistic contexts (polysemy)
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-number">1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-Architecture"><span class="toc-number">2.</span> <span class="toc-text">Model Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bidirectional-Language-Model"><span class="toc-number">2.1.</span> <span class="toc-text">Bidirectional Language Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ELMo"><span class="toc-number">2.2.</span> <span class="toc-text">ELMo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#biLMs-for-supervised-NLP-tasks"><span class="toc-number">2.3.</span> <span class="toc-text">biLMs for supervised NLP tasks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final-Model"><span class="toc-number">2.4.</span> <span class="toc-text">Final Model</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experimental-Results"><span class="toc-number">3.</span> <span class="toc-text">Experimental Results</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1244,6 +1113,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
