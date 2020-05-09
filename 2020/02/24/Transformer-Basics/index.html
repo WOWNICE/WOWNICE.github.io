@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">923</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.3k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -405,6 +405,7 @@ height:50vh;
 <ul>
 <li><a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener">paper: “Attention Is All You Need”</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/44121378" target="_blank" rel="noopener">知乎文章 “Transformer详解”</a></li>
+<li><a href="http://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">blog “The Illustrated Transformer”</a>, which is extremely helpful!!!</li>
 </ul>
 <h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><p>Sequence Modeling问题简述为以下：</p>
 <blockquote>
@@ -413,6 +414,8 @@ height:50vh;
 <p>encoder-decoder framework是auto-regressive的，也就是说当前生成的词是conditioned on the previously generated word (previously generated symbols as additional input when generating the next). 注意：虽然我们传统意义上使用encoder-decoder时，encoder往往将variable-length的input映射成fixed-length的向量（RNN中为最后一个hidden state），但是encoder在编码时已经生成了很多的中间结果构成$z = (z_1,\cdots,z_n)$ .</p>
 <p>Transformer的模型如下图所示。</p>
 <p><img src="https://i.loli.net/2020/02/23/ZNT194ipKYeAzv6.png" alt="image.png"></p>
+<p>下面是blog中更加简洁但是能看得清flow的示意图，可以看到encoder最后一层的结果会作为每一层decoder的input。</p>
+<p><img src="https://i.loli.net/2020/05/09/c4ROe6ZKEzLbiop.png" alt="image.png"></p>
 <h2 id="Encoder-and-Decoder-Stacks"><a href="#Encoder-and-Decoder-Stacks" class="headerlink" title="Encoder and Decoder Stacks"></a>Encoder and Decoder Stacks</h2><h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><ul>
 <li><p>由6层相同的layer组成，每层layer由3层sublayer组成。</p>
 </li>
@@ -433,9 +436,32 @@ height:50vh;
 <blockquote>
 <p> We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.</p>
 </blockquote>
-<p>这一段话是理解Decoder过程的关键。首先要明确的是Transformer是auto-regressive的，所以这样一来结合图片我们知道，Transformer在decode阶段第$i$位的input是第$i-1$位decode的output，以及中间的Multi-Head Attention阶段要用到的第$i-1$位encode的结果。</p>
-<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>Attention机制可以被看作是given a set of key-value pairs，将query映射到一个output上。output通常是weighted sum of the values, based on the similarity of the query-key pairs.</p>
+<p>这一段话是理解Decoder过程的关键。首先要明确的是Transformer的encoding可以并行化，但是decoding确是auto-regressive的。而在Decoder中有两层不同的attention机制，包括了第一层的self-attention和第二层加入了encoder信息的attention机制。</p>
+<p><img src="https://i.loli.net/2020/05/09/nKkf6t72AxU9aIB.png" alt="image.png"></p>
+<p>然后是最关键的，通常来说我们认为两个模块之间是以embedding的形式来进行信息的传递的，但是注意encoder产生出的结果是一个三元组(Query, Key, Value)，其中Value就是我们通常意义上的embedding。而由于在decoder中也需要使用attention机制，所以自然地，将(Key, Value)都作为输出传给decoder。</p>
+<p>假设当前为$i^{th}$ time step，从input一直到产生softmax输出分布的流程为：</p>
+<ul>
+<li>input为前$i-1$个output token embeddings, 这一点是通过mask机制来实现的</li>
+<li>input经过positional encoding得到embedding with positional signal</li>
+<li>input经过self-attention得到中间结果$z_1$（其中的QKV也是含参重新生成，而不是使用encoder产生的QKV）</li>
+<li>$z_1$利用encoder产生的$(K, V)$通过encoder-decoder attention得到$o_1$, which serves as input of the next decoder block.</li>
+<li>经过若干个decoder模块之后，通过softmax产生输出的分布，取得$i$号位置的输出</li>
+</ul>
+<p><img src="https://i.loli.net/2020/05/09/xdjPuXefbAU6oO2.png" alt="image.png"></p>
+<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>Attention机制可以被看作是given a set of key-value pairs，将query映射到一个output上。output通常是weighted sum of the values, based on the similarity of the query-key pairs. </p>
 <p><img src="https://i.loli.net/2020/02/24/8icua43VCtygQHO.png" alt="image.png"></p>
+<p>一层Attention运行流程如下：</p>
+<ul>
+<li>假设input token sequence为$X = \{x_1, x_2, \cdots, x_n\}$ ，</li>
+<li>将每一个token vector分别通过参数矩阵$W^Q, W^K, W^V$，得到以下：<ul>
+<li>Query: $Q=\{q_1, q_2, \cdots, q_n\}$</li>
+<li>Key: $K=\{k_1, k_2, \cdots, k_n\}$</li>
+<li>Value: $V=\{v_1, v_2, \cdots, v_n\}$</li>
+</ul>
+</li>
+<li>$Q,K$之间的dot product表示了词之间的关联系数，也就是attention机制赋予的权重</li>
+<li>将权重和$V$进行加权平均，就得到了这一层encoding结果</li>
+</ul>
 <h3 id="Scaled-Dot-Product-Attention"><a href="#Scaled-Dot-Product-Attention" class="headerlink" title="Scaled Dot-Product Attention"></a>Scaled Dot-Product Attention</h3><p><strong>Scaled Dot-Product Attention</strong> 是本文使用的attention机制。In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix $Q$. The keys and values are also packed together into matrices $K$ and $V$. We compute the matrix of outputs as: </p>
 <script type="math/tex; mode=display">
 \text { attention }(Q, K, V)=\operatorname{softmax}\left(\frac{Q K^{T}}{\sqrt{d_{k}}}\right) V</script><h3 id="Multi-Head-Attention"><a href="#Multi-Head-Attention" class="headerlink" title="Multi-Head Attention"></a>Multi-Head Attention</h3><p>通过实验发现如果将$Q,K,V$这些向量分别线性映射（映射也是参数化的）到不同的空间，然后并行地计算Attention，最后concat并映射回原来的空间，将会非常有提升（见图）。这样的技术叫做<strong>Multi-Head Attention</strong>.</p>
@@ -455,7 +481,7 @@ height:50vh;
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/24/Transformer-Basics/">http://www.shihaizhou.com/2020/02/24/Transformer-Basics/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/24/Transformer-Basics/">February 24th 2020, 1:22:40 am</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/24/Transformer-Basics/">February 24th 2020, 1:22:40 am</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/24/Transformer-Basics/">May 9th 2020, 2:23:34 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -856,9 +882,45 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 20
+        Total : 22
         </div>
         <!-- search  -->
         
@@ -874,7 +936,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href="/2020/05/08/Graph-Level-Representation-Learning-via-Graph-Graph-Proximity/">Graph-Level Representation Learning via Graph-Graph Proximity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
         </li>
     
     
@@ -894,12 +966,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -957,6 +1029,29 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">08/13</span><a class="archive-post-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">Emergent Communication Through Negotiation</a>
         </li>
@@ -976,20 +1071,6 @@ top:50vh;
             <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">Google Research Football - RL Environment</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
     </ul></div>
   </div>
         <div class="sidebar-panel-tags">
@@ -999,15 +1080,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
     
         <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
     
-        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
-    
-        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
+        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
@@ -1015,11 +1096,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
     
-        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
     
         <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
     
-        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

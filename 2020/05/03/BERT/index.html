@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>BERT · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">BERT</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -220,24 +231,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            BERT
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="NLP">NLP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">884</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/05/03</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,39 +401,98 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/28/Visual-Exploration/">
-            
-                <span>Visual Exploration</span>
-        </a>
-        <div class="abstract-content">
-            notes on paper "An Exploration of Embodied Visual Exploration"
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="CV">CV</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>Materials</strong></p>
+<ul>
+<li><a href="https://arxiv.org/pdf/1810.04805.pdf" target="_blank" rel="noopener">paper “BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding”</a></li>
+<li><a href="https://www.youtube.com/watch?v=OR0wfP2FD3c" target="_blank" rel="noopener">youtube “BERT Explained”</a></li>
+</ul>
+<h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>BERT is designed to pretrain deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. <strong>As a result, the pre-trained BERT model can be finetuned with just one additional output layer to create state-of-the-art models for a wide range of tasks.</strong> </p>
+<p>预训练模型在sentence-level和token-level tasks上都有很不错的表现。现存的预训练方法可以分为feature-based和fine-tuning：</p>
+<ul>
+<li>ELMo作为前者 uses task-specific architectures that include the pre-trained representations as additional features. </li>
+<li>The fine-tuning approach, such as the Generative Pre-trained Transformer (OpenAI GPT) introduces minimal task-specific parameters, and is trained on the downstream tasks by simply fine-tuning all pretrained parameters.</li>
+</ul>
+<p>The two approaches share the same objective function during pre-training, <strong>where they use unidirectional language models to learn general language representations.</strong></p>
+<p>BERT采用“<strong>masked language model</strong>” (MLM) pre-training objective. The masked language model randomly masks some of the tokens from the input, and the objective is to predict the original vocabulary id of the masked word based only on its context. </p>
+<ul>
+<li>We showed the importance of the bidirectional pre-training for language representations. </li>
+<li>We show that pre-trained representations reduce the need for many heavily-engineered task-specific architectures </li>
+<li>BERT advances the state of the art for <strong>eleven NLP tasks.</strong> </li>
+</ul>
+<h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><p>BERT’s model architecture is a multi-layer bidirectional Transformer encoder based on the original implementation. </p>
+<h2 id="Input-Output-Representations"><a href="#Input-Output-Representations" class="headerlink" title="Input/Output Representations"></a>Input/Output Representations</h2><p>因为BERT是一种预训练模型，所以需要匹配各种不同形式的输入输出。在BERT的训练中，一个sentence不是一个语义上的sentence，而只需要是arbitrary span of contiguous text. 而一个sequence可以是一个sentence也可以是两个放置在一起的sentence（例如在QA问题中的Question-Answer pair需要用到两个并置的sentence）. </p>
+<ul>
+<li>The first token of every sequence is always a special classification token ([CLS]). </li>
+<li>Sentence pairs are packed together into a single sequence. We differentiate the sentences in two ways. <ul>
+<li>We separate them with a special token ([SEP]). </li>
+<li>We add a learned embedding to every token indicating whether it belongs to sentence A or sentence B. </li>
+<li>最终，将最后一层[CLS] token得到的hidden state标记为C，其余中间结果的final hidden states标记为$T_i \in \mathbb R^H$. 见下图左边pre-training部分。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/05/08/I14vnXO6uJtpiBM.png" alt="image.png"></p>
+<h2 id="Pre-training-BERT"><a href="#Pre-training-BERT" class="headerlink" title="Pre-training BERT"></a>Pre-training BERT</h2><p>采用两个Unsupervised Tasks对BERT进行训练。</p>
+<h3 id="Task-1-Masked-LM"><a href="#Task-1-Masked-LM" class="headerlink" title="Task #1: Masked LM"></a>Task #1: Masked LM</h3><p>In order to train a deep bidirectional representation, we simply mask some percentage of the input tokens at random, and then predict those masked tokens. We refer to this procedure as a “masked LM” (MLM), although it is often referred to as a <strong>Cloze</strong> task in the literature. 在BERT中，被mask掉的位置会送入一个mask token，然后在输出层输出softmax的概率分布。训练时BERT采取的是随机mask掉15%的token，但是这样会造成所谓”mismatch”：因为mask token不会在fine-tuning阶段出现。为了缓解这个问题，文章将已经选中的token再进行：</p>
+<ul>
+<li>80%几率真实替换为mask token</li>
+<li>10%几率替换为random token</li>
+<li>10%几率保留原token</li>
+</ul>
+<h3 id="Task-2-Next-Sentence-Prediction-NSP"><a href="#Task-2-Next-Sentence-Prediction-NSP" class="headerlink" title="Task #2: Next Sentence Prediction (NSP)"></a>Task #2: Next Sentence Prediction (NSP)</h3><p>这个任务的动机在于对于很多的任务，例如Question Answering / Natural Language Inference等，需要探究句子之间的关系。选择进入模型的sentence来进行NSP任务时，句子B有50%的概率选择非A的next，同时标注为NonNext，在这个任务下，最后的C就是用来判断是否为next sentence的标志。</p>
+<h3 id="Pre-training-Data"><a href="#Pre-training-Data" class="headerlink" title="Pre-training Data"></a>Pre-training Data</h3><p>一共使用了3个大数据集进行非监督的训练，包括BooksCorpus (800M words), English Wikipedia (2,500M words), Billion Word Benchmark to extract long contiguous sequences. </p>
+<h2 id="Fine-tuning-BERT"><a href="#Fine-tuning-BERT" class="headerlink" title="Fine-tuning BERT"></a>Fine-tuning BERT</h2><p>For each task, we simply plug in the task-specific inputs and outputs into BERT and fine-tune all the parameters end-to-end. (A, B) sentence input可以适应各种样式的input: </p>
+<ul>
+<li>形如QA任务的输入就是question-passage pair</li>
+<li>如果是单一语句输入就是degenerate text-$\empty$ pair</li>
+</ul>
+<p>At the output, the token representations are fed into an output layer for token-level tasks, such as sequence tagging or question answering, and the [CLS] representation is fed into an output layer for classification, such as entailment or sentiment analysis.</p>
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/03/BERT/">http://www.shihaizhou.com/2020/05/03/BERT/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/03/BERT/">May 3rd 2020, 9:35:18 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/03/BERT/">May 9th 2020, 1:33:02 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/05/08/Graph-Level-Representation-Learning-via-Graph-Graph-Proximity/" title="Graph-Level Representation Learning via Graph-Graph Proximity">
+                    <div class="nextTitle">Graph-Level Representation Learning via Graph-Graph Proximity</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/" title="ELMo - Deep Contextualized Word Representations">
+                    <div class="prevTitle">ELMo - Deep Contextualized Word Representations</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -452,6 +574,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-number">1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-Architecture"><span class="toc-number">2.</span> <span class="toc-text">Model Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Input-Output-Representations"><span class="toc-number">2.1.</span> <span class="toc-text">Input/Output Representations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pre-training-BERT"><span class="toc-number">2.2.</span> <span class="toc-text">Pre-training BERT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Task-1-Masked-LM"><span class="toc-number">2.2.1.</span> <span class="toc-text">Task #1: Masked LM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Task-2-Next-Sentence-Prediction-NSP"><span class="toc-number">2.2.2.</span> <span class="toc-text">Task #2: Next Sentence Prediction (NSP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pre-training-Data"><span class="toc-number">2.2.3.</span> <span class="toc-text">Pre-training Data</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fine-tuning-BERT"><span class="toc-number">2.3.</span> <span class="toc-text">Fine-tuning BERT</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1002,6 +1142,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
