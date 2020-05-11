@@ -112,9 +112,9 @@
     </summary>
     
     
-      <category term="NLP" scheme="http://www.shihaizhou.com/tags/NLP/"/>
-    
       <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
+    
+      <category term="NLP" scheme="http://www.shihaizhou.com/tags/NLP/"/>
     
   </entry>
   
@@ -138,9 +138,9 @@
     </summary>
     
     
-      <category term="NLP" scheme="http://www.shihaizhou.com/tags/NLP/"/>
-    
       <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
+    
+      <category term="NLP" scheme="http://www.shihaizhou.com/tags/NLP/"/>
     
   </entry>
   
@@ -190,9 +190,9 @@
     </summary>
     
     
-      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
-    
       <category term="GNN" scheme="http://www.shihaizhou.com/tags/GNN/"/>
+    
+      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
     
   </entry>
   
@@ -390,9 +390,9 @@
     </summary>
     
     
-      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
-    
       <category term="GNN" scheme="http://www.shihaizhou.com/tags/GNN/"/>
+    
+      <category term="Basics" scheme="http://www.shihaizhou.com/tags/Basics/"/>
     
   </entry>
   
@@ -510,9 +510,9 @@
     </summary>
     
     
-      <category term="NLP" scheme="http://www.shihaizhou.com/tags/NLP/"/>
-    
       <category term="RL" scheme="http://www.shihaizhou.com/tags/RL/"/>
+    
+      <category term="NLP" scheme="http://www.shihaizhou.com/tags/NLP/"/>
     
       <category term="Negotiation" scheme="http://www.shihaizhou.com/tags/Negotiation/"/>
     
