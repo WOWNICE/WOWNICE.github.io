@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.9k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.1k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -429,9 +429,18 @@ D_{K L}(p(x) \| q(x))=\int_{-\infty}^{\infty} p(x) \ln \frac{p(x)}{q(x)} d x</sc
 <p>注意：这条定理告诉我们为什么KL divergence和距离的定义非常相似，因为它满足了距离中的正则性。而同时我们需要注意的是它并不满足距离的对称性以及距离的三角不等式性质。</p>
 <p>在机器学习中，我们经常需要做极大似然估计：</p>
 <script type="math/tex; mode=display">
-\theta^{*}=\underset{\theta}{\operatorname{argmax}} \prod_{i=1}^{n} p_{X}^{\theta}\left(x_{i}\right)</script><p>其中，$p_{X}^{\theta}$表示的是由参数$\theta$决定的在随机变量$X$上的概率分布。而其实我们可以证明，极大似然估计的等价就是极小KL divergence函数的优化：</p>
+\theta^{*}=\underset{\theta}{\operatorname{argmax}} \prod_{i=1}^{n} p_{X}^{\theta}\left(x_{i}\right)</script><p>其中，$p_{X}^{\theta}​$表示的是由参数$\theta​$决定的在随机变量$X​$上的概率分布。而其实我们可以证明，极大似然估计的等价就是极小KL divergence函数的优化：</p>
 <script type="math/tex; mode=display">
-\theta^{*} = \arg\min_\theta d(\hat{p}_X,p^\theta_X)</script><h1 id="Entropy"><a href="#Entropy" class="headerlink" title="Entropy"></a>Entropy</h1><p><strong>Definition</strong> (Shannon Entropy). The <strong>Shannon entropy</strong> of $p \in \mathcal{P}^{\mathcal X}$ is</p>
+\theta^{*} = \arg\min_\theta d(\hat{p}_X,p^\theta_X)</script><p><strong>证明</strong>：Maximum Likelihood Estimation = KL Divergence Minimization. ($P_G$为估计的分布，$P_\text{data}$为真实分布)</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\theta^{*} &=\arg \max _{\theta} \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\
+&=\arg \max _{\theta} \log \prod_{i=1}^{m} P_{G}\left(x^{i} ; \theta\right) \\ 
+&=\arg \max _{\theta} \sum_{i=1}^{m} \log P_{G} \\ 
+& \approx \arg \max _{\theta} E_{x \sim P_{\text {data }}}\left[\log P_{G}(x ; \theta)\right] \\
+&= \arg \max _{\theta} \int_{x} P_{\text {data }}(x) \log P_{G}(x ; \theta) d x-\int_{x} P_{\text {data }}(x) \log P_{\text {data }}(x) d x \\
+&= \arg \min _{\theta} \operatorname{KL}(P_{\text{data}}\|P_G)
+\end{aligned}</script><h1 id="Entropy"><a href="#Entropy" class="headerlink" title="Entropy"></a>Entropy</h1><p><strong>Definition</strong> (Shannon Entropy). The <strong>Shannon entropy</strong> of $p \in \mathcal{P}^{\mathcal X}$ is</p>
 <script type="math/tex; mode=display">
 H(p) \triangleq-\sum_{x \in \mathcal{X}} p(x) \log p(x)</script><p>我们也使用 $H(X)$ 来表示随机变量$X$的熵。</p>
 <p><strong>Theorem</strong> The Shannon entropy is related to the divergence according to the formula</p>
@@ -443,7 +452,7 @@ H(p) = \log |X| - d(p,u)</script><p>其中$u$表示在集合$X$上的均匀分�
 <li>$p_{X} \in \mathcal{P}^{\mathcal X}$: 一个在alphabet $\mathcal X$上的随机变量$X$的分布$p$</li>
 <li>$p_{Y} \in \mathcal{P}^{\mathcal Y}$: 一个在alphabet $\mathcal Y$上的随机变量$Y$的分布$p$</li>
 <li>$p_{X,Y} \in \mathcal{P}^{\mathcal X \times \mathcal Y}$: 一个在他们上面的联合分布$p$</li>
-<li>$p_{X} \otimes p_{Y} \in \mathcal{P}^{\mathcal{X} \times \mathcal Y}$: 定义为边缘分布的乘积，也即$\left(p_{X} \otimes p_{Y}\right)(x, y)= p_{X}(x) p_{Y}(y)$.</li>
+<li>$p_{X} \otimes p_{Y} \in \mathcal{P}^{\mathcal{X} \times \mathcal Y}$: 定义为边缘分布的乘积，也即$\left(p_{X} \otimes p_{Y}\right)(x, y)= p_{X}(x) p_{Y}(y)​$.</li>
 </ul>
 <p><strong>Definition</strong> (Conditional Entropy). The <strong>conditional entropy</strong> of $X$ given $Y$ is</p>
 <script type="math/tex; mode=display">
@@ -471,7 +480,7 @@ I(X,Y) \triangleq H(X) - H(X|Y).</script><p><strong>Theorem</strong> The mutual 
 \begin{align}
 I(X,Y) &= d(p_{X,Y}, p_{X} \otimes p_{Y}) \\
 &= \mathbb E _Y[d(p_{X|Y}, p_X)]
-\end{align}</script><p>以上的两个表示方法能够通过简单的代数推导得出，而根据第一条等式我们互换$XY$变量可以得到以下推论</p>
+\end{align}</script><p><strong>Mutual Information在很多情况下也叫做Information Gain（信息增益），是用来衡量两个随机变量之间的dependence的：Mutual Information越大，则两个随机变量间的关联度越高。</strong>而根据第一条等式推知：the larger the divergence between the joint and the product of the marginals, the stronger the dependence between the two variables. 而同时我们互换第一条等式$XY$变量可以得到以下：</p>
 <p><strong>Corrolary</strong> The mutual information is symmetric:</p>
 <script type="math/tex; mode=display">
 I(X,Y) = I(Y,X)</script><p>而第二条等式的含义则是如果你选择无视$Y$给出的side information并还是认为分布是按照$p_X$的，那么mutual information或者就等于你选择忽视和接受Y之间的surprise。</p>
@@ -486,7 +495,7 @@ I(X,Z) \leq I(X,Y)</script><p>这条定理告诉我们，对于一个作为side 
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">February 17th 2020, 3:59:39 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">February 20th 2020, 4:16:03 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">May 11th 2020, 9:03:24 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -923,9 +932,27 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 22
+        Total : 24
         </div>
         <!-- search  -->
         
@@ -938,6 +965,16 @@ top:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2020/05/10/MI-Estimator/">MI Estimator and Information Theory Stuff</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/">InfoGraph - USL and Semi-SL Graph-Level Representation Learning</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1034,6 +1071,16 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">Emergent Communication Through Negotiation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href="/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">RL(2) - Model-Free Policy Evaluation</a>
+        </li>
+    
+    
     
     
     
@@ -1058,16 +1105,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/13</span><a class="archive-post-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">Emergent Communication Through Negotiation</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/15</span><a class="archive-post-title" href="/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">RL(2) - Model-Free Policy Evaluation</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">RL(1) - MP, MRP, MDP</a>
         </li>
     
@@ -1085,17 +1122,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
-        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
-    
-        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
-    
         <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
     
         <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
     
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
+    
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
     
         <span class="sidebar-tag-name" data-tags="CV"><span class="iconfont-archer">&#xe606;</span>CV</span>
     
@@ -1175,25 +1212,7 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-
-</body>
+    </body>
 </html>
 
 
