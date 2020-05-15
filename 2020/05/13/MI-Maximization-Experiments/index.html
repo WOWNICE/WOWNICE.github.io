@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Haizhou Shi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Haizhou Shi">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mutual Information Maximization - Experiments · N1H111SM&#39;s Miniverse</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/Goku_1.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Mutual Information Maximization - Experiments</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">N1H111SM's Miniverse</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Mutual Information Maximization - Experiments
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">3k</span>阅读时长: <span class="post-count reading-time">16 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/05/13</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>Materials</strong></p>
+<ul>
+<li><a href="https://gtas.unican.es/files/docencia/TICC/apuntes/tema1bwp_0.pdf" target="_blank" rel="noopener">MI for correlated gaussian model</a></li>
+<li><a href="https://github.com/seanie12/MINE" target="_blank" rel="noopener">github repo implementing MINE</a></li>
+<li><a href="https://shihaizhou.com/2020/05/10/MI-Maximization/" target="_blank" rel="noopener">my former blog about mutual information theory</a></li>
+</ul>
+<h1 id="MI-Estimation"><a href="#MI-Estimation" class="headerlink" title="MI Estimation"></a>MI Estimation</h1><h2 id="Correlated-gaussian-variables"><a href="#Correlated-gaussian-variables" class="headerlink" title="Correlated gaussian variables"></a>Correlated gaussian variables</h2><p>Let $(X, Y)^T$ be a zero-mean Gaussian random vector with covariance matrix given by</p>
+<script type="math/tex; mode=display">
+\mathbf{C}=\left(\begin{array}{cc}\sigma^{2} & \rho \sigma^{2} \\ \rho \sigma^{2} & \sigma^{2}\end{array}\right)</script><p>Then the theoratical MI of the correated Gaussian distribution is given by</p>
+<script type="math/tex; mode=display">
+\begin{align}
+I(X ; Y) &=h(Y)-h(Y | X) \\ 
+&=h(Y)+h(X)-h(X, Y) \\ 
+&=-\frac{1}{2} \ln \left(1-\rho^{2}\right)
+ \end{align}</script><p>需要注意的是，材料当中给出的公式是$\log$，但这log表示的就是以自然对数为底的，这一点和numpy中的log函数规范一致，即log2才表示已2为底的取对数。接着我们通过numpy简单生成correlated guassian samples. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mean = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">cov = [[<span class="number">1</span>, <span class="number">0.6</span>], [<span class="number">0.6</span>,<span class="number">1</span>]]</span><br><span class="line">ro = cov[<span class="number">0</span>][<span class="number">1</span>] / cov[<span class="number">1</span>][<span class="number">1</span>]</span><br><span class="line">mi = <span class="number">-0.5</span> * np.log(<span class="number">1</span>-ro**<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">X, Y = np.random.multivariate_normal(mean, cov, <span class="number">500</span>).T</span><br><span class="line">plt.plot(X, Y, <span class="string">'.'</span>)</span><br><span class="line">plt.axis(<span class="string">'equal'</span>)</span><br><span class="line">plt.title(<span class="string">'true-mi = &#123;:.4&#125;'</span>.format(mi))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>从而我们得到了一个带有Ground-truth MI的样本. </p>
+<p><img src="https://i.loli.net/2020/05/12/MXSuCpb1AVdPOh3.png" alt="image.png"></p>
+<h2 id="MI-estimation-with-linear-discriminator"><a href="#MI-estimation-with-linear-discriminator" class="headerlink" title="MI estimation with linear discriminator"></a>MI estimation with linear discriminator</h2><p>We built a Linear-Discriminator-based MI estimator from scratch，其中采用的优化方法是梯度下降法。Linear discriminator会将两个sample $(a_n, b_n)$ 进行concatenation，通过一个简单的线性层即可就产生出scalar output. 因为是最简单的模型所以我们可以根据公式直接计算出每一步梯度的函数表示（具体看 KLD_estimate 和 gradient_descent 函数）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MIEstimator</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, X, Y, lr=<span class="number">0.01</span>)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        X: N * D1</span></span><br><span class="line"><span class="string">        Y: N * D2</span></span><br><span class="line"><span class="string">        w: (D1+D2+1) * 1</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        N = len(X)</span><br><span class="line"><span class="comment">#         x_join_y = np.hstack([X, Y, np.ones([N,1])])</span></span><br><span class="line">        x_join_y = np.hstack([X, Y])</span><br><span class="line"></span><br><span class="line"><span class="comment">#         x_prod_y = np.hstack([X, Y_, np.ones([N,1])])</span></span><br><span class="line">        Y_ = np.vstack([np.array(Y) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>)])</span><br><span class="line">        np.random.shuffle(Y_)</span><br><span class="line">        x_prod_y = np.hstack([np.vstack([np.array(X) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>)]), Y_])</span><br><span class="line">        </span><br><span class="line">        w = np.ones(shape=[x_join_y.shape[<span class="number">1</span>], <span class="number">1</span>])</span><br><span class="line">        </span><br><span class="line">        self.N = N</span><br><span class="line">        self.x_join_y = x_join_y</span><br><span class="line">        self.x_prod_y = x_prod_y</span><br><span class="line">        self.w = w</span><br><span class="line">        self.lr = lr</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">KLD_estimate</span><span class="params">(self)</span>:</span></span><br><span class="line">        res =  np.matmul(self.x_join_y, self.w).mean()</span><br><span class="line">        res -= np.log2(np.exp(np.matmul(self.x_prod_y, self.w)).mean())</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">grad_descent</span><span class="params">(self)</span>:</span></span><br><span class="line">        delta_w = self.x_join_y.mean(axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>).T</span><br><span class="line"></span><br><span class="line">        exp_fx = np.exp(np.matmul(self.x_prod_y, self.w))</span><br><span class="line">        last_item = <span class="number">1</span>/np.log(<span class="number">2</span>) * <span class="number">1</span>/exp_fx.sum() * np.matmul(self.x_prod_y.T, exp_fx)</span><br><span class="line"></span><br><span class="line">        delta_w -= last_item</span><br><span class="line">        self.delta_w = delta_w</span><br><span class="line"></span><br><span class="line">        self.w += delta_w * self.lr</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">optimize</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">            self.grad_descent()</span><br><span class="line">            print(<span class="string">'------------------'</span>)</span><br><span class="line">            print(self.KLD_estimate)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> self.KLD_estimate</span><br></pre></td></tr></table></figure>
+<p>通过实验我们发现，简单的linear discriminator不能够完成MI Estimation的任务（几乎拟合的点都在0左右）。同时还有一个不符合常规的情况，那就是如果我们给这个线性模型加上bias，则bias项的gradient将会变成常数（可以数学推导），使得estimation无限增大。这说明了$sup​$在所有函数中找到最优函数是一件非常困难的事情，使用更加复杂的模型来做estimation才是正确的道路。</p>
+<h2 id="MI-estimation-with-neural-networks"><a href="#MI-estimation-with-neural-networks" class="headerlink" title="MI estimation with neural networks"></a>MI estimation with neural networks</h2><p>为了使用更加复杂的非线性函数，我们使用<a href="https://github.com/seanie12/MINE" target="_blank" rel="noopener">github for MINE</a>中pytorch实现Neural Estimation for MI的代码. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MINE</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, hidden_size=<span class="number">10</span>)</span>:</span></span><br><span class="line">        super(MINE, self).__init__()</span><br><span class="line">        self.layers= nn.Sequential(nn.Linear(<span class="number">2</span>, hidden_size),</span><br><span class="line">                                   nn.ReLU(),</span><br><span class="line">                                   nn.Linear(hidden_size,hidden_size),</span><br><span class="line">                                   nn.ReLU(),</span><br><span class="line">                                   nn.Linear(hidden_size, <span class="number">1</span>)</span><br><span class="line">                                  )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        batch_size = x.size(<span class="number">0</span>)</span><br><span class="line">        tiled_x = torch.cat([x, x,], dim=<span class="number">0</span>)</span><br><span class="line">        idx = torch.randperm(batch_size)</span><br><span class="line">        </span><br><span class="line">        shuffled_y = y[idx]</span><br><span class="line">        concat_y = torch.cat([y, shuffled_y], dim=<span class="number">0</span>)</span><br><span class="line">        </span><br><span class="line">        inputs = torch.cat([tiled_x, concat_y], dim=<span class="number">1</span>)</span><br><span class="line">        logits = self.layers(inputs)</span><br><span class="line"></span><br><span class="line">        pred_xy = logits[:batch_size]</span><br><span class="line">        pred_x_y = logits[batch_size:]</span><br><span class="line">        loss = -(torch.mean(pred_xy) </span><br><span class="line">               - torch.log(torch.mean(torch.exp(pred_x_y))))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<p>在不同相关性上的Correlated Gaussian Distribution上进行estimation。非常凑巧的是，原文中也做了双变量高斯分布的实验，并且和其他的estimation算法进行比较，得到的结果也非常优秀：几乎和True MI完全重合.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hyperparameters</span></span><br><span class="line">hidden_size=<span class="number">10</span></span><br><span class="line">n_epoch = <span class="number">500</span></span><br><span class="line">data_size = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create model</span></span><br><span class="line">model = MINE(hidden_size)</span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=<span class="number">0.01</span>)</span><br><span class="line">all_mi = []</span><br><span class="line">true_mi = []</span><br><span class="line"></span><br><span class="line">mean = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>):</span><br><span class="line">    <span class="comment"># change the covariance matrix</span></span><br><span class="line">    cov = [[<span class="number">1</span>, <span class="number">2</span>*i/<span class="number">10</span>], [<span class="number">2</span>*i/<span class="number">10</span>, <span class="number">1</span>]]</span><br><span class="line">    ro = cov[<span class="number">0</span>][<span class="number">1</span>] / cov[<span class="number">1</span>][<span class="number">1</span>]</span><br><span class="line">    mi = <span class="number">-0.5</span> * np.log(<span class="number">1</span>-ro**<span class="number">2</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># new training trajactory</span></span><br><span class="line">    true_mi.append(mi)</span><br><span class="line">    all_mi.append([])</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> tqdm(range(n_epoch)):</span><br><span class="line">        X, Y = np.random.multivariate_normal(mean, cov, data_size).T</span><br><span class="line">        x_sample = np.expand_dims(X, axis=<span class="number">1</span>)</span><br><span class="line">        y_sample = np.expand_dims(Y, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        x_sample = torch.from_numpy(x_sample).float()</span><br><span class="line">        y_sample = torch.from_numpy(y_sample).float()</span><br><span class="line">        loss = model(x_sample, y_sample)</span><br><span class="line"></span><br><span class="line">        model.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        all_mi[<span class="number">-1</span>].append(-loss.item())</span><br><span class="line"></span><br><span class="line">print(true_mi)</span><br><span class="line">print(all_mi)</span><br></pre></td></tr></table></figure>
+<p>最终利用以下code将结果进行可视化. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">"figure.figsize"</span>] = (<span class="number">25</span>,<span class="number">10</span>) <span class="comment"># Set the figure size</span></span><br><span class="line">plt.suptitle(<span class="string">'Simple NeuralNet MI Estimation'</span>) <span class="comment"># super title for all subplots</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="comment"># return the axis object.</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, <span class="number">3</span>, i+<span class="number">1</span>)</span><br><span class="line">    ax.set_ylim([<span class="number">-0.05</span>, <span class="number">0.8</span>])</span><br><span class="line">    ax.plot(range(len(all_mi[i])), all_mi[i], color=<span class="string">'r'</span>, label=<span class="string">'Estimated MI'</span>)</span><br><span class="line">    ax.plot([<span class="number">0</span>, len(all_mi[i])], [true_mi[i],true_mi[i]], color=<span class="string">'b'</span>, label=<span class="string">'Ground-truth MI'</span>)</span><br><span class="line"><span class="comment">#     ax.set_xlabel('training steps')</span></span><br><span class="line">    ax.legend(loc=<span class="string">'best'</span>)</span><br><span class="line">    ax.set_title(<span class="string">'ro=&#123;:.2f&#125;'</span>.format(<span class="number">0.2</span>*i))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/05/13/EcRsnGKAYCtr9VM.png" alt="image.png"></p>
+<h1 id="MI-Maximization"><a href="#MI-Maximization" class="headerlink" title="MI Maximization"></a>MI Maximization</h1><h2 id="Inductive-unsupervised-representation-learning-via-MI-maximization"><a href="#Inductive-unsupervised-representation-learning-via-MI-maximization" class="headerlink" title="Inductive unsupervised representation learning via MI maximization"></a>Inductive unsupervised representation learning via MI maximization</h2><p>Assume we have the simulated unsupervised dataset $\tilde X = g(X)$, without knowing the form or any other knowledge of generation function $g$. </p>
+<p>The target of the representation learning is to learn a model $M_{\psi}: \tilde X \rightarrow \hat X$ which maximize the mutual information between $\tilde X$ and $\hat X$. By doing so, we hope the model $M_\psi$ will help come into use one day in the future (using the knowledge of unlabeled data for coming supervised learning). </p>
+<h2 id="Theoretical-solution"><a href="#Theoretical-solution" class="headerlink" title="Theoretical solution"></a>Theoretical solution</h2><p>Recall we use Donsker-Varadhan representation of KL divergence to estimate MI: </p>
+<script type="math/tex; mode=display">
+\mathcal{I}(X ; Y):=\mathcal{D}_{K L}(\mathbb{I} \| \mathbb{M}) \geq \widehat{\mathcal{I}}_{\omega}^{(D V)}(X ; Y):=\mathbb{E}_{\mathbb{J}}\left[T_{\omega}(x, y)\right]-\log \mathbb{E}_{\mathbb{M}}\left[e^{T_{\omega}(x, y)}\right]</script><p>The goal of learning the best moddel $M$ becomes simultaneously estimating and maximizing MI.</p>
+<script type="math/tex; mode=display">
+(\hat{\omega}, \hat{\psi})_{G}=\underset{\omega, \psi}{\arg \max } \widehat{\mathcal{I}}_{\omega}\left(\tilde X ; M_{\psi}(\tilde X)\right)</script><p>where $\hat I$ is the total loss computed completely without supervision, i.e., given only $\tilde X$. </p>
+<h2 id="Model-implementation"><a href="#Model-implementation" class="headerlink" title="Model implementation"></a>Model implementation</h2><p>Now we only need to treat them as a joint optimization problem. The internal logic of this unsupervised training setting is as follows:</p>
+<ul>
+<li>we have two smaller models - a inductive representation generator and an MI estimator - residing in the main model; </li>
+<li>when given a mini-batch of samples of $\tilde X$, the generator maps $\tilde X$ to $\hat X$;</li>
+<li>then the MI estimator treat the $(\tilde X, \hat X)$ as two distribution, estimate the mutual information of them, or more precisely, the lower bound of the their mutual information;<ul>
+<li>when optimizing the MI estimation, the gradient of the objective also flows back to the generator;</li>
+<li>that’s why we say they are trained jointly. </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn </span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MIMaximizer</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_size=<span class="number">5</span>, hidden_size=<span class="number">10</span>)</span>:</span></span><br><span class="line">        super(MIMaximizer, self).__init__()</span><br><span class="line">        self.est_layers = nn.Sequential(nn.Linear(input_size+<span class="number">1</span>, hidden_size),</span><br><span class="line">                                        nn.ReLU(),</span><br><span class="line">                                        nn.Linear(hidden_size,hidden_size),</span><br><span class="line">                                        nn.ReLU(),                                   </span><br><span class="line">                                        nn.Linear(hidden_size, <span class="number">1</span>)</span><br><span class="line">                                       )</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># model that generates representation of given input x</span></span><br><span class="line">        self.model_layers = nn.Sequential(nn.Linear(input_size, hidden_size),</span><br><span class="line">                                         nn.ReLU(),</span><br><span class="line">                                         nn.Linear(hidden_size,hidden_size),</span><br><span class="line">                                         nn.ReLU(),                                   </span><br><span class="line">                                         nn.Linear(hidden_size, <span class="number">1</span>)</span><br><span class="line">                                        )</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        y = self.model_layers(x)</span><br><span class="line">        </span><br><span class="line">        batch_size = x.size(<span class="number">0</span>)</span><br><span class="line">        tiled_x = torch.cat([x, x,], dim=<span class="number">0</span>)</span><br><span class="line">        idx = torch.randperm(batch_size)</span><br><span class="line">        </span><br><span class="line">        shuffled_y = y[idx]</span><br><span class="line">        concat_y = torch.cat([y, shuffled_y], dim=<span class="number">0</span>)</span><br><span class="line">        </span><br><span class="line">        inputs = torch.cat([tiled_x, concat_y], dim=<span class="number">1</span>)</span><br><span class="line">        logits = self.est_layers(inputs)</span><br><span class="line"></span><br><span class="line">        pred_xy = logits[:batch_size]</span><br><span class="line">        pred_x_y = logits[batch_size:]</span><br><span class="line">        loss = -(torch.mean(pred_xy) </span><br><span class="line">               - torch.log(torch.mean(torch.exp(pred_x_y))))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> y, loss</span><br></pre></td></tr></table></figure>
+<h2 id="Simulating-high-dimensional-data"><a href="#Simulating-high-dimensional-data" class="headerlink" title="Simulating high-dimensional data"></a>Simulating high-dimensional data</h2><p>To simulate high-dimensional data, the generation function $g: x \rightarrow [f_1(x), f_2(x), \cdots, f_n(x)]$ is to generate high dimensional representation of $x$. For the sake of simplicity, the original $x$ is sampled from uniform distribution. And we can also add some noise into the model to make it more close to the real-world scenario. </p>
+<p>One reason to play with such a toy setting is that now we can treat the problem of finding function $g^{-1}: [f_1(x), f_2(x), \cdots, f_n(x)] \rightarrow x$ as a supervised regression problem, and we have the ground-truth label of them!</p>
+<p>The experimented data generation methods are as follows: </p>
+<ul>
+<li>$x \rightarrow [x^1-x^2, x^2-x^3, \cdots, x^k-x^{k+1}, \cdots, x^{n-1}-x^n, x^n]$, when reversed as a regression task, is linear-solvable. </li>
+<li>$x \rightarrow [x^1-x^2, x^2-x^3, \cdots, x^k-x^{k+1}, \cdots, x^{n-1}-x^n]$, when reversed as a regression task, is <strong>not</strong> linear-solvable, but can be easily approximated with linear model when $n$ is large. </li>
+<li>$x \rightarrow [\sin(x), \cos(x), \log(2+x), x^2, \sinh(x), \cosh(x), \tanh(x)]$, where each non-linear function $f$ can be further mapped to even more complex space by $J: f \rightarrow [f(x)^{\frac{1}{i+1}}|x: x \in \operatorname{dom}_f]$</li>
+</ul>
+<h2 id="Sanity-check"><a href="#Sanity-check" class="headerlink" title="Sanity check"></a>Sanity check</h2><ul>
+<li><strong>Target</strong>: check whether the algorithm works. </li>
+<li><strong>Method</strong>: using LR model to fit on the generated representation and the ground truth $(\tilde X, X)$, to see whether it’s MSE is minimized along the MI maximization.</li>
+<li><strong>Data</strong>: We use $x$ -&gt; $[x^1-x^2, x^2-x^3, \cdots, x^k-x^{k+1}, \cdots, x^{n-1}-x^n, x^n]$ to generate high-dimensional representation of $x$. </li>
+</ul>
+<p>Data Generation: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.uniform(low=<span class="number">-1.</span>,high=<span class="number">1.</span>,size=<span class="number">3000</span>).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate x_representation based on [x^2, x^3, ... x^n]</span></span><br><span class="line">n = <span class="number">5</span></span><br><span class="line">x1 = np.hstack([np.power(x, i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">2</span> + n)])</span><br><span class="line">x2 = np.hstack([np.power(x, i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1</span> + n)])</span><br><span class="line">x_tilde = np.hstack([x2 - x1, np.power(x, n+<span class="number">1</span>)])</span><br><span class="line">input_size = n+<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>The result of linear-solvable data $x \rightarrow [x^1-x^2, x^2-x^3, \cdots, x^k-x^{k+1}, \cdots, x^{n-1}-x^n, x^n]$ : </p>
+<p><img src="https://i.loli.net/2020/05/14/MdeW8EOobrcuPIB.png" alt="image.png"></p>
+<h2 id="Influence-of-dimensionality-of-representation"><a href="#Influence-of-dimensionality-of-representation" class="headerlink" title="Influence of dimensionality of representation"></a>Influence of dimensionality of representation</h2><ul>
+<li><strong>Target</strong>: find how the dimension of the representation matters.</li>
+<li><strong>Method</strong>: use different output dimension. </li>
+<li><strong>Data</strong>: We use $x$ -&gt; $[x^1-x^2, x^2-x^3, \cdots, x^k-x^{k+1}, \cdots, x^{n-1}-x^n]$ to generate high-dimensional representation of $x$, which is not linear-solvable. </li>
+</ul>
+<p>Data Generation: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.uniform(low=<span class="number">-1.</span>,high=<span class="number">1.</span>,size=<span class="number">3000</span>).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate x_representation based on [x^2, x^3, ... x^n]</span></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line">x1 = np.hstack([np.power(x, i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">2</span> + n)])</span><br><span class="line">x2 = np.hstack([np.power(x, i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1</span> + n)])</span><br><span class="line">x_tilde = np.hstack([x2 - x1])</span><br><span class="line">input_size = n</span><br></pre></td></tr></table></figure>
+<p>Define <code>train()</code> function, train the model across different dimensionality setting: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(x_tilde, n_epoch=<span class="number">1000</span>, output_size=<span class="number">1</span>, hidden_size=<span class="number">10</span>, lr=<span class="number">0.01</span>, log_every_n_steps=<span class="number">10</span>)</span>:</span></span><br><span class="line">    input_size = x_tilde.shape[<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># create the model </span></span><br><span class="line">    model = MIMaximizer(</span><br><span class="line">        input_size=input_size, </span><br><span class="line">        hidden_size=hidden_size, </span><br><span class="line">        output_size=output_size</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># print([_.size() for _ in model.parameters()])</span></span><br><span class="line">    optimizer = torch.optim.Adam(model.parameters(), lr=<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line">    all_mi = []</span><br><span class="line">    best_linear_model_loss = []</span><br><span class="line"></span><br><span class="line">    x_sample =  torch.from_numpy(x_tilde).float()</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> tqdm(range(n_epoch)):</span><br><span class="line">        y, loss = model(x_sample)</span><br><span class="line"></span><br><span class="line">        model.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> epoch % log_every_n_steps == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># record the MI</span></span><br><span class="line">                all_mi.append(-loss.item())</span><br><span class="line"></span><br><span class="line">                <span class="comment"># find the best simple method modeling generated representation of x_tilde.</span></span><br><span class="line">                y_ = y.detach().numpy()</span><br><span class="line">                reg = LinearRegression().fit(y_, x)</span><br><span class="line">                x_hat = reg.predict(y_)</span><br><span class="line">                mse = mean_squared_error(x, x_hat)</span><br><span class="line">                best_linear_model_loss.append(mse)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                print(<span class="string">'nan!'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> all_mi, best_linear_model_loss</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hidden_size = <span class="number">10</span></span><br><span class="line">n_epoch = <span class="number">10000</span></span><br><span class="line">output_size = <span class="number">5</span></span><br><span class="line">lr = <span class="number">0.01</span></span><br><span class="line">log_every_n_steps = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">all_mi_across_models = []</span><br><span class="line">all_mse_across_models = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> output_size <span class="keyword">in</span> range (<span class="number">1</span>,<span class="number">6</span>):</span><br><span class="line">    mis, mses = train(</span><br><span class="line">        x_tilde=x_tilde,</span><br><span class="line">        n_epoch=n_epoch,</span><br><span class="line">        output_size=output_size,</span><br><span class="line">        hidden_size=hidden_size,</span><br><span class="line">        lr=lr,</span><br><span class="line">        log_every_n_steps=<span class="number">10</span>   </span><br><span class="line">    )</span><br><span class="line">    all_mi_across_models.append(mis)</span><br><span class="line">    all_mse_across_models.append(mses)</span><br></pre></td></tr></table></figure>
+<p>Use the following code to visualize: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">"figure.figsize"</span>] = (<span class="number">20</span>,<span class="number">10</span>)</span><br><span class="line">plt.suptitle(<span class="string">'Study of Dimension of Representation'</span>)</span><br><span class="line"></span><br><span class="line">ax = plt.subplot(<span class="number">211</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    ax.plot(range(len(all_mi_across_models[i])), all_mi_across_models[i], label=<span class="string">'Dim=&#123;&#125;'</span>.format(i+<span class="number">1</span>))</span><br><span class="line">    ax.legend(loc=<span class="string">'best'</span>)</span><br><span class="line">    ax.set_title(<span class="string">'MI Maximization'</span>)</span><br><span class="line">    </span><br><span class="line">ax = plt.subplot(<span class="number">212</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    ax.plot(range(len(all_mse_across_models[i])), all_mse_across_models[i], label=<span class="string">'Dim=&#123;&#125;'</span>.format(i+<span class="number">1</span>))</span><br><span class="line">    ax.legend(loc=<span class="string">'best'</span>)</span><br><span class="line">    ax.set_title(<span class="string">'Best LR-MSE'</span>)</span><br></pre></td></tr></table></figure>
+<p>(1) Data without noise:</p>
+<p><img src="https://i.loli.net/2020/05/14/B4QpckTaKitYsjX.png" alt="image.png"></p>
+<p>(2) Data with noise (scale=0.05):</p>
+<p><img src="https://i.loli.net/2020/05/14/ujPaUWfS6AVMN8y.png" alt="image.png"></p>
+<h2 id="Unsupervised-Representation-Learning"><a href="#Unsupervised-Representation-Learning" class="headerlink" title="Unsupervised Representation Learning"></a>Unsupervised Representation Learning</h2><ul>
+<li>Target: Study the unsupervised learning using MI maximization.</li>
+<li>Method: unsupervised training dataset, supervised training dataset, testset. </li>
+<li>Data: We create the dataset (unsupervised/supervised/test dataset)</li>
+</ul>
+<p>some tricks regarding generating a list of functions: <a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017434209254976" target="_blank" rel="noopener">廖雪峰python教程</a></p>
+<p>Data Generation given a list of functions:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_data</span><span class="params">(size, g_fns, split=<span class="params">(<span class="number">0.9</span>, <span class="number">0.05</span>, <span class="number">0.05</span>)</span>, noise_scale=<span class="number">0.05</span>)</span>:</span></span><br><span class="line">    x = np.random.uniform(low=<span class="number">-1.</span>,high=<span class="number">1.</span>,size=size).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># g_fns should be numpy functions which support broadcasting. </span></span><br><span class="line">    x_tilde = np.hstack([fn(x) <span class="keyword">for</span> fn <span class="keyword">in</span> g_fns])</span><br><span class="line">    noise = noise_scale * np.random.normal(loc=<span class="number">0</span>, scale=<span class="number">1</span>, size=x_tilde.shape)</span><br><span class="line">    x_tilde += noise</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># split the data</span></span><br><span class="line">    unsup_x = x_tilde[:int(split[<span class="number">0</span>]*size),:]</span><br><span class="line">    </span><br><span class="line">    sup_x = x_tilde[int(split[<span class="number">0</span>]*size):int((<span class="number">1</span>-split[<span class="number">2</span>])*size),:]</span><br><span class="line">    sup_y = x[int(split[<span class="number">0</span>]*size):int((<span class="number">1</span>-split[<span class="number">2</span>])*size),:]</span><br><span class="line">    </span><br><span class="line">    test_x = x_tilde[int((<span class="number">1</span>-split[<span class="number">2</span>])*size):,:]</span><br><span class="line">    test_y = x[int((<span class="number">1</span>-split[<span class="number">2</span>])*size):,:]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> unsup_x, sup_x, sup_y, test_x, test_y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># some tricks for generating the function list</span></span><br><span class="line">g_fns = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">20</span>):</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(i)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">j</span><span class="params">(x)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> np.power(x, i<span class="number">-1</span>) - np.power(x, i)</span><br><span class="line">        <span class="keyword">return</span> j</span><br><span class="line">        </span><br><span class="line">    g_fns.append(f(i))</span><br><span class="line"></span><br><span class="line">unsup_x, train_x, train_y, test_x, test_y = gen_data(<span class="number">1000</span>, g_fns=g_fns, noise_scale=<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+<p>We use the method introduced above to generate data of 20 dimension to evaluate the performance of the MI maximization method. Since the higher the dimension, the more linear-solvable the data is, we can expect that simple Linear Regression would solve it very well.  Here is the result on different setting of noise. </p>
+<h3 id="Results-on-linear-solvable-data-study-of-noise"><a href="#Results-on-linear-solvable-data-study-of-noise" class="headerlink" title="Results on linear-solvable data - study of noise"></a>Results on linear-solvable data - study of noise</h3><p><img src="https://i.loli.net/2020/05/15/7GNuBsaAPlRmYJO.png" alt="image.png"></p>
+<p><img src="https://i.loli.net/2020/05/15/iuP7U2woYCBMRSt.png" alt="image.png"></p>
+<h3 id="Results-on-non-linear-solvable-data"><a href="#Results-on-non-linear-solvable-data" class="headerlink" title="Results on non-linear-solvable data"></a>Results on non-linear-solvable data</h3><p>Replace $\tilde X$ with non-linearity following:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root_g_fns = [np.sin, np.cos, <span class="keyword">lambda</span> x: np.log(<span class="number">2</span>+x), np.square, np.sinh, np.cosh, np.tanh]</span><br><span class="line"><span class="keyword">for</span> root_f <span class="keyword">in</span> root_g_fns:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(i)</span>:</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">j</span><span class="params">(x)</span>:</span></span><br><span class="line">                <span class="keyword">return</span> np.sign(root_f(x)) * ((np.abs(root_f(x))) ** (<span class="number">1</span>/(i+<span class="number">1</span>)))</span><br><span class="line">            <span class="keyword">return</span> j</span><br><span class="line">        g_fns.append(f(i))</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/05/15/ceK4HPaXJOErzkM.png" alt="image.png"></p>
+<p>以上的结果是在数据维度为30维左右的，我们继续增大simulated data的维度到130维，我们可以发现，普通的LR模型会显著过拟合，而采用MI无监督学习过后的模型有更好的generalization能力。</p>
+<p><img src="https://i.loli.net/2020/05/15/ul3bJx57C2jGItK.png" alt="image.png"></p>
+<p>因为维度的高低是和数据量共同影响model效果的，所以我们想再探究一下稍微大一些的数据量的表现，如下图所示，我们发现即便数据量是维度的4倍左右（500/133），SL也并没有经过无监督学习过后的模型表现更好。</p>
+<p><img src="https://i.loli.net/2020/05/15/qEpisDlBTxJvzWC.png" alt="image.png"></p>
+<h3 id="Results-on-shifted-and-scaled-unsupervised-data-study-of-dimensionality"><a href="#Results-on-shifted-and-scaled-unsupervised-data-study-of-dimensionality" class="headerlink" title="Results on shifted and scaled unsupervised data - study of dimensionality"></a>Results on shifted and scaled unsupervised data - study of dimensionality</h3><p>Now all the data points are drawn from the exact same distribution, it’s time to check how the algorithm behave when there is <strong>shift/scale</strong> of the unsupervised data distribution. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_data</span><span class="params">(size, g_fns, split=<span class="params">(<span class="number">0.9</span>, <span class="number">0.05</span>, <span class="number">0.05</span>)</span>, noise_scale=<span class="number">0.05</span>, unsup_scale=<span class="params">(<span class="number">1.</span>, <span class="number">1.5</span>)</span>, unsup_shift=<span class="number">0.5</span>)</span>:</span></span><br><span class="line">    <span class="comment"># ... omitted. </span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># split the data</span></span><br><span class="line">    unsup_x = x_tilde[:int(split[<span class="number">0</span>]*size),:]</span><br><span class="line">    <span class="comment"># add some distribution shift/scale to the unsupervised dataset</span></span><br><span class="line">    unsup_scale = np.random.uniform(low=unsup_scale[<span class="number">0</span>], high=unsup_scale[<span class="number">1</span>], size=unsup_x.shape[<span class="number">0</span>]).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">    unsup_shift = np.random.normal(loc=unsup_shift, scale=<span class="number">0.05</span>)</span><br><span class="line">    unsup_x = unsup_scale * unsup_x + unsup_shift</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ... omitted.</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/05/15/g9EthkTW1O46XCe.png" alt="image.png"></p>
+<h2 id="Analysis-of-the-results"><a href="#Analysis-of-the-results" class="headerlink" title="Analysis of the results"></a>Analysis of the results</h2><p>The result of which shows that the unsupervised learning via MI maximization is more stable across different data-noisy scearios including: </p>
+<ul>
+<li>small size of training data</li>
+<li>scale/shift in unsupervised data</li>
+<li>better performance with fewer parameters</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/13/MI-Maximization-Experiments/">http://www.shihaizhou.com/2020/05/13/MI-Maximization-Experiments/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/13/MI-Maximization-Experiments/">May 13th 2020, 7:28:43 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/13/MI-Maximization-Experiments/">May 15th 2020, 12:16:51 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/" title="Bias-Variance Tradeoff of the Learning Algorithms">
+                    <div class="prevTitle">Bias-Variance Tradeoff of the Learning Algorithms</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:shihaizhou@zju.edu.cn" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/WOWNICE" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Estimation"><span class="toc-number">1.</span> <span class="toc-text">MI Estimation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Correlated-gaussian-variables"><span class="toc-number">1.1.</span> <span class="toc-text">Correlated gaussian variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MI-estimation-with-linear-discriminator"><span class="toc-number">1.2.</span> <span class="toc-text">MI estimation with linear discriminator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MI-estimation-with-neural-networks"><span class="toc-number">1.3.</span> <span class="toc-text">MI estimation with neural networks</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Maximization"><span class="toc-number">2.</span> <span class="toc-text">MI Maximization</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Inductive-unsupervised-representation-learning-via-MI-maximization"><span class="toc-number">2.1.</span> <span class="toc-text">Inductive unsupervised representation learning via MI maximization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theoretical-solution"><span class="toc-number">2.2.</span> <span class="toc-text">Theoretical solution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-implementation"><span class="toc-number">2.3.</span> <span class="toc-text">Model implementation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simulating-high-dimensional-data"><span class="toc-number">2.4.</span> <span class="toc-text">Simulating high-dimensional data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sanity-check"><span class="toc-number">2.5.</span> <span class="toc-text">Sanity check</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Influence-of-dimensionality-of-representation"><span class="toc-number">2.6.</span> <span class="toc-text">Influence of dimensionality of representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsupervised-Representation-Learning"><span class="toc-number">2.7.</span> <span class="toc-text">Unsupervised Representation Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Results-on-linear-solvable-data-study-of-noise"><span class="toc-number">2.7.1.</span> <span class="toc-text">Results on linear-solvable data - study of noise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Results-on-non-linear-solvable-data"><span class="toc-number">2.7.2.</span> <span class="toc-text">Results on non-linear-solvable data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Results-on-shifted-and-scaled-unsupervised-data-study-of-dimensionality"><span class="toc-number">2.7.3.</span> <span class="toc-text">Results on shifted and scaled unsupervised data - study of dimensionality</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Analysis-of-the-results"><span class="toc-number">2.8.</span> <span class="toc-text">Analysis of the results</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 27
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href="/2020/05/12/Divergence-Estimation-Framework/">Divergence Estimation Framework</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2020/05/10/MI-Maximization/">Mutual Information Maximization - Theory</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/">InfoGraph - USL and Semi-SL Graph-Level Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href="/2020/05/08/Graph-Level-Representation-Learning-via-Graph-Graph-Proximity/">Graph-Level Representation Learning via Graph-Graph Proximity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href="/2020/03/06/RSA-Algorithm/">RSA Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/03</span><a class="archive-post-title" href="/2020/03/03/Graph-Problems/">Subgraph Related</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/29</span><a class="archive-post-title" href="/2020/02/29/How-Powerful-are-GNNs/">How Powerful are GNNs?</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Attention-Networks/">Graph Attention Networks</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/25</span><a class="archive-post-title" href="/2020/02/25/Graph-Convolutional-Neural-Networks/">Graph Convolutional Neural Networks</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href="/2020/02/24/Transformer-Basics/">Transformer Basics</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">Grammar of Java</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href="/2020/02/22/Graph-Neural-Networks-Basics/">Graph Neural Networks - Basics</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/17</span><a class="archive-post-title" href="/2020/02/17/Information-Theory-Simple-Concepts/">Information Theory</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Some-Maths/">Metric Space</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL(4) - Value Function Approximation</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href="/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">RL(3) - Model-Free Control</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">Emergent Communication Through Negotiation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href="/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">RL(2) - Model-Free Policy Evaluation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">RL(1) - MP, MRP, MDP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">Google Research Football - RL Environment</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
+    
+        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+    
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
+    
+        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
+    
+        <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
+    
+        <span class="sidebar-tag-name" data-tags="CV"><span class="iconfont-archer">&#xe606;</span>CV</span>
+    
+        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
+    
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+    
+        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
+    
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Haizhou Shi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+</body>
+</html>
+
+

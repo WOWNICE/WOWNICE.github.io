@@ -416,10 +416,10 @@ height:50vh;
 \mathcal{P}^{\mathcal X} \triangleq\left\{q \in \mathbb{R}^{m} | \sum_{i} q_{i}=1, q_{i} \geq 0 \quad \forall i\right\}</script><p>注意：Probability Simplex是一个维度为$m-1$的空间，因为这个空间上的向量需要满足$\sum_{i} q_{i}=1$，从而导致其少了一个自由度。</p>
 <p><strong>Definition</strong> (Kullback-Leibler Divergence). For $p, q \in \mathcal{P}^{\mathcal X}$, the <strong>Kullback-Leibler (KL) divergence</strong> of $q$ from $p$ is</p>
 <script type="math/tex; mode=display">
-d(p, q) \triangleq \sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)}</script><p>where we are using the conventions that $\log \infty=\infty$, $\log 0=-\infty$, $0/0=0$, and $0\times \infty=0$.</p>
+d(p, q) \triangleq \sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)}</script><p>where $\log$ represents $\ln$, and we are using the conventions that $\log \infty=\infty$, $\log 0=-\infty$, $0/0=0$, and $0\times \infty=0$.</p>
 <p>注意：同entropy不同，KL divergence不仅仅局限于离散型变量，对于连续型变量也是适用的：</p>
 <script type="math/tex; mode=display">
-D_{K L}(p(x) \| q(x))=\int_{-\infty}^{\infty} p(x) \ln \frac{p(x)}{q(x)} d x</script><p>以上也是为什么作者会从KL divergence开始介绍Information Theory，因为KL divergence是一个更加广泛的定义。在实际计算两个分布的的KL divergence时，因为采样会不完全，所以需要用到以上数值的习惯性定义，或者使用function approximation来拟合观察到的分布；另一种做法是在计算的时候使用平滑策略：为两个变量missing $x$值赋予一个小的频率常数$\epsilon$，这部分多出来的频率由其他采样过的$x$支付，这样就保证了所有的频率都是非零的。</p>
+D_{K L}(p(x) \| q(x))=\int_{-\infty}^{\infty} p(x) \log \frac{p(x)}{q(x)} d x</script><p>以上也是为什么作者会从KL divergence开始介绍Information Theory，因为KL divergence是一个更加广泛的定义。在实际计算两个分布的的KL divergence时，因为采样会不完全，所以需要用到以上数值的习惯性定义，或者使用function approximation来拟合观察到的分布；另一种做法是在计算的时候使用平滑策略：为两个变量missing $x$值赋予一个小的频率常数$\epsilon$，这部分多出来的频率由其他采样过的$x$支付，这样就保证了所有的频率都是非零的。</p>
 <p><strong>Theorem</strong> (Gibbs’ Inequality). For all $p, q \in \mathcal{P}^{\mathcal{X}}$ , it holds that $d(p, q) \geq 0$, with equality iff $p = q$.</p>
 <p>证明这个定理的思路：</p>
 <ul>
@@ -495,7 +495,7 @@ I(X,Z) \leq I(X,Y)</script><p>这条定理告诉我们，对于一个作为side 
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">February 17th 2020, 3:59:39 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">May 11th 2020, 9:03:24 am</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/02/17/Information-Theory-Simple-Concepts/">May 14th 2020, 1:28:44 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -972,9 +972,26 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 24
+        Total : 27
         </div>
         <!-- search  -->
         
@@ -990,7 +1007,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2020/05/10/MI-Estimator/">MI Estimator and Information Theory Stuff</a>
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href="/2020/05/12/Divergence-Estimation-Framework/">Divergence Estimation Framework</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2020/05/10/MI-Maximization/">Mutual Information Maximization - Theory</a>
         </li>
     
     
@@ -1005,12 +1037,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
         </li>
     
     
@@ -1030,12 +1062,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1057,29 +1089,6 @@ top:50vh;
         <li class="archive-post-item">
             <span class="archive-post-date">02/23</span><a class="archive-post-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">Grammar of Java</a>
         </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1111,6 +1120,29 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">08/15</span><a class="archive-post-title" href="/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">RL(3) - Model-Free Control</a>
         </li>
@@ -1140,23 +1172,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
-    
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
-    
-        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
-    
-        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
-    
-        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
-    
-        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
-    
         <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
     
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
     
         <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
     
@@ -1165,6 +1189,14 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
         <span class="sidebar-tag-name" data-tags="CV"><span class="iconfont-archer">&#xe606;</span>CV</span>
+    
+        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
+    
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+    
+        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
+    
+        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
