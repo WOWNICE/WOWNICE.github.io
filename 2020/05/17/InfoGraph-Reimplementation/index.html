@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Haizhou Shi">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Haizhou Shi">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>InfoGraph - Experiments · N1H111SM&#39;s Miniverse</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/Goku_1.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">InfoGraph - Experiments</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href="/">N1H111SM's Miniverse</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            InfoGraph - Experiments
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="MI">MI</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="GNN">GNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Code">Code</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.5k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/05/17</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>Materials</strong></p>
+<ul>
+<li><a href="https://shihaizhou.com/2020/05/13/MI-Maximization-Experiments/" target="_blank" rel="noopener">previous post on MI maximization</a></li>
+<li><a href="http://shihaizhou.com/2020/05/16/GCN-Code-Explanation/" target="_blank" rel="noopener">previous post on GCN code explanation</a></li>
+<li><a href="https://pytorch.org/docs/master/generated/torch.nn.CrossEntropyLoss.html" target="_blank" rel="noopener">pytorch nn.CrossEntropyLoss</a></li>
+</ul>
+<h1 id="GC-Layer"><a href="#GC-Layer" class="headerlink" title="GC Layer"></a>GC Layer</h1><p>在原本的GCN repo中，因为解决的是node-level task，所以认为一张图内的节点就是一个batch。但是在InfoGraph的setting中，必须要将图也以batch的方式处理，所以我们需要处理的对象也就变成了tensor. 第一版的代码通过循环实现。经过实验发现该代码效率过低，原因在于在for循环中CPU内存和GPU显存需要进行大量通讯（将GPU上的tensor拷贝到CPU上）. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, adj)</span>:</span></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">    <span class="comment"># support batch graph, modified from original GCN code.</span></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">    support = torch.matmul(x, self.weight)</span><br><span class="line">    output = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(support.shape[<span class="number">0</span>]):</span><br><span class="line">        sparse_adj = adj[i]</span><br><span class="line">        dense_x = support[i]</span><br><span class="line">        output.append(torch.spmm(sparse_adj, dense_x))</span><br><span class="line">    output = torch.stack(output)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> self.bias <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> output + self.bias</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
+<p>因为其实我们将邻接矩阵$A$存成sparse matrix的形式是为了在data preprocessing阶段节省内存空间和运算时间；但是到了GPU中我们就不太需要去考虑内存空间，直接将它转换成dense matrix来进行运算即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, adj)</span>:</span></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">    <span class="comment"># support batch graph, modified from original GCN code.</span></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">    support = torch.matmul(x, self.weight)</span><br><span class="line">    output = torch.matmul(adj.to_dense(), support)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> self.bias <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> output + self.bias</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
+<h1 id="GCN"><a href="#GCN" class="headerlink" title="GCN"></a>GCN</h1><p>Multiple GC layers stacked together with dropout layer. 采用了<code>nn.ModuleList()</code>技术来实现多个层之间灵活的连接. 其中的<code>GraphConvolution</code>层采用的就是kipf的GCN repo.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, d_input, d_hids, d_output, dropout)</span>:</span></span><br><span class="line">        super(GCN, self).__init__()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># connect the graph convolution layer</span></span><br><span class="line">        gcs = []</span><br><span class="line">        d_hids = [d_input, *d_hids, d_output]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(d_hids)<span class="number">-1</span>):</span><br><span class="line">            gcs.append(GraphConvolution(d_hids[i], d_hids[i+<span class="number">1</span>]))</span><br><span class="line">        </span><br><span class="line">        self.gcs = nn.ModuleList(gcs)</span><br><span class="line">        self.dropout = dropout</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, adj)</span>:</span></span><br><span class="line">        multi_scale_output = []</span><br><span class="line">        <span class="keyword">for</span> gc <span class="keyword">in</span> self.gcs:</span><br><span class="line">            <span class="comment"># one-layer perceptron, can be potentially replaced by MLP</span></span><br><span class="line">            x = F.relu(gc(x, adj))</span><br><span class="line">            <span class="comment"># something not sure here, whether </span></span><br><span class="line">            <span class="comment"># the dropout will affect performance</span></span><br><span class="line">            x = F.dropout(x, self.dropout, training=self.training)</span><br><span class="line">            multi_scale_output.append(x)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> multi_scale_output</span><br></pre></td></tr></table></figure>
+<h1 id="Graph-MI-Maximization"><a href="#Graph-MI-Maximization" class="headerlink" title="Graph MI Maximization"></a>Graph MI Maximization</h1><p>基于<a href="https://shihaizhou.com/2020/05/13/MI-Maximization-Experiments/" target="_blank" rel="noopener">previous post on MI maximization</a> 中<code>MIMaximizer</code>类的实现，以及基于<code>GCN</code>的实现，我们将图神经网络用于graph-level representation learning. </p>
+<p>首先要解决的是batch training for graphs，不同的图具有不同的节点数，这就导致不同的$X$拥有不同的维度。为了解决这个问题，在数据准备过程中，我们采用zero-padding的方式：取$N=\max_i{N_i}$, 其中$N_i$表示第$i$张图的节点个数。对于任意一个图$G_i: (X, A)$，对其zero-padding的结果为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+X^\prime &= \left(\begin{array}{c}X \\ O \end{array}\right)_{N\times D} \\
+A^\prime &= \left(\begin{array}{cc}A & O \\ O & O \end{array}\right)_{N\times N}
+\end{align}</script><p>在GCN的setting下，则有：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+A^\prime X^\prime &= \left(\begin{array}{c}AX \\ O \end{array}\right)_{N\times D} \\
+A^\prime X^\prime \Theta &= \left(\begin{array}{c}AX\Theta \\ O \end{array}\right)_{N\times D_{\theta}}
+\end{align}</script><p>在进行zero-padding的时候我们需要保证参数训练时的gradient不会受到zero-pad的影响，我们需要将这一点bare in mind. 这一点我们可以对照一下GCN中数据处理的做法，通过自己的数学推导，我们暂时认为在 $\sum$ 作为READOUT function的时候是不会影响参数更新的，但是如果是average over node number $N$ 则会使得拥有更多节点数的图更新效率更高。下面我们简要描述张量（形状）变换的过程。</p>
+<h2 id="Theoretical-Procedure"><a href="#Theoretical-Procedure" class="headerlink" title="Theoretical Procedure"></a>Theoretical Procedure</h2><p>Suppose the input $\{(X_1, A_1), (X_2, A_2), \cdots, (X_M, A_M)\}$ is zero-padded to $N = \max N_i$ where $N_i$ is the dimension of the adjacency matrix $A_i$</p>
+<p><strong>Input</strong></p>
+<script type="math/tex; mode=display">
+\begin{align}
+X&: M \times N \times d_{input} \\
+A&: M \times N \times N \\
+\end{align}</script><p><strong>After GCN</strong></p>
+<script type="math/tex; mode=display">
+\operatorname{GCN}(X, A): \{M\times N \times d_1, M\times N \times d_2, \cdots, M\times N \times d_k, M\times N \times d_{output}\}</script><p><strong>Node Representation</strong></p>
+<script type="math/tex; mode=display">
+h_{\phi}^{i}=\operatorname{CONCAT}\left(\left\{h_{i}^{(k)}\right\}_{k=1}^{K}\right): M \times N \times (\sum_i^{d_i} + d_{output})</script><p><strong>Graph representation</strong><br>We use $\sum$ as the readout function: </p>
+<script type="math/tex; mode=display">
+\begin{align}
+H_{\phi}(G)&=\operatorname{READOUT}\left(\left\{h_{\phi}^{i}\right\}_{i=1}^{N}\right) \\
+&= \operatorname{SUM}\left(\left\{h_{\phi}^{i}\right\}_{i=1}^{N}\right): M \times 1 \times (\sum_i^{d_i} + d_{output})
+\end{align}</script><h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>在<code>GraphMIMaximizer</code>类中，初始化时创建<code>node_level_model</code>，该模型返回a list of multi-scale node level features. 因为是得到总的node-level embedding时采用的是concatenate策略，所以MI estimator的input维度为其向量长度之和+graph-level embedding的长度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    self, </span></span></span><br><span class="line"><span class="function"><span class="params">    d_input=<span class="number">16</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">    d_hids=<span class="params">(<span class="number">16</span>, <span class="number">16</span>, <span class="number">16</span>)</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">    d_output=<span class="number">16</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">    dropout=<span class="number">0.9</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">    input_size=<span class="number">5</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">    hidden_size=<span class="number">10</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">    output_size=<span class="number">1</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span>:</span></span><br><span class="line">    super(MIMaximizer, self).__init__()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># GCN model returns a list of intermidiate representation of the nodes.</span></span><br><span class="line">    self.node_level_model = GCN(</span><br><span class="line">        d_input=d_input, </span><br><span class="line">        d_hids=d_hids, </span><br><span class="line">        d_output=d_output, </span><br><span class="line">        dropout=dropout</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># READOUT function specific</span></span><br><span class="line">    self.multi_scale_dim = sum(d_hids) + d_output</span><br><span class="line"></span><br><span class="line">    <span class="comment"># concatenate graph embedding and the node level embedding</span></span><br><span class="line">    self.est_model = nn.Sequential(</span><br><span class="line">        nn.Linear(self.multi_scale_dim * <span class="number">2</span>, hidden_size),</span><br><span class="line">        nn.ReLU(),</span><br><span class="line">        nn.Linear(hidden_size,hidden_size),</span><br><span class="line">        nn.ReLU(),</span><br><span class="line">        nn.Linear(hidden_size, <span class="number">1</span>)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<p>接着我们根据以上理论，定义<code>forward</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, adj)</span>:</span></span><br><span class="line">    batch_size, node_num, rep_size = x.shape</span><br><span class="line"></span><br><span class="line">    multi_scale_node_rep = self.node_level_model(x, adj) </span><br><span class="line">    node_rep = torch.cat(multi_scale_node_rep, dim=<span class="number">2</span>) <span class="comment">#(M,N,D)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># graph representation </span></span><br><span class="line">    <span class="comment"># if not sum, then the gradient &amp; loss should be reconsidered.</span></span><br><span class="line">    graph_rep = torch.sum(node_rep, dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>) <span class="comment"># (M,1,D)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># collapse node representation</span></span><br><span class="line">    flatten_node_rep = node_rep.view(<span class="number">-1</span>, rep_size) <span class="comment">#(M*N,D)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># tiled graph representation: (2*M*N, D)</span></span><br><span class="line">    flatten_graph_rep = torch.cat([graph_rep <span class="keyword">for</span> _ <span class="keyword">in</span> range(node_num)], dim=<span class="number">1</span>).view(<span class="number">-1</span>, rep_size)</span><br><span class="line">    tiled_graph_rep = torch.cat([flatten_graph_rep, flatten_graph_rep, ], dim=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># random permutation on node representation</span></span><br><span class="line">    idx = torch.randperm(batch_size*node_num)</span><br><span class="line">    shuffled_node_rep = flatten_node_rep[idx]</span><br><span class="line">    concat_node_rep = torch.cat([flatten_node_rep, shuffled_node_rep], dim=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>其中为了实现两个分布的sample相互对齐的tensor operation值得仔细记录。</p>
+<p>问题描述：有一个 $M\times N\times D$ 的tensor，其中 $M$ 表示图的batch size, 其中每个 $N\times D$ 维矩阵表示$N$个节点的$D$维representation. 将该tensor沿着axis=1方向sum就得到了 $M\times D$ 维的graph representation. 我们想要将graph representation和该图中的node representation align起来从而实现Mutual Information maximization. </p>
+<p>为了解决以上问题，我们使用了以下sample code. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">node_rep = torch.from_numpy(np.arange(<span class="number">24</span>).reshape(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)).float()</span><br><span class="line"></span><br><span class="line"><span class="comment"># M * 1 * D</span></span><br><span class="line">graph_rep = torch.sum(node_rep, dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">tilde_graph_rep = torch.cat([graph_rep <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">3</span>)], dim=<span class="number">1</span>).view(<span class="number">-1</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<p>这样在此基础上我们只需要简单地reshape就完成了。</p>
+<h1 id="Graph-Generation"><a href="#Graph-Generation" class="headerlink" title="Graph Generation"></a>Graph Generation</h1><p>我们需要生成一些基于某种分布的graph data. 在生成random graph方向上，我们需要考虑几个变量的随机化：</p>
+<ul>
+<li>node number $N_i$</li>
+<li>node feature $X_i$</li>
+<li>edge number $E_i$</li>
+<li>edge connection: <strong>random permutation</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_graph</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    node_number,</span></span></span><br><span class="line"><span class="function"><span class="params">    edge_number,</span></span></span><br><span class="line"><span class="function"><span class="params">    g_fns,</span></span></span><br><span class="line"><span class="function"><span class="params">    noise_scale=<span class="number">0.2</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    return: </span></span><br><span class="line"><span class="string">        a batch of directed graphs (maybe not symmetric), </span></span><br><span class="line"><span class="string">        which contain no self-edge. </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># generate X matrix</span></span><br><span class="line">    x = np.random.uniform(low=<span class="number">-1.</span>,high=<span class="number">1.</span>,size=node_number).reshape([<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># g_fns should be numpy functions which support broadcasting. </span></span><br><span class="line">    x_tilde = np.hstack([fn(x) <span class="keyword">for</span> fn <span class="keyword">in</span> g_fns])</span><br><span class="line">    noise = noise_scale * np.random.normal(loc=<span class="number">0</span>, scale=<span class="number">1</span>, size=x_tilde.shape)</span><br><span class="line">    x_tilde += noise</span><br><span class="line">    </span><br><span class="line">    x_tilde = np.nan_to_num(x_tilde)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># generate A matrix</span></span><br><span class="line">    idx = np.random.permutation(node_number**<span class="number">2</span>)</span><br><span class="line">    idx = list(filter(<span class="keyword">lambda</span> x: x%node_number != x//node_number, idx))[:edge_number]</span><br><span class="line">    row = list(map(<span class="keyword">lambda</span> x: x%node_number, idx))</span><br><span class="line">    col = list(map(<span class="keyword">lambda</span> x: x//node_number, idx))</span><br><span class="line">    </span><br><span class="line">    A = sp.sparse.coo_matrix((np.ones(edge_number), (row, col)), shape=(node_number, node_number))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> x_tilde, A</span><br></pre></td></tr></table></figure>
+<p>同时为了将这些生成的graph $(X, A)$ pairs转换成GPU中的张量，我们需要以下将<code>coo_matrix</code>类型转换成torch张量的<code>util</code>函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">coos2tensor</span><span class="params">(coos, shape)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    convert a list of coo_matrices to 3D torch tensor.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    values, indices = [], []</span><br><span class="line">    <span class="keyword">for</span> i, coo <span class="keyword">in</span> enumerate(coos):</span><br><span class="line">        values.extend(coo.data)</span><br><span class="line"></span><br><span class="line">        indice = np.vstack([i*np.ones(len(coo.row)), coo.row, coo.col])</span><br><span class="line">        indices.append(indice)</span><br><span class="line"></span><br><span class="line">    indices = np.concatenate(indices, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    i = torch.LongTensor(indices)</span><br><span class="line">    v = torch.FloatTensor(values)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> torch.sparse.FloatTensor(i, v, torch.Size(shape))</span><br></pre></td></tr></table></figure>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Sanity-check"><a href="#Sanity-check" class="headerlink" title="Sanity check"></a>Sanity check</h2><p>对于生成数据集进行MI maximization，结果如下</p>
+<p><img src="https://i.loli.net/2020/05/20/uz8fbFkSBxr1oTt.png" alt="image.png"></p>
+<p>其中我们发现MI在graph中训练时会有sudden collapse的情况。因为是我们人工生成的simulated data，所以还没有办法非常确定这样的现象是不是普遍存在的，是否是MI训练时需要解决的痛点。</p>
+<h2 id="Inductive-representation-learning-with-InfoGraph"><a href="#Inductive-representation-learning-with-InfoGraph" class="headerlink" title="Inductive representation learning with InfoGraph"></a>Inductive representation learning with InfoGraph</h2><h4 id="Data-generation"><a href="#Data-generation" class="headerlink" title="Data generation"></a>Data generation</h4><p>数据生成的目标还是生成一组unsupervised/train/test数据集。其具体细节我们将略过，其中值得一提的是针对分类问题我们采用了torch中的<code>nn.CrossEntropyLoss</code>这一个损失函数，所以对应生成的标签$Y$应该符合该函数input shape.</p>
+<ul>
+<li>Input: $(N, C)$</li>
+<li>Target: $(N)$ where each value is $0 \leq \operatorname{targets}[i] \leq C-1$. </li>
+</ul>
+<h4 id="Graph-Classification-Model"><a href="#Graph-Classification-Model" class="headerlink" title="Graph Classification Model"></a>Graph Classification Model</h4><p>该模型作为baseline模型，实现在训练集上的supervised learning. 采用的架构是GCN + SUM_READOUT + Linear + softmax模型. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Grpah Classification</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GraphClassifier</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        d_input=<span class="number">16</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">        d_hids=<span class="params">(<span class="number">16</span>, <span class="number">16</span>, <span class="number">16</span>)</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">        d_output=<span class="number">16</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">        dropout=<span class="number">0.2</span></span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        super(GraphClassifier, self).__init__()</span><br><span class="line">        </span><br><span class="line">        self.node_level_model = GCN(</span><br><span class="line">            d_input=d_input, </span><br><span class="line">            d_hids=d_hids, </span><br><span class="line">            d_output=d_output, </span><br><span class="line">            dropout=dropout</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">        self.multi_scale_dim = sum(d_hids) + d_output</span><br><span class="line">        </span><br><span class="line">        self.classify_model = nn.Sequential(</span><br><span class="line">            nn.Linear(self.multi_scale_dim, <span class="number">2</span>),</span><br><span class="line">            nn.Softmax()</span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, adj, y)</span>:</span></span><br><span class="line">        multi_scale_node_rep = self.node_level_model(x, adj)</span><br><span class="line">        node_rep = torch.cat(multi_scale_node_rep, dim=<span class="number">2</span>) <span class="comment">#(M,N,D)</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># graph representation </span></span><br><span class="line">        <span class="comment"># if not sum, then the gradient &amp; loss should be reconsidered.</span></span><br><span class="line">        graph_rep = torch.sum(node_rep, dim=<span class="number">1</span>, keepdim=<span class="literal">False</span>) <span class="comment"># (M,D)</span></span><br><span class="line">        </span><br><span class="line">        y_hat = self.classify_model(graph_rep)</span><br><span class="line"><span class="comment">#         print(y_hat.shape, y.shape)</span></span><br><span class="line">        criterion = nn.CrossEntropyLoss()</span><br><span class="line">        loss = criterion(y_hat, y)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> y_hat, loss</span><br></pre></td></tr></table></figure>
+<p>使用该模型进行supervised learning的结果如下</p>
+<p><img src="https://i.loli.net/2020/05/20/fCBWZcFGIMehDdH.png" alt="image.png"></p>
+<h4 id="Supervised-classifier-for-representations"><a href="#Supervised-classifier-for-representations" class="headerlink" title="Supervised classifier for representations"></a>Supervised classifier for representations</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Representation Classification</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RepClassifier</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        d_rep=<span class="number">16</span>, </span></span></span><br><span class="line"><span class="function"><span class="params">        dropout=<span class="number">0.2</span></span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        super(RepClassifier, self).__init__()</span><br><span class="line">        </span><br><span class="line">        self.classify_model = nn.Sequential(</span><br><span class="line">            nn.Linear(d_rep, <span class="number">2</span>),</span><br><span class="line">            nn.Softmax()</span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, rep, y)</span>:</span></span><br><span class="line">        y_hat = self.classify_model(rep)</span><br><span class="line"><span class="comment">#         print(y_hat.shape, y.shape)</span></span><br><span class="line">        criterion = nn.CrossEntropyLoss()</span><br><span class="line">        loss = criterion(y_hat, y)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> y_hat, loss</span><br></pre></td></tr></table></figure>
+<h4 id="InfoGraph-for-unsupervised-representation-learning"><a href="#InfoGraph-for-unsupervised-representation-learning" class="headerlink" title="InfoGraph for unsupervised representation learning"></a>InfoGraph for unsupervised representation learning</h4><p>mi_epoch=10000, <strong>cla_epoch=100</strong>, unsup=10000, train=100, test=100</p>
+<p><img src="https://i.loli.net/2020/05/20/xhbW64eAEPCjagQ.png" alt="image.png"></p>
+<p>可以看到MI还是会出现sudden collapse的情况。但是从后续representation来看，collapse的发生也并不会导致representation的表现变差。因为test error表现得非常高，所以我们怀疑是否是最后末端加的单层线性加上softmax训练没有拟合。加大cla_epoch的总数，我们有以下结果。</p>
+<p>mi_epoch=10000, <strong>cla_epoch=500</strong>, unsup=10000, train=100, test=100</p>
+<p><img src="https://i.loli.net/2020/05/20/aAEFS25u7L6qzZO.png" alt="image.png"></p>
+<p>我们发现在test上的cross_entropy变得更加稳定，同时当sudden collapse发生的时候对应的eval_loss也会相应地增加。更重要的是，我们发现横坐标并没有一直延伸到10000/10=1000的地方，而是很早就停了下来。打印得到的结果，我们发现后面一半的训练结果是清一色的<code>nan</code>，这也是MI在训练时非常容易达到的状态，或者说是由于我们优化器的选择，超参的选择导致的。</p>
+<p>MI在训练时的表现还是需要我们再进一步观察理解，但现在先将在simulated graph data上发现的结果进行一些总结：</p>
+<ul>
+<li>MI在maximization的过程中经常会发生sudden collapse，因为是将estimation和maximization同时进行的，这样做会不会带来一些非常糟糕的结果？可能需要参考RL中的estimation. </li>
+<li>MI在maximization过程中经常会发生值变为<code>nan</code>的情况，具体原因不明，可能是因为没有采用BN或者weight decay或者采用不适当的优化器（需要进一步调查）. </li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/17/InfoGraph-Reimplementation/">http://www.shihaizhou.com/2020/05/17/InfoGraph-Reimplementation/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/17/InfoGraph-Reimplementation/">May 17th 2020, 10:01:33 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/17/InfoGraph-Reimplementation/">May 21st 2020, 7:30:15 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/05/19/Pytorch-batch-sparse-matrix-on-GPU/" title="Pytorch - Batch Sparse Matrix on GPU">
+                    <div class="nextTitle">Pytorch - Batch Sparse Matrix on GPU</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/05/17/Pytorch-nn-ModuleList-and-nn-Sequential/" title="Pytorch - nn.ModuleList vs nn.Sequential">
+                    <div class="prevTitle">Pytorch - nn.ModuleList vs nn.Sequential</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:shihaizhou@zju.edu.cn" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/WOWNICE" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GC-Layer"><span class="toc-number">1.</span> <span class="toc-text">GC Layer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GCN"><span class="toc-number">2.</span> <span class="toc-text">GCN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-MI-Maximization"><span class="toc-number">3.</span> <span class="toc-text">Graph MI Maximization</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Theoretical-Procedure"><span class="toc-number">3.1.</span> <span class="toc-text">Theoretical Procedure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code"><span class="toc-number">3.2.</span> <span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Generation"><span class="toc-number">4.</span> <span class="toc-text">Graph Generation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiments"><span class="toc-number">5.</span> <span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sanity-check"><span class="toc-number">5.1.</span> <span class="toc-text">Sanity check</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inductive-representation-learning-with-InfoGraph"><span class="toc-number">5.2.</span> <span class="toc-text">Inductive representation learning with InfoGraph</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Data-generation"><span class="toc-number">5.2.0.1.</span> <span class="toc-text">Data generation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Graph-Classification-Model"><span class="toc-number">5.2.0.2.</span> <span class="toc-text">Graph Classification Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-classifier-for-representations"><span class="toc-number">5.2.0.3.</span> <span class="toc-text">Supervised classifier for representations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InfoGraph-for-unsupervised-representation-learning"><span class="toc-number">5.2.0.4.</span> <span class="toc-text">InfoGraph for unsupervised representation learning</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 53
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href="/2020/06/16/Generative-Adversarial-Networks/">Generative Adversarial Networks</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href="/2020/06/10/Learning-Disentangled-Representations-via-Mutual-Information-Estimation/">Disentangled Representation Learning via Mutual Information Estimation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/09</span><a class="archive-post-title" href="/2020/06/09/InfoAE-Unpublished/">InfoAE - Unpublished</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href="/2020/06/08/InfoGAN/">InfoGAN</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href="/2020/05/27/Information-Competing-Process-for-Learning-Diversified-Representations/">Information Competing Process for Learning Diversified Representations</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href="/2020/05/26/InfoBal-Ideas/">InfoBal - Ideas (failed)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href="/2020/05/26/What-Makes-for-Good-Views-for-Contrastive-Learning/">What Makes for Good Views for Contrastive Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href="/2020/05/25/Contrastive-Multiview-Coding/">Contrastive Multiview Coding</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2020/05/22/On-MI-Maximization-for-Representation-Learning/">On MI Maximization for Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2020/05/22/Variational-Auto-Encoders/">Variational Auto-Encoders</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/21</span><a class="archive-post-title" href="/2020/05/21/Deep-InfoMax/">Deep InfoMax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href="/2020/05/19/Pytorch-batch-sparse-matrix-on-GPU/">Pytorch - Batch Sparse Matrix on GPU</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span><a class="archive-post-title" href="/2020/05/17/InfoGraph-Reimplementation/">InfoGraph - Experiments</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span><a class="archive-post-title" href="/2020/05/17/Pytorch-nn-ModuleList-and-nn-Sequential/">Pytorch - nn.ModuleList vs nn.Sequential</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span><a class="archive-post-title" href="/2020/05/17/Sparse-Matrix/">Sparse Matrix</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href="/2020/05/16/GCN-Code-Explanation/">GCN - Code Explanation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2020/05/10/MI-Maximization/">Mutual Information Maximization - Theory</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/">InfoGraph</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/08</span><a class="archive-post-title" href="/2020/05/08/Graph-Level-Representation-Learning-via-Graph-Graph-Proximity/">Graph-Level Representation Learning via Graph-Graph Proximity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href="/2020/03/06/RSA-Algorithm/">RSA Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/03</span><a class="archive-post-title" href="/2020/03/03/Graph-Problems/">Subgraph Related</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/29</span><a class="archive-post-title" href="/2020/02/29/How-Powerful-are-GNNs/">How Powerful are GNNs?</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Attention-Networks/">Graph Attention Networks</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/25</span><a class="archive-post-title" href="/2020/02/25/Graph-Convolutional-Neural-Networks/">Graph Convolutional Neural Networks</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href="/2020/02/24/Transformer-Basics/">Transformer Basics</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">Grammar of Java</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href="/2020/02/22/Graph-Neural-Networks-Basics/">Graph Neural Networks - Basics</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/17</span><a class="archive-post-title" href="/2020/02/17/Information-Theory-Simple-Concepts/">Information Theory</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL(4) - Value Function Approximation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href="/2019/08/15/RL-Course-Lesson-3-Model-Free-Control/">RL(3) - Model-Free Control</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href="/2019/08/13/Notes-on-Emergent-Communication-Through-Negotiation/">Emergent Communication Through Negotiation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/15</span><a class="archive-post-title" href="/2019/07/15/RL-Course-Lesson-2-Model-Free-Policy-Evaluation/">RL(2) - Model-Free Policy Evaluation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href="/2019/07/10/RL-Course-Lesson-1-MP-MRP-MDP/">RL(1) - MP, MRP, MDP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href="/2019/06/12/Google-Research-Football-RL-Environment/">Google Research Football - RL Environment</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+    
+        <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
+    
+        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+    
+        <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
+    
+        <span class="sidebar-tag-name" data-tags="CV"><span class="iconfont-archer">&#xe606;</span>CV</span>
+    
+        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
+    
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+    
+        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Haizhou Shi"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+</body>
+</html>
+
+

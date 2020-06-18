@@ -268,11 +268,13 @@ height:50vh;
     
         <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
     
+        <a class="post-tag" href="javascript:void(0);" data-tags="MI">MI</a>
+    
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.6k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -432,12 +434,19 @@ D_{K L}(\mathbb{P} \| \mathbb{Q})=\sup _{T: \Omega \rightarrow \mathbb{R}} \math
 \hat{I}(A ; B)=\sup _{w} \frac{1}{N} \sum_{n=1}^{N} f\left(a_{n}, b_{n} ; w\right)-\log \left(\frac{1}{N} \sum_{n=1}^{N} \exp \left(f\left(a_{n}, b_{\sigma(n)} ; w\right)\right)\right)</script><h2 id="InfoNCE"><a href="#InfoNCE" class="headerlink" title="InfoNCE"></a>InfoNCE</h2><p>InfoNCE is another MI estimator used in representation learning, which is defined as, </p>
 <script type="math/tex; mode=display">
 I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_{i}, y_{i}\right)}}{\frac{1}{K} \sum_{j=1}^{K} e^{f\left(x_{i}, y_{j}\right)}}\right] \triangleq I_{\mathrm{NCE}}(X ; Y)</script><p>where the expectation is over $K$ independent samples $\left\{\left(x_{i}, y_{i}\right)\right\}_{i=1}^{K}$ from the joint distribution $p(x, y)$.</p>
-<h1 id="MI-Maximization"><a href="#MI-Maximization" class="headerlink" title="MI Maximization"></a>MI Maximization</h1><p>Let $\mathcal X$ and $\mathcal Y$ be the domain and range of a continuous and (almost everywhere) differentiable parametric function, $E_{\psi}: \mathcal{X} \rightarrow \mathcal{Y}$ with parameters $\psi$ (e.g., a neural network). <strong>Mutual Information Maximization</strong> is to: find the set of parameters, $\psi$, such that the mutual information, $\mathcal{I}\left(X ; E_{\psi}(X)\right)$, is maximized. This process is often used for finding representations for a given dataset. (This part refers to <a href="https://arxiv.org/abs/1808.06670" target="_blank" rel="noopener">“Learning Deep Representations by Mutual Information Estimation and Maximization”</a>)</p>
+<h2 id="JSD"><a href="#JSD" class="headerlink" title="JSD"></a>JSD</h2><p>根据fGAN中提出的框架，我们可以构造一个Jensen-Shannon MI Estimator: </p>
+<script type="math/tex; mode=display">
+\widehat{\mathcal{I}}_{\omega, \psi}^{(\mathrm{JSD})}\left(X ; E_{\psi}(X)\right):=\mathbb{E}_{\mathbb{P}}\left[-\operatorname{sp}\left(-T_{\psi, \omega}\left(x, E_{\psi}(x)\right)\right)\right]-\mathbb{E}_{\mathbb{P} \times \tilde{\mathbb{P}}}\left[\operatorname{sp}\left(T_{\psi, \omega}\left(x^{\prime}, E_{\psi}(x)\right)\right)\right]</script><p>where <code>sp</code> is the <code>softplus</code> function:</p>
+<script type="math/tex; mode=display">
+\operatorname{sp}(z) =\log (1+e^z)</script><h1 id="MI-Maximization"><a href="#MI-Maximization" class="headerlink" title="MI Maximization"></a>MI Maximization</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>Refer this section to <a href="https://arxiv.org/abs/1808.06670" target="_blank" rel="noopener">paper “Learning Deep Representations by Mutual Information Estimation and Maximization”</a>. </p>
+<blockquote>
+<p>Incorporating knowledge about locality in the input into the objective can significantly improve a representation’s suitability for downstream tasks. We further control characteristics of the repre- sentation by matching to a prior distribution adversarially.</p>
+<p>We leverage MI estimation for representation learning and show that, depending on the downstream task, maximizing MI between the complete input and the encoder output (i.e., global MI) is often insufficient for learning useful representations.</p>
+</blockquote>
+<h2 id="Representation-Learning"><a href="#Representation-Learning" class="headerlink" title="Representation Learning"></a>Representation Learning</h2><p>Let $\mathcal X$ and $\mathcal Y$ be the domain and range of a continuous and (almost everywhere) differentiable parametric function, $E_{\psi}: \mathcal{X} \rightarrow \mathcal{Y}$ with parameters $\psi$ (e.g., a neural network). <strong>Mutual Information Maximization</strong> is to: find the set of parameters, $\psi$, such that the mutual information, $\mathcal{I}\left(X ; E_{\psi}(X)\right)$, is maximized. This process is often used for finding representations for a given dataset. (This part refers to <a href="https://arxiv.org/abs/1808.06670" target="_blank" rel="noopener">“Learning Deep Representations by Mutual Information Estimation and Maximization”</a>)</p>
 <p><strong>InfoMax</strong> finds that exact KL-based formulation of MI is not necessary, for example, a simple alternative based on the Jensen-Shannon divergence (JSD) is more stable and provides better results. At a high level, we optimize $E_{\psi}$ by <strong>simultaneously estimating and maximizing</strong> $\mathcal{I}\left(X ; E_{\psi}(X)\right)$, where $G$ represents global maximization: </p>
 <script type="math/tex; mode=display">
-(\hat{\omega}, \hat{\psi})_{G}=\underset{\omega, \psi}{\arg \max } \widehat{\mathcal I}_{\omega}\left(X ; E_{\psi}(X)\right)</script><p>根据fGAN中提出的框架，我们可以构造一个Jensen-Shannon MI Estimator: </p>
-<script type="math/tex; mode=display">
-\widehat{\mathcal{I}}_{\omega, \psi}^{(\mathrm{JSD})}\left(X ; E_{\psi}(X)\right):=\mathbb{E}_{\mathbb{P}}\left[-\operatorname{sp}\left(-T_{\psi, \omega}\left(x, E_{\psi}(x)\right)\right)\right]-\mathbb{E}_{\mathbb{P} \times \tilde{\mathbb{P}}}\left[\operatorname{sp}\left(T_{\psi, \omega}\left(x^{\prime}, E_{\psi}(x)\right)\right)\right]</script><h2 id="Global-Local-MI-Maximization"><a href="#Global-Local-MI-Maximization" class="headerlink" title="Global/Local-MI Maximization"></a>Global/Local-MI Maximization</h2><p>The objective above can be used to maximize MI between input and output, but ultimately this may be undesirable depending on the tasks. Suppose the intermediate representation of the input preserves the characteristics of locality, which is represented as $C_{\psi}(x):=\left\{C_{\psi}^{(i)}\right\}_{i=1}^{M}$ , and $E_{\psi}(x)=f_{\psi} \circ C_{\psi}(x)$. Define our MI estimator on global/local pairs, maximizing the average estimated MI:</p>
+(\hat{\omega}, \hat{\psi})_{G}=\underset{\omega, \psi}{\arg \max } \widehat{\mathcal I}_{\omega}\left(X ; E_{\psi}(X)\right)</script><h2 id="Global-Local-MI-Maximization"><a href="#Global-Local-MI-Maximization" class="headerlink" title="Global/Local-MI Maximization"></a>Global/Local-MI Maximization</h2><p>The objective above can be used to maximize MI between input and output, but ultimately this may be undesirable depending on the tasks. Suppose the intermediate representation of the input preserves the characteristics of locality, which is represented as $C_{\psi}(x):=\left\{C_{\psi}^{(i)}\right\}_{i=1}^{M}$ , and $E_{\psi}(x)=f_{\psi} \circ C_{\psi}(x)$. Define our MI estimator on global/local pairs, maximizing the average estimated MI:</p>
 <script type="math/tex; mode=display">
 (\hat{\omega}, \hat{\psi})_{L}=\underset{\omega, \psi}{\arg \max } \frac{1}{M} \sum_{i=1}^{M} \widehat{I}_{\omega, \psi}\left(C_{\psi}^{(i)}(X) ; E_{\psi}(X)\right)</script><h2 id="Multiview-MI-Maximization"><a href="#Multiview-MI-Maximization" class="headerlink" title="Multiview-MI Maximization"></a>Multiview-MI Maximization</h2><p><strong>Multiview-MI Maximization includes various objectives among which the MI is computed into one unified framework.</strong> (refer to <a href="https://arxiv.org/abs/1907.13625" target="_blank" rel="noopener">paper “On Mutual Information Maximization for Representation Learning”</a>)</p>
 <p>In the image classification setting, for a given image $X$, let $X^{(1)}$ and $X^{(2)}$ be different, possibly overlapping views of $X$, for instance the top and bottom halves of the image. These are encoded using encoders $g_1$ and $g_2$ respectively, and the MI between the two representationsg $g_1(X^{(1)})$ and $g_2(X^{(2)})$ is maximized, </p>
@@ -449,6 +458,35 @@ I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_
 <li><strong>Contrastive multiview coding (CMC)</strong> generalizes the objective in to consider multiple views $X^{(i)}$, where each $X^{(i)}$ corresponds to a different image modality (e.g., different color channels, or the image and its segmentation mask).</li>
 <li><strong>Contrastive predictive coding(CPC)</strong> incorporates a sequential component of the data. Concretely, one extracts a sequence of patches from an image in some fixed order, maps each patch using an encoder, aggregates the resulting features of the first $t$ patches into a context vector, and maximizes the MI between the context and features extracted from the patch at position $t + k.$</li>
 </ul>
+<h1 id="MI-Maximization-Papers"><a href="#MI-Maximization-Papers" class="headerlink" title="MI Maximization Papers"></a>MI Maximization Papers</h1><p>Fundamental research work.</p>
+<ul>
+<li>[x] LEARNING DEEP REPRESENTATIONS BY MUTUAL INFORMATION ESTIMATION AND MAXIMIZATION (ICLR 2019)</li>
+<li>[ ] Representation Learning with Contrastive Predictive Coding</li>
+<li>[x] ON MUTUAL INFORMATION MAXIMIZATION FOR REPRESENTATION LEARNING (ICLR 2020)</li>
+<li>[x] Constrastive Multiview Coding</li>
+</ul>
+<p>MI maximization with other constraints</p>
+<ul>
+<li><p>[ ] MI maximization in graphs.</p>
+</li>
+<li><p>[ ] DEEP GRAPH INFOMAX (ICLR 2019)</p>
+</li>
+<li>[ ] SPATIO-TEMPORAL DEEP GRAPH INFOMAX (RLGM, ICLR 2019)</li>
+<li>[x] INFOGRAPH: UNSUPERVISED AND SEMI-SUPERVISED GRAPH-LEVEL REPRESENTATION LEARNING VIA MUTUAL INFORMATION MAXIMIZATION (ICLR 2020)</li>
+<li>[ ] Unsupervised Hierarchical Graph Representation Learning by Mutual Information Maximization</li>
+<li>[ ] Unsupervised Attributed Multiplex Network Embedding</li>
+<li>[ ] Graph Representation Learning via Graphical Mutual Information Maximization</li>
+<li>[ ] Heterogeneous Deep Graph Infomax</li>
+</ul>
+<p>Application of the MI in other fields.</p>
+<ul>
+<li><p>[ ] Utilizing Edge Features in Graph Neural Networks via Variational Information Maximization</p>
+</li>
+<li><p>[ ] GNNExplainer: Generating Explanations for Graph Neural Networks</p>
+</li>
+<li><p>[ ] MINT: Deep Network Compression via Mutual Information-based Neuron Trimming</p>
+</li>
+</ul>
 
     </article>
     <!-- license  -->
@@ -457,7 +495,7 @@ I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">http://www.shihaizhou.com/2020/05/10/MI-Maximization/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">May 10th 2020, 2:29:18 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">May 15th 2020, 12:08:12 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">June 14th 2020, 9:58:54 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -466,16 +504,16 @@ I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2020/05/12/Divergence-Estimation-Framework/" title="Divergence Estimation Framework">
-                    <div class="nextTitle">Divergence Estimation Framework</div>
+                <a href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/" title="Bias-Variance Tradeoff of the Learning Algorithms">
+                    <div class="nextTitle">Bias-Variance Tradeoff of the Learning Algorithms</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/" title="InfoGraph - USL and Semi-SL Graph-Level Representation Learning">
-                    <div class="prevTitle">InfoGraph - USL and Semi-SL Graph-Level Representation Learning</div>
+                <a href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/" title="InfoGraph">
+                    <div class="prevTitle">InfoGraph</div>
                 </a>
             
         </li>
@@ -591,7 +629,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Definition"><span class="toc-number">1.</span> <span class="toc-text">MI Definition</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Estimation"><span class="toc-number">2.</span> <span class="toc-text">MI Estimation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Donsker-Varadhan-representation"><span class="toc-number">2.1.</span> <span class="toc-text">The Donsker-Varadhan representation.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoNCE"><span class="toc-number">2.2.</span> <span class="toc-text">InfoNCE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Maximization"><span class="toc-number">3.</span> <span class="toc-text">MI Maximization</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Global-Local-MI-Maximization"><span class="toc-number">3.1.</span> <span class="toc-text">Global/Local-MI Maximization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiview-MI-Maximization"><span class="toc-number">3.2.</span> <span class="toc-text">Multiview-MI Maximization</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Definition"><span class="toc-number">1.</span> <span class="toc-text">MI Definition</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Estimation"><span class="toc-number">2.</span> <span class="toc-text">MI Estimation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Donsker-Varadhan-representation"><span class="toc-number">2.1.</span> <span class="toc-text">The Donsker-Varadhan representation.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoNCE"><span class="toc-number">2.2.</span> <span class="toc-text">InfoNCE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSD"><span class="toc-number">2.3.</span> <span class="toc-text">JSD</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Maximization"><span class="toc-number">3.</span> <span class="toc-text">MI Maximization</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Motivation"><span class="toc-number">3.1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Representation-Learning"><span class="toc-number">3.2.</span> <span class="toc-text">Representation Learning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Global-Local-MI-Maximization"><span class="toc-number">3.3.</span> <span class="toc-text">Global/Local-MI Maximization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiview-MI-Maximization"><span class="toc-number">3.4.</span> <span class="toc-text">Multiview-MI Maximization</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MI-Maximization-Papers"><span class="toc-number">4.</span> <span class="toc-text">MI Maximization Papers</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -951,9 +989,483 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 27
+        Total : 53
         </div>
         <!-- search  -->
         
@@ -969,6 +1481,141 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href="/2020/06/16/Generative-Adversarial-Networks/">Generative Adversarial Networks</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href="/2020/06/10/Learning-Disentangled-Representations-via-Mutual-Information-Estimation/">Disentangled Representation Learning via Mutual Information Estimation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/09</span><a class="archive-post-title" href="/2020/06/09/InfoAE-Unpublished/">InfoAE - Unpublished</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href="/2020/06/08/InfoGAN/">InfoGAN</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href="/2020/05/27/Information-Competing-Process-for-Learning-Diversified-Representations/">Information Competing Process for Learning Diversified Representations</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href="/2020/05/26/InfoBal-Ideas/">InfoBal - Ideas (failed)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href="/2020/05/26/What-Makes-for-Good-Views-for-Contrastive-Learning/">What Makes for Good Views for Contrastive Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href="/2020/05/25/Contrastive-Multiview-Coding/">Contrastive Multiview Coding</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2020/05/22/On-MI-Maximization-for-Representation-Learning/">On MI Maximization for Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/22</span><a class="archive-post-title" href="/2020/05/22/Variational-Auto-Encoders/">Variational Auto-Encoders</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/21</span><a class="archive-post-title" href="/2020/05/21/Deep-InfoMax/">Deep InfoMax</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href="/2020/05/19/Pytorch-batch-sparse-matrix-on-GPU/">Pytorch - Batch Sparse Matrix on GPU</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span><a class="archive-post-title" href="/2020/05/17/InfoGraph-Reimplementation/">InfoGraph - Experiments</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span><a class="archive-post-title" href="/2020/05/17/Pytorch-nn-ModuleList-and-nn-Sequential/">Pytorch - nn.ModuleList vs nn.Sequential</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span><a class="archive-post-title" href="/2020/05/17/Sparse-Matrix/">Sparse Matrix</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href="/2020/05/16/GCN-Code-Explanation/">GCN - Code Explanation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
         </li>
     
@@ -979,17 +1626,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/12</span><a class="archive-post-title" href="/2020/05/12/Divergence-Estimation-Framework/">Divergence Estimation Framework</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/10</span><a class="archive-post-title" href="/2020/05/10/MI-Maximization/">Mutual Information Maximization - Theory</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/09</span><a class="archive-post-title" href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/">InfoGraph - USL and Semi-SL Graph-Level Representation Learning</a>
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href="/2020/05/09/InfoGraph-USL-and-Semi-SL-Graph-Level-Representation-Learning/">InfoGraph</a>
         </li>
     
     
@@ -999,12 +1641,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
         </li>
     
     
@@ -1024,12 +1666,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
@@ -1063,25 +1705,6 @@ top:50vh;
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Some-Maths/">Metric Space</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL(4) - Value Function Approximation</a>
-        </li>
-    
-    
     
     
     
@@ -1101,8 +1724,27 @@ top:50vh;
     
         </ul>
     
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL(4) - Value Function Approximation</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1136,17 +1778,23 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
     
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
         <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
+        <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
+    
+        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+    
+        <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
+    
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
-    
-        <span class="sidebar-tag-name" data-tags="paper"><span class="iconfont-archer">&#xe606;</span>paper</span>
-    
-        <span class="sidebar-tag-name" data-tags="notes"><span class="iconfont-archer">&#xe606;</span>notes</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
@@ -1157,8 +1805,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
     
         <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
-    
-        <span class="sidebar-tag-name" data-tags="ML"><span class="iconfont-archer">&#xe606;</span>ML</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
