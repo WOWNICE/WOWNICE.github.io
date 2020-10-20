@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Contrastive Learning from the Perspective of Manifold Learning · N1H111SM&#39;s Miniverse</title>
+    <title>Momentum Contrast for Unsupervised Visual Representation Learning · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Contrastive Learning from the Perspective of Manifold Learning</a>
+                <a href="#" class="post-name">Momentum Contrast for Unsupervised Visual Representation Learning</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Contrastive Learning from the Perspective of Manifold Learning
+            Momentum Contrast for Unsupervised Visual Representation Learning
             <!-- 404 -->
             
         </h1>
@@ -266,22 +266,18 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
-    
         <a class="post-tag" href="javascript:void(0);" data-tags="Contrastive">Contrastive</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Manifold">Manifold</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">77</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">828</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/06/15</span>
+                    <span class="post-intro-time">2020/06/23</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -405,19 +401,37 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>In Isomap method, the target of representation space is to keep the Geodesic Distance between arbitrary two points: </p>
+        <p><strong>Materials</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1911.05722" target="_blank" rel="noopener">MoCo paper</a> </li>
+</ul>
+<h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>From a perspective on contrastive learning as dictionary look-up, we build a dynamic dictionary with a queue and a moving-averaged encoder. We present Momentum Contrast (MoCo) as a way of building large and consistent dictionaries for unsupervised learning with a contrastive loss.<br>We maintain the dictionary as a queue of data samples: the encoded repre- sentations of the current mini-batch are enqueued, and the oldest are dequeued. The queue decouples the dictionary size from the mini-batch size, allowing it to be large.<br>More- over, as the dictionary keys come from the preceding sev- eral mini-batches, a slowly progressing key encoder, imple- mented as a momentum-based moving average of the query encoder, is proposed to maintain consistency.</p>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><h2 id="Contrastive-Learning-as-Dictionary-Look-up"><a href="#Contrastive-Learning-as-Dictionary-Look-up" class="headerlink" title="Contrastive Learning as Dictionary Look-up"></a>Contrastive Learning as Dictionary Look-up</h2><p>Consider an encoded query $q$ and a set of encoded samples $\{k_0, k_1, k_2, \cdots \}$ that are the keys of a dictionary. 假定只有一个和 query $q$ 匹配的 key $k_+$, 那么contrastive loss InfoNCE 为以下形式：</p>
 <script type="math/tex; mode=display">
-\min_{\theta} \mathbb E[|d_{G}(x_i, x_j)-d_E(f(x_i;\theta), f(x_j;\theta))|]</script><p>In contrastive learning, the target of representation space is that there exists a critic that can distinguish positive/negative sample pairs. The procedure of optimizing the contrastive loss is</p>
+\mathcal{L}_{q}=-\log \frac{\exp \left(q \cdot k_{+} / \tau\right)}{\sum_{i=0}^{K} \exp \left(q \cdot k_{i} / \tau\right)}</script><p>其中 $\tau$ 为temperature hyper-parameter. 直觉上来看我们可以将以上loss看做是 (K+1)-way softmax-based classifier that tries to classify $q$ as $k_+$. 其中 $q=f_q(x^q)$ 和 $k=f_k(x^k)$ 分别由encoder $f_q$ 和 $f_k$ 编码得到，两者的encoder可以采取 identical/parameter-sharing/different 这三种模式，通常在contrastive learning的语境下会采取最前者。</p>
+<h2 id="Momentum-Contrast"><a href="#Momentum-Contrast" class="headerlink" title="Momentum Contrast"></a>Momentum Contrast</h2><p>从这个角度来说，CL可以被看做为每一个input value $x$ 建立一个key，从而我们有字典 $\{\operatorname{key:} f_k(x);\operatorname{val:}x\}$. MoCo的关键假设是：</p>
+<blockquote>
+<p>Our hypothesis is that good features can be learned by a large dictionary that covers a rich set of negative samples, while the encoder for the dictionary keys is kept as consistent as possible despite its evolution. </p>
+</blockquote>
+<p>MoCo 将 dictionary 看作 “a queue of data samples”. 这样可以将dictionary size设置得比 mini-batch size要大得多从而非常显著地提升负样本的数量：这是因为mini-batch要求内存能够容纳 $\operatorname{mini-batch}\times\operatorname{image-size}$, 而对于queue来说内存需要容纳 $\operatorname{queue-size}\times\operatorname{key-size}$. 非常显然的key的大小远远小于input image. queue 更新的规则是最近的mini-batch of samples替换最早的mini-batch. </p>
+<p>将 $f_q$ 直接作为 $f_k$ 会导致表现变得很差。We hypothesize that such failure is caused by the rapidly changing encoder that reduces the key representations’ consistency. We propose a momentum update to address this issue. 以下为momentum update的具体形式：</p>
 <script type="math/tex; mode=display">
-\min_{\theta} \mathbb E[|d_{G}(x_i, x_j)-d_E(f(x_i;\theta), f(x_j;\theta))|]</script>
+\theta_{\mathrm{k}} \leftarrow m \theta_{\mathrm{k}}+(1-m) \theta_{\mathrm{q}}</script><p>其中通过BP学习的参数只有 $\theta_q$. In experiments, a relatively large momentum (e.g., m = 0.999, our default) works much better than a smaller value (e.g., m = 0.9), suggesting that a slowly evolving key encoder is a core to making use of a queue. </p>
+<p>下图表示了mini-batch/memory bank/MoCo架构的区别.</p>
+<p><img src="https://i.loli.net/2020/06/23/g5ulQIAZscDLBaP.png" alt="image.png"></p>
+<p>下面的类torch伪代码则展示了整个MoCo的训练过程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># f_q, f_k: encoder networks for query and key # queue: dictionary as a queue of K keys (CxK) # m: momentum</span></span><br><span class="line"><span class="comment"># t: temperature</span></span><br><span class="line"></span><br><span class="line">f_k.params = f_q.params <span class="comment"># initialize</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> loader: <span class="comment"># load a minibatch x with N samples</span></span><br><span class="line">    x_q = aug(x) <span class="comment"># a randomly augmented version</span></span><br><span class="line">    x_k = aug(x) <span class="comment"># another randomly augmented version</span></span><br><span class="line">    q = f_q.forward(x_q) <span class="comment"># queries: NxC </span></span><br><span class="line">    k = f_k.forward(x_k) <span class="comment"># keys: NxC</span></span><br><span class="line">    k = k.detach() <span class="comment"># no gradient to keys</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># positive logits: Nx1</span></span><br><span class="line">    l_pos = bmm(q.view(N,<span class="number">1</span>,C), k.view(N,C,<span class="number">1</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># negative logits: NxK</span></span><br><span class="line">    l_neg = mm(q.view(N,C), queue.view(C,K))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># logits: Nx(1+K)</span></span><br><span class="line">    logits = cat([l_pos, l_neg], dim=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># contrastive loss, Eqn.(1)</span></span><br><span class="line">    labels = zeros(N) <span class="comment"># positives are the 0-th </span></span><br><span class="line">    loss = CrossEntropyLoss(logits/t, labels)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># SGD update: query network</span></span><br><span class="line">    loss.backward() update(f_q.params)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># momentum update: key network</span></span><br><span class="line">    f_k.params = m*f_k.params+(<span class="number">1</span>-m)*f_q.params</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># update dictionary</span></span><br><span class="line">    enqueue(queue, k) <span class="comment"># enqueue the current minibatch</span></span><br><span class="line">    dequeue(queue) <span class="comment"># dequeue the earliest minibatch</span></span><br></pre></td></tr></table></figure>
+<p>为了更好地理解MoCo的更新过程，绘制MoCo示意图如下：</p>
+<p><img src="https://i.loli.net/2020/06/23/gtwiHGlX5Pc9ZOS.png" alt="image.png"></p>
+
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">http://www.shihaizhou.com/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">June 15th 2020, 10:02:30 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">June 15th 2020, 10:30:15 pm</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">http://www.shihaizhou.com/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">June 23rd 2020, 3:55:16 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">October 20th 2020, 11:14:56 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -426,16 +440,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2020/06/16/Generative-Adversarial-Networks/" title="Generative Adversarial Networks">
-                    <div class="nextTitle">Generative Adversarial Networks</div>
+                <a href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/" title="Learning Representations by Maximizing Mutual Information Across Views">
+                    <div class="nextTitle">Learning Representations by Maximizing Mutual Information Across Views</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/06/14/Manifold-Learning/" title="Manifold Learning">
-                    <div class="prevTitle">Manifold Learning</div>
+                <a href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/" title="Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning">
+                    <div class="prevTitle">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</div>
                 </a>
             
         </li>
@@ -551,7 +565,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-number">1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Methods"><span class="toc-number">2.</span> <span class="toc-text">Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Contrastive-Learning-as-Dictionary-Look-up"><span class="toc-number">2.1.</span> <span class="toc-text">Contrastive Learning as Dictionary Look-up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Momentum-Contrast"><span class="toc-number">2.2.</span> <span class="toc-text">Momentum Contrast</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1385,9 +1399,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1403,6 +1420,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1413,17 +1470,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1443,32 +1490,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1508,7 +1535,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1539,11 +1566,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1588,12 +1610,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1627,6 +1649,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1638,20 +1665,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1698,25 +1711,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     

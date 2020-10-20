@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>N1H111SM&#39;s Miniverse</title>
+    <title>EM Algorithm · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">N1H111SM&#39;s Miniverse</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">EM Algorithm</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">N1H111SM's Miniverse</a>
 </header>
@@ -220,24 +231,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/poker_1.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            EM Algorithm
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/07/24</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,39 +399,118 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2020/02/23/Algorithms-and-Grammar-of-java/">
-            
-                <span>Grammar of Java</span>
-        </a>
-        <div class="abstract-content">
-            Grammar of Java for job hunting.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="reality">reality</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p><strong>Materials</strong></p>
+<ul>
+<li>Pattern Recognition and Machine Learning. </li>
+</ul>
+<h1 id="Gaussian-Mixtures"><a href="#Gaussian-Mixtures" class="headerlink" title="Gaussian Mixtures"></a>Gaussian Mixtures</h1><p>Suppose  a $K$-dimensional one-hot binary random variable $z$ having a 1-of-$K$ representation in which a particular element $z_k$ equals to 1 and all other elements are equal to 0. Thus the random variable $z$ satisfies $z_k\in\{0,1\}$ and $\sum_k z_k=1$.  </p>
+<p>The Guassian mixture distribution is written as a linear superposition of Gaussians in the form as follows:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+p(x) &= \mathbb E_z[p(x|z)] 
+= \sum_z p(x|z) p (z) \\
+&= \sum_{k=1}^{K} p(x|z_k=1) p (z_k=1) \\
+&= \sum_{k=1}^{K} \mathcal N(x|\mu_k, \Sigma_k) p (z_k=1) \\ 
+&= \sum_{k=1}^{K} \pi_k \mathcal N(x|\mu_k, \Sigma_k) \\ 
+\end{align}</script><p>where $\pi_k$ represents the marginal probability of the $z_k$, in other words, $\pi_k$ is the prior probability of $z_k=1$.  The insight behind the setting above is that for every given data point $x^{(n)}$, there is a corresponding latent variable $z^{(n)}$. </p>
+<p>We use quantity $\gamma (z_k)$ to denote the conditional probability $p(z_k=1|x)$, which has another name ‘posterior’. </p>
+<script type="math/tex; mode=display">
+\gamma\left(z_{k}\right) \equiv p\left(z_{k}=1 | x\right) = \frac{\pi_{k} \mathcal{N}\left({x} | {\mu}_{k}, {\Sigma}_{k}\right)}{\sum_{j=1}^{K} \pi_{j} \mathcal{N}\left({x} | {\mu}_{j}, {\Sigma}_{j}\right)}</script><h2 id="Maximum-Likelihood"><a href="#Maximum-Likelihood" class="headerlink" title="Maximum Likelihood"></a>Maximum Likelihood</h2><p>Suppose we have the observation of a set of i.i.d data points $X=\{ x^{(1)}, \cdots , x^{(N)} \}$, the log of the probability of this dataset is as follows:</p>
+<script type="math/tex; mode=display">
+\ln p(X|\pi,\mu, \Sigma) = \sum_{n=1}^{N} \ln \left\{\sum_{k=1}^{K} \pi_{k} \mathcal{N}\left({x}^{(n)} \mid {\mu}_{k}, {\Sigma}_{k}\right)\right\}</script><p>The difficulty arises from the presence of the summation over $k$ that appears inside the logarithm, so that the logarithm function no longer acts directly on the Gaussian. If we set the derivatives of the log likelihood to zero, we will no longer obtain a closed form solution. To solve this inconvenience is one of the motivations for the EM algorithm.</p>
+<h2 id="EM-for-Gaussian-Mixtures"><a href="#EM-for-Gaussian-Mixtures" class="headerlink" title="EM for Gaussian Mixtures"></a>EM for Gaussian Mixtures</h2><p>The posterior $\gamma (z_{nk})$ of the sample $x^{(n)}$, according to the previous definition, could be written in the following form: </p>
+<script type="math/tex; mode=display">
+\gamma\left(z_{nk}\right) \equiv p\left(z_{k}=1 | x^{(n)}\right) = \frac{\pi_{k} \mathcal{N}\left({x^{(n)}} | {\mu}_{k}, {\Sigma}_{k}\right)}{\sum_{j=1}^{K} \pi_{j} \mathcal{N}\left({x^{(n)}} | {\mu}_{j}, {\Sigma}_{j}\right)}</script><p>There are three sets of parameters in the Gaussian mixtures: $\pi, \mu, \Sigma$. Now let’s optimize them one by one. First we set the derivatives of the log likelihood $p(X|\pi, \mu, \Sigma)$ to 0 with respect to the means $\mu_k$ of the Gaussian components, yielding</p>
+<script type="math/tex; mode=display">
+0=-\sum_{n=1}^{N} \underbrace{\frac{\pi_{k} \mathcal{N}\left(x^{(n)} | \mu_{k}, \Sigma_{k}\right)}{\sum_{j} \pi_{j} \mathcal{N}\left(x^{(n)} | \mu_{j}, \Sigma_{j}\right)}}_{\gamma\left(z_{n k}\right)} \Sigma_{k}\left(x^{(n)}-\mu_{k}\right)</script><p>Define:</p>
+<script type="math/tex; mode=display">
+N_{k}=\sum_{n=1}^{N} \gamma\left(z_{n k}\right)</script><p>Thus we have <strong>i) the solution of</strong> $\mu_k$: </p>
+<script type="math/tex; mode=display">
+\mu_{k}=\frac{1}{N_{k}} \sum_{n=1}^{N} \gamma\left(z_{n k}\right) x^{(n)}</script><p>Similarly, we can derive <strong>ii) the solution of</strong> $\Sigma_k$, which depends on  $\mu_k$:</p>
+<script type="math/tex; mode=display">
+\Sigma_{k}=\frac{1}{N_{k}} \sum_{n=1}^{N} \gamma\left(z_{n k}\right)\left(x^{(n)}-\mu_{k}\right)\left(x^{(n)}-\mu_{k}\right)^{\mathrm{T}}</script><p>Finally we derive the process of optimizing the posterior $\pi$ using the techinque of Lagrange multiplier since the optimization of $\pi$ is restrained by the following constraint: </p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^K \pi_k =1</script><p>Thus we maximize the following quantity: </p>
+<script type="math/tex; mode=display">
+\ln p(X|\pi, \mu, \Sigma) + \lambda \left(\sum_{k=1}^K \pi_k -1\right)</script><p>which gives us the following equation: </p>
+<script type="math/tex; mode=display">
+0=\sum_{n=1}^{N} \frac{\mathcal{N}\left({x}^{(n)} | {\mu}_{k}, {\Sigma}_{k}\right)}{\sum_{j} \pi_{j} \mathcal{N}\left({x}^{(n)} | {\mu}_{j}, {\Sigma}_{j}\right)}+\lambda</script><p>If we now multiply both sides by $\pi_k$ and sum over $k$ making use of the constraint, we find $\lambda = -N$. Using this to eliminate $\lambda$ and rearranging we obtain <strong>iii) the optimal of</strong>  $\pi_k$: </p>
+<script type="math/tex; mode=display">
+\pi_k = \frac{N_k}{N}</script><p>The solutions above don’t give us an “closed-form” solution for the parameters of the mixtures model because the responsibilities $\gamma(z_{nk})$ depend on those parameters in a complex way through the expression of this posterior shown in the previous session, while it does suggest an iterative method, which is exactly EM, of optimizing the Gaussian mixtures model: </p>
+<ul>
+<li><strong>Initialization</strong>. Initialize the parameter set which consists of $\{\pi, \mu, \Sigma\}$. </li>
+<li>Repeat following processes until convergence:<ul>
+<li><strong>E-step</strong>. Estimate the posterior (responsibility) $\gamma(z_{nk})$. </li>
+<li><strong>M-step</strong>. Maximize the parameter set $\{\pi, \mu, \Sigma \}$ by the support of the posterior. </li>
+<li><strong>Log likelihood estimation</strong>. Estimate the log likelihood to check whether convergence happens. </li>
+</ul>
+</li>
+</ul>
+<h1 id="General-EM-Algorithm"><a href="#General-EM-Algorithm" class="headerlink" title="General EM Algorithm"></a>General EM Algorithm</h1><p>Consider a probabilistic model in which we collectively denote all of the observed variables by $X$ and all of the hidden variables by $Z$. The joint distribution $p(X, Z|\theta)$ is governed by a set of parameters denoted $\theta$. Our goal is to maximize the log likelihood function that is given by</p>
+<script type="math/tex; mode=display">
+\ln \left[ p(X|\theta) \right] =\ln \left[ \sum_Z p (X,Z|\theta) \right]</script><p><strong>The basic premise of the general EM algorithm</strong> is that the direct optimization over the likelihood function $p(X|\theta)$ is hard while the optimization over the complete-data likelihood $p(X,Z|\theta)$ is much easier. As we can see in the equation above, the sum of the probability is inside the log, the optimization of which is non-trivial even for a simple normal distribution. By introducing another distribution $q(Z)$, we can decompose the objective (log likelihood) into two components: </p>
+<script type="math/tex; mode=display">
+\ln p({X} | {\theta})=\mathcal{L}(q, {\theta})+\operatorname{KL}(q \| p)</script><p>where </p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathcal{L}(q, {\theta}) &=\sum_ q({Z}) \ln \left\{\frac{p({X}, {Z} | {\theta})}{q({Z})}\right\} \\
+\operatorname{KL}(q \| p) &= \sum_ q({Z}) \ln \left\{\frac{q({Z})}{p({Z} | {X}, {\theta})}\right\}
+\end{aligned}</script><p>The EM algorithm is a two-stage iterative optimization technique for finding maximum likelihood solutions. We can use the decomposition above to define the EM algorithm and to demonstrate that it does indeed maximize the log likelihood. </p>
+<h2 id="E-step"><a href="#E-step" class="headerlink" title="E-step"></a>E-step</h2><p>First during the E step, we are minimizing the KL-divergence between $q(Z)$ and $p(Z|X)$. This optimization has nothing to do with the parameter set, thus will not change the final objective, log likelihood. To minimize the KL-divergence, we set the introduced distribution $q$ to the posterior and by doing so, we make the lower bound $\mathcal L (q, \theta)$ equal to the log likelihood. Suppose the current parameter is $\theta^{\text{old}}$, then after the E-step we have</p>
+<script type="math/tex; mode=display">
+q(Z) = p(Z|X, \theta^{\text{old}})</script><p>Substitute $q$ with $p$ in the lower bound $\mathcal L (q, \theta)$ we obtain </p>
+<script type="math/tex; mode=display">
+\mathcal L (q, \theta) = \sum_Z p(Z|X, \theta^{\text{old}}) \ln \left\{ \frac{p(X, Z|\theta)}{p(Z|X, \theta^{\text{old}})} \right\}</script><h2 id="M-step"><a href="#M-step" class="headerlink" title="M-step"></a>M-step</h2><p>Then we can maximize the $\mathcal L(q, \theta)$ w.r.t $\theta$. Instead of directly optimizing $\mathcal L$, we first get rid of the denominator term inside the $\ln$ function, since it’s just the entropy of the posterior, which is a constant: </p>
+<script type="math/tex; mode=display">
+\begin{align}
+\mathcal L(q, \theta) 
+&= \sum_Z p(Z|X, \theta^{\text{old}})\ln p(X,Z|\theta) + H(Z|X, \theta^{\text{old}}) \\
+&= \mathcal Q(\theta, \theta^{\text{old}}) + \operatorname{const}
+\end{align}</script><p>Then we can optimize the term $\mathcal Q$. Note that now the probability term is directly wrapped in the $\ln$ function. Thus if the probability model is of the exponential familiy, in this case Gaussian, the optimization is way simpler, which is demonstarated in the Gaussian mixtures model. Another thing to note here is the <strong>monotonous improvement of the log likelihood</strong>. </p>
+<p>Before the M-step, $\mathcal L$ equals to the log likelihood because of the E-step. Then $\mathcal L$, the lower bound of the log likelihood is optimized w.r.t $\theta$ yielding $\theta^{\text{new}}$. Since the current $q$ is optimal w.r.t the old parameter set $\theta^{\text{old}}$, which indicates that the KL-divergence is not zero, there is guaranteed a gap between the updated $\mathcal L$ and the current log likelihood and proves that log likelihood increases. The following figure illustrates the process described above. </p>
+<p><img src="https://i.loli.net/2020/07/28/c5zvfudUJto1RKl.png" alt="image.png"></p>
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/07/24/EM-Algorithm/">http://www.shihaizhou.com/2020/07/24/EM-Algorithm/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/07/24/EM-Algorithm/">July 24th 2020, 1:22:07 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/07/24/EM-Algorithm/">July 28th 2020, 4:38:41 pm</a>
+            </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/07/19/RL-environment-stable-baselines/" title="RL environment & stable-baselines">
+                    <div class="prevTitle">RL environment & stable-baselines</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -452,6 +592,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Mixtures"><span class="toc-number">1.</span> <span class="toc-text">Gaussian Mixtures</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Maximum-Likelihood"><span class="toc-number">1.1.</span> <span class="toc-text">Maximum Likelihood</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EM-for-Gaussian-Mixtures"><span class="toc-number">1.2.</span> <span class="toc-text">EM for Gaussian Mixtures</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#General-EM-Algorithm"><span class="toc-number">2.</span> <span class="toc-text">General EM Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#E-step"><span class="toc-number">2.1.</span> <span class="toc-text">E-step</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#M-step"><span class="toc-number">2.2.</span> <span class="toc-text">M-step</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1284,9 +1442,12 @@
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1302,6 +1463,46 @@
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1312,17 +1513,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1342,32 +1533,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1407,7 +1578,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1438,11 +1609,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1487,12 +1653,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1526,6 +1692,11 @@
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1537,20 +1708,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1597,25 +1754,25 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
@@ -1692,6 +1849,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({

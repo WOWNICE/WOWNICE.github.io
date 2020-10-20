@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Bias-Variance Tradeoff of the Learning Algorithms · N1H111SM&#39;s Miniverse</title>
+    <title>Bias-Variance Decompostion · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Bias-Variance Tradeoff of the Learning Algorithms</a>
+                <a href="#" class="post-name">Bias-Variance Decompostion</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Bias-Variance Tradeoff of the Learning Algorithms
+            Bias-Variance Decompostion
             <!-- 404 -->
             
         </h1>
@@ -272,12 +272,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">148</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/05/13</span>
+                    <span class="post-intro-time">2020/06/28</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -403,30 +403,116 @@ height:50vh;
     <article class="article-entry">
         <p><strong>Materials</strong></p>
 <ul>
-<li><a href="https://www.youtube.com/watch?v=KtNwjbWbnh8" target="_blank" rel="noopener">youtube demonstration</a></li>
+<li><a href="https://www.youtube.com/watch?v=KtNwjbWbnh8" target="_blank" rel="noopener">youtube demonstration on point estimation</a></li>
 <li><a href="http://www.inf.ed.ac.uk/teaching/courses/mlsc/Notes/Lecture4/BiasVariance.pdf" target="_blank" rel="noopener">course note mlsc</a></li>
+<li><a href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/" target="_blank" rel="noopener">http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</a></li>
+<li>Slides of lecture No.4 in Prof.Cai’s Machine Learning course.</li>
+<li><a href="https://www.youtube.com/watch?v=zUJbRO0Wavo" target="_blank" rel="noopener">Cornel CS4780 ML course on Bias-Variance Decomposition, which explains everything!</a></li>
 </ul>
-<h1 id="Bias-Variance-Tradeoff"><a href="#Bias-Variance-Tradeoff" class="headerlink" title="Bias-Variance Tradeoff"></a>Bias-Variance Tradeoff</h1><p>First recall the <strong>variance</strong> definition.</p>
+<p>网络上的资料覆盖了3种 bias-variance 的分解，让我在最初学习的时候有些迷惑。这篇博客依次介绍了这3种在思维复杂度上完全不同的分解推导，可以看到虽然它们都披着 Bias-Variance Decompostion 的外衣，但表述的含义是完全不同的。最为重要的是第一章节的第三section “Dataset Comes in Play”，是对这个问题最完整的分析，参考资料为Prof.Kilian Weinberger的ML课程. </p>
+<h1 id="Bias-Variance-Decomposition"><a href="#Bias-Variance-Decomposition" class="headerlink" title="Bias-Variance Decomposition"></a>Bias-Variance Decomposition</h1><h2 id="Decomposition-of-Point-Estimation"><a href="#Decomposition-of-Point-Estimation" class="headerlink" title="Decomposition of Point Estimation"></a>Decomposition of Point Estimation</h2><p>First recall the <strong>variance</strong> definition.</p>
 <script type="math/tex; mode=display">
-\operatorname{var}(X) = \mathbb E[X^2] - \mathbb E[X]^2</script><p>Substitute random variable $X$ with $\hat \theta - \theta$, where $\hat \theta$ represents the estimate of the parameters given a certain architecture of the learning algorithm, and $\theta$ stands for the oracle optimal parameter setting. </p>
+\operatorname{var}(\theta) = \mathbb E[\theta^2] - \mathbb E[\theta]^2</script><p>Suppose that we have a point estimate $\hat \theta$ of an oracle parameter $\theta$, which is a constant vector. Substituting the “$\theta$” above with $\hat \theta - \theta$, we have: </p>
 <script type="math/tex; mode=display">
-\operatorname{var}(\hat\theta-\theta) = \mathbb E[(\hat\theta-\theta)^2] -  [\mathbb E(\hat\theta-\theta)]^2</script><p>Since $\theta$ is constant, </p>
+\begin{align}
+\operatorname{var}(\hat \theta) &= \operatorname{var}(\theta-\hat \theta) \\
+&= \mathbb E\left[(\theta-\hat \theta)^2\right] - \left(\mathbb E[\theta-\hat\theta]\right)^2 \\
+&= \operatorname{EPE}(\hat \theta) - \left(\theta-\mathbb E\left[\hat\theta\right]\right)^2 \\
+&= \operatorname{EPE}(\hat \theta) - \left(\operatorname{bias}(\hat \theta)\right)^2 \\
+\Rightarrow \operatorname{EPE}(\hat \theta) &= \operatorname{var}(\hat \theta) + \left(\operatorname{bias}(\hat \theta)\right)^2
+\end{align}</script><h2 id="Decomposition-of-EPE"><a href="#Decomposition-of-EPE" class="headerlink" title="Decomposition of EPE"></a>Decomposition of EPE</h2><p>We use the <strong>Expected Prediction Error (EPE)</strong> of the estimate $\hat f$ as: </p>
 <script type="math/tex; mode=display">
-\operatorname{var}(\hat\theta-\theta) = \operatorname{var}(\hat\theta)</script><p>The second term is the definition of the mean squared error (MSE), </p>
+\begin{align}
+\operatorname{EPE}(\hat f) &= \mathbb E_{x\sim X} [\hat f(x)-f(x)]^2 \\
+&= \int p(x) [\hat f(x)-f(x)]^2 dx 
+\end{align}</script><p>The target of the machine learning is to make the EPE low. Suppose the oracle mapping from input $x$ to label $y$ is $f$ satisfying $y=f(x)$. And we have an estimate $\hat y =\hat f(x)$. </p>
+<p>By the definition of the EPE, we can write it out in the form of $y$ and $\hat y$:</p>
 <script type="math/tex; mode=display">
-\operatorname{mse}(\hat\theta) = \mathbb E[(\hat\theta-\theta)^2]</script><p>The third term is the definition of the squared bias,</p>
+\operatorname{EPE}(\hat f) = \mathbb E\left[(y-\hat y)^2\right]</script><p>In order the extract the term of variance of $\hat y$, we add a constant term $\mathbb E(\hat y)$ into the equation, yielding:</p>
 <script type="math/tex; mode=display">
-\operatorname{bias}(\hat\theta) = \mathbb E(\hat\theta-\theta)</script><p>Thus by moving the terms, finally we have, </p>
+\begin{align}
+\operatorname{EPE}(\hat f) &= \mathbb E\left[(y-\hat y)^2\right] \\
+&= \mathbb E\left[(y- \mathbb E(\hat y) + \mathbb E(\hat y) - \hat y)^2\right] \\
+&= \mathbb E \left[ (y-\mathbb E(\hat y))^2 \right] + \mathbb E\left[(\mathbb E(\hat y ) -\hat y)^2\right] + \mathbb E \left[ (y-\mathbb E(\hat y))(\mathbb E(\hat y ) -\hat y) \right]
+\end{align}</script><p>The last term is $0$, which is easy to prove, yielding:</p>
 <script type="math/tex; mode=display">
-\operatorname{mse}(\hat\theta)= \operatorname{var}(\hat\theta) + \operatorname{bias}(\hat\theta)^2 \\</script>
+\begin{align}
+\operatorname{EPE}(\hat f) &= \mathbb E \left[ (y-\mathbb E(\hat y))^2 \right] + \mathbb E\left[(\mathbb E(\hat y ) -\hat y)^2\right] \\
+&= \mathbb E \left[ (y-\mathbb E(\hat y))^2 \right] + \operatorname{var}[\hat y] \\&= \operatorname{bias}^2+\operatorname{variance} + (\operatorname{noise})
+\end{align}</script><h2 id="Dataset-Comes-in-Play"><a href="#Dataset-Comes-in-Play" class="headerlink" title="Dataset Comes in Play"></a>Dataset Comes in Play</h2><p>In reality, considering the variance of the output value is not really making any sense since the problem itself might be challenging and the ground truth is of high variance. Then what does it mean when we decompose the learning objective into bias squared and variance and, oddly, where is noise? In this section, we will try to anatomize the problem of bais-variance decomposition, taking the dataset and the variance of the algorithm into account. </p>
+<p>First let’s suppose the dataset is $D=\{(x_1,y_1), \cdots, (x_n,y_n)\}$, in which each element is independently drawn from the joint distribution: $(x,y)\sim P$.  Therefore $D\sim P^n$. </p>
+<p>Then suppose we have a learning algorithm $\mathcal A$, which takes in a dataset as an input and learns an output function $h$. We denote this function as conditioned on $D$:</p>
+<script type="math/tex; mode=display">
+h_D=\mathcal A(D)</script><p>We want to understand the property of the learned function $h$, not conditioned on certain dataset but the average performance of it. To achieve so, we can set the average function $\bar h$ as the expectation of $h$ over the dataset distribution:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\bar h &= \mathbb E_{D\sim P^n}\left[\mathcal A(D)\right] \\
+&= \int_{D} h_D P(D) d D
+\end{align}</script><p>The test error of the learner $h$ is the expected error over the training dataset $D$ and the test samples drawn independently from $P$. </p>
+<script type="math/tex; mode=display">
+\operatorname{EPE}(\mathcal A) = \mathbb E_{(x,y)\sim P; D\sim P^n} \left[ (h_D(x)-y)^2 \right]</script><p>Since we want to estimate the variance of the learner (how it fluctuates w.r.t its average $\bar h$), we add this term into the EPE: </p>
+<script type="math/tex; mode=display">
+\begin{align}
+\operatorname{EPE}(\mathcal A) 
+&= \mathbb E_{(x,y)\sim P, D\sim P^n} \left[ (h_D(x)-y)^2 \right] \\
+&= \mathbb E_{(x,y), D} \left[ (h_D(x)-\bar{h}(x) + \bar{h}(x) -  y)^2 \right] \\
+&= 
+\underbrace{\mathbb E_{x,D} \left[ \left((h_D(x)-\bar{h}(x)\right)^2 \right]}_{\text{variance}} + 
+\underbrace{\mathbb E_{x,y} \left[ \left(\bar{h}(x) -  y\right)^2 \right]}_{\text{term}_1} + 
+2 \underbrace{\mathbb E_{(x,y), D} \left[ (h_D(x)-\bar{h}(x))( \bar{h}(x) -  y) \right]}_{\text{term}_2} \\
+
+
+\end{align}</script><p>The explanation of each meaningful term will be left in the following paragraphs, and before we get there let’s first eliminate $\text{term}_2$ by proving it’s $0$. </p>
+<script type="math/tex; mode=display">
+\begin{align}
+\text{term}_2
+&= \mathbb E_{(x,y), D} \left[ (h_D(x)-\bar{h}(x))( \bar{h}(x) -  y) \right] \\
+&= \mathbb E_{(x,y)} \left[ \mathbb E_{D}[(h_D(x)-\bar{h}(x))]( \bar{h}(x) -  y) \right] \\
+&= \mathbb E_{(x,y)} \left[ (\mathbb E_{D}[h_D(x)]-\bar{h}(x))( \bar{h}(x) -  y) \right] \\
+&= \mathbb E_{(x,y)} \left[ (\bar{h}(x)-\bar{h}(x))( \bar{h}(x) -  y) \right] \\
+&= 0
+\end{align}</script><p>Now let’s cope with $\text{term}_1$. Denote the expectation of the true value given certain $x$ as:</p>
+<script type="math/tex; mode=display">
+\bar y(x)=\mathbb E_{y|x}[y(x)]</script><p>The same trick applied again, we rewrite $\text{term}_1$ as: </p>
+<script type="math/tex; mode=display">
+\begin{align}
+\text{term}_1 
+&= \mathbb E_{x,y} \left[ \left(\bar{h}(x) -  y\right)^2 \right] \\
+&= \mathbb E_{x,y} \left[ \left(\bar{h}(x) - \bar y(x) + \bar y(x) - y\right)^2 \right] \\
+&= 
+\underbrace{\mathbb E_{x} \left[  (\bar{h}(x)-\bar y(x))^2  \right]}_{\text{bias}^2} + 
+\underbrace{\mathbb E_{x,y} \left[  (\bar y(x)-y)^2  \right]}_{\text{noise}} + 
+\underbrace{\mathbb E_{x,y} \left[  (\bar{h}(x)-\bar y(x))(\bar y(x)-y)  \right]}_{\text{term}_3} \\
+
+
+\end{align}</script><p>Now we can prove that $\text{term}_3 = 0$:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\text{term}_3 
+&= \mathbb E_{x,y} \left[  (\bar{h}(x)-\bar y(x))(\bar y(x)-y)  \right] \\
+&= \mathbb E_{x} \left[ \mathbb E_{y|x} \left[(\bar{h}(x)-\bar y(x))(\bar y(x)-y)  \right]\right] \\
+&= \mathbb E_{x} \left[(\bar{h}(x)-\bar y(x)) \mathbb E_{y|x} \left[(\bar y(x)-y)  \right]\right] \\
+&= \mathbb E_{x} \left[(\bar{h}(x)-\bar y(x))  (\bar y(x)- \mathbb E_{y|x} [y])  \right] \\
+&= \mathbb E_{x} \left[(\bar{h}(x)-\bar y(x))  (\bar y(x)- \bar y(x)) \right] \\
+&= 0
+\end{align}</script><p>Thus we have the final representation: </p>
+<script type="math/tex; mode=display">
+\operatorname{EPE}(\mathcal A) = \underbrace{\mathbb E_{x,D} \left[ \left((h_D(x)-\bar{h}(x)\right)^2 \right]}_{\text{variance}} + \underbrace{\mathbb E_{x} \left[  (\bar{h}(x)-\bar y(x))^2  \right]}_{\text{bias}^2} + 
+\underbrace{\mathbb E_{x,y} \left[  (\bar y(x)-y)^2  \right]}_{\text{noise}}</script><h1 id="Bias-Variance-Tradeoff-in-Regularization-Method"><a href="#Bias-Variance-Tradeoff-in-Regularization-Method" class="headerlink" title="Bias-Variance Tradeoff in Regularization Method"></a>Bias-Variance Tradeoff in Regularization Method</h1><p>Does it (decomposition) tell us that we cannot achieve low variance and low bias at the same time? Of course not! This target of making them both low is the whole point of the machine learning field. <strong>This decomposition helps us understand how regularization method works.</strong> </p>
+<p>In WGAN, we learn about the K-lipschitz condition, which limits the changing speed of the the model. When using the regularization method (e.g., l1-norm and l2-norm), we are actually making the same limitation as the K-lipschitz condition (refer to the following figure). </p>
+<p><img src="https://i.loli.net/2020/06/28/7xBty53Mq4FmlJU.png" alt="image.png"></p>
+<p>Thus the regularization method, by adding an additional loss term into the original objective, makes the output more smooth, which is equivalent to “reducing the variance of the output”. Though reducing the variance is a desirable pursuit, it cannot be achieved without sacrifice, which, in this case, is the ramification of increasing the bias of the model. </p>
+<p>The following figure shows the tradeoff of the bias and the variance with regularization term, in which $\lambda$ represents the weight of the regularization.</p>
+<p> <img src="https://i.loli.net/2020/06/28/YFLRf3oOewaGmCX.png" alt="image.png"></p>
+
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">http://www.shihaizhou.com/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">May 13th 2020, 5:57:25 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">May 13th 2020, 6:10:33 pm</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/28/Bias-Variance-Decomposition/">http://www.shihaizhou.com/2020/06/28/Bias-Variance-Decomposition/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/28/Bias-Variance-Decomposition/">June 28th 2020, 5:57:25 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/28/Bias-Variance-Decomposition/">June 30th 2020, 1:49:36 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -435,16 +521,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2020/05/13/MI-Maximization-Experiments/" title="Mutual Information Maximization - Experiments">
-                    <div class="nextTitle">Mutual Information Maximization - Experiments</div>
+                <a href="/2020/07/19/RL-environment-stable-baselines/" title="RL environment & stable-baselines">
+                    <div class="nextTitle">RL environment & stable-baselines</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/05/10/MI-Maximization/" title="Mutual Information Maximization - Theory">
-                    <div class="prevTitle">Mutual Information Maximization - Theory</div>
+                <a href="/2020/06/27/Bagging-and-Boosting/" title="Bagging">
+                    <div class="prevTitle">Bagging</div>
                 </a>
             
         </li>
@@ -560,7 +646,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bias-Variance-Tradeoff"><span class="toc-number">1.</span> <span class="toc-text">Bias-Variance Tradeoff</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bias-Variance-Decomposition"><span class="toc-number">1.</span> <span class="toc-text">Bias-Variance Decomposition</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Decomposition-of-Point-Estimation"><span class="toc-number">1.1.</span> <span class="toc-text">Decomposition of Point Estimation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decomposition-of-EPE"><span class="toc-number">1.2.</span> <span class="toc-text">Decomposition of EPE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dataset-Comes-in-Play"><span class="toc-number">1.3.</span> <span class="toc-text">Dataset Comes in Play</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bias-Variance-Tradeoff-in-Regularization-Method"><span class="toc-number">2.</span> <span class="toc-text">Bias-Variance Tradeoff in Regularization Method</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1394,9 +1480,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1412,6 +1501,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1422,17 +1551,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1452,32 +1571,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1517,7 +1616,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1548,11 +1647,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1597,12 +1691,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1636,6 +1730,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1647,20 +1746,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1707,25 +1792,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     

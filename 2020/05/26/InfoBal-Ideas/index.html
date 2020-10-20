@@ -484,7 +484,7 @@ J(\Theta,\phi) = \frac{1}{M}\sum_i^M w_i I(V_i;R) - \frac{2}{M(M-1)}\sum_{1\leq 
 <li>The improvement compared to the original starting points is rather marginal. </li>
 <li>InfoBal objective is constantly hurting the performance of the representation learning model, despite the fact that the lower bound MI estimate value is nearly the same, which also implies that the MI is not so relevant to the representation quality. </li>
 </ul>
-<p>Up to now, we can conclude that the new objectice InfoBal is a failed attempt. One thing worth trying though, is to reimplement the DIM’s global/local objective in multiple (way more than 2) views and shed some light on our future exploration.</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p><strong>Up to now, we can conclude that the new objectice InfoBal is a failed attempt.</strong> One thing worth trying though, is to reimplement the DIM’s global/local objective in multiple (way more than 2) views and shed some light on our future exploration.</p>
 
     </article>
     <!-- license  -->
@@ -493,7 +493,7 @@ J(\Theta,\phi) = \frac{1}{M}\sum_i^M w_i I(V_i;R) - \frac{2}{M(M-1)}\sum_{1\leq 
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/26/InfoBal-Ideas/">http://www.shihaizhou.com/2020/05/26/InfoBal-Ideas/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/26/InfoBal-Ideas/">May 26th 2020, 10:25:21 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/26/InfoBal-Ideas/">June 10th 2020, 6:43:43 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/26/InfoBal-Ideas/">October 20th 2020, 3:02:14 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -627,7 +627,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-number">1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Theory"><span class="toc-number">2.</span> <span class="toc-text">Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-Description"><span class="toc-number">2.1.</span> <span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoBal-Objective"><span class="toc-number">2.2.</span> <span class="toc-text">InfoBal Objective</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Global-Local-InfoBal"><span class="toc-number">2.3.</span> <span class="toc-text">Global/Local InfoBal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Weighted-InfoBal"><span class="toc-number">2.4.</span> <span class="toc-text">Weighted InfoBal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimizing-InfoBal"><span class="toc-number">2.5.</span> <span class="toc-text">Optimizing InfoBal</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiments"><span class="toc-number">3.</span> <span class="toc-text">Experiments</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Motivation"><span class="toc-number">1.</span> <span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Theory"><span class="toc-number">2.</span> <span class="toc-text">Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-Description"><span class="toc-number">2.1.</span> <span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InfoBal-Objective"><span class="toc-number">2.2.</span> <span class="toc-text">InfoBal Objective</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Global-Local-InfoBal"><span class="toc-number">2.3.</span> <span class="toc-text">Global/Local InfoBal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Weighted-InfoBal"><span class="toc-number">2.4.</span> <span class="toc-text">Weighted InfoBal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimizing-InfoBal"><span class="toc-number">2.5.</span> <span class="toc-text">Optimizing InfoBal</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiments"><span class="toc-number">3.</span> <span class="toc-text">Experiments</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">4.</span> <span class="toc-text">Conclusion</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1461,9 +1461,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1479,6 +1482,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1489,17 +1532,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1519,32 +1552,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1584,7 +1597,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1615,11 +1628,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1664,12 +1672,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1703,6 +1711,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1714,20 +1727,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1774,25 +1773,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     

@@ -422,7 +422,7 @@ I(X ; Z) &:=H(X)-H(X | Z) \\
 <h2 id="The-Donsker-Varadhan-representation"><a href="#The-Donsker-Varadhan-representation" class="headerlink" title="The Donsker-Varadhan representation."></a>The Donsker-Varadhan representation.</h2><p>The following theorem gives a representation of the KL divergence. </p>
 <script type="math/tex; mode=display">
 D_{K L}(\mathbb{P} \| \mathbb{Q})=\sup _{T: \Omega \rightarrow \mathbb{R}} \mathbb{E}_{\mathbb{P}}[T]-\log \left(\mathbb{E}_{\mathbb{Q}}\left[e^{T}\right]\right)</script><p>where the <strong>supremum is taken over all functions</strong> $T$ such that the two expectations are finite. </p>
-<p>挑选出一个使$\mathbb{E}_{\mathbb{P}}[T]-\log \left(\mathbb{E}_{\mathbb{Q}}\left[e^{T}\right]\right)$最大的函数，我们只需要构造一个在每一个自变量取值处都取到函数最大值的最优函数$T$. 从而可以证明这条式子是成立的（在离散情况下）. Donsker-Varadhan representation提供了一个紧的下界，为了estimate KL divergence，我们只需要将这个实值函数$T$参数化，去maximize对应的函数值即可：</p>
+<p>挑选出一个使$\mathbb{E}_{\mathbb{P}}[T]-\log \left(\mathbb{E}_{\mathbb{Q}}\left[e^{T}\right]\right)$最大的函数，我们只需要构造一个在每一个自变量取值处都取到函数最大值的最优函数$T$. 从而可以证明这条式子是成立的（在离散情况下）. Donsker-Varadhan representation提供了一个紧的下界，为了estimate KL divergence，我们只需要将这个实值函数 $T$ 参数化，去maximize对应的函数值即可：</p>
 <p>Given pairs of samples $x_n \sim \mathbb P, y_n \sim \mathbb Q, n=1, \cdots, N$. we can estimate the $\sup$ over all mappings with the optimization of a model:</p>
 <script type="math/tex; mode=display">
 \hat D_{K L}\left(\mu_{X} \| \mu_{Y}\right)=\sup _{w} \frac{1}{N} \sum_{n=1}^{N} f\left(x_{n} ; w\right)-\log \left(\frac{1}{N} \sum_{n=1}^{N} \exp \left(f\left(y_{n} ; w\right)\right)\right)</script><p>For estimating mutual informaiton, the last thing required is to construct joint distribution and marginal product distribution: given pairs of samples i.i.d $\sim \mu_{A,B}$</p>
@@ -454,7 +454,7 @@ I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_
 \max _{g_{1} \in \mathcal{G}_{1}, g_{2} \in \mathcal{G}_{2}} \quad \hat I\left(g_{1}\left(X^{(1)}\right) ; g_{2}\left(X^{(2)}\right)\right)</script><p>where $\hat I$ represents the sample based MI estimator of the true MI $I(X;Y)$ and the function classes $\mathcal{G}_{1}$ and $\mathcal{G}_{2}$ can be used to specify structural constraints on the encoders. One thing to note here is that two encoders $g_1$ and $g_2$ often share parameters. </p>
 <p>It gives us plenty of modeling flexibility, as the two <strong>views</strong> can be chosen to capture completely different aspects and modalities of the data, for example:</p>
 <ul>
-<li>In the basic form of <strong>DeepInfoMax</strong> $g_1$ extracts global features from the entire image $X^{(1)}$ and $g_2$ local features from image patches $X^{(2)}$, where $g_1$ and $g_2$ correspond to activations in different layers of the same convolutional network. (也就是上一节介绍的global/local-MI Maximization)</li>
+<li>In the basic form of <strong>Deep InfoMax</strong> $g_1$ extracts global features from the entire image $X^{(1)}$ and $g_2$ local features from image patches $X^{(2)}$, where $g_1$ and $g_2$ correspond to activations in different layers of the same convolutional network. (也就是上一节介绍的global/local-MI Maximization)</li>
 <li><strong>Contrastive multiview coding (CMC)</strong> generalizes the objective in to consider multiple views $X^{(i)}$, where each $X^{(i)}$ corresponds to a different image modality (e.g., different color channels, or the image and its segmentation mask).</li>
 <li><strong>Contrastive predictive coding(CPC)</strong> incorporates a sequential component of the data. Concretely, one extracts a sequence of patches from an image in some fixed order, maps each patch using an encoder, aggregates the resulting features of the first $t$ patches into a context vector, and maximizes the MI between the context and features extracted from the patch at position $t + k.$</li>
 </ul>
@@ -495,7 +495,7 @@ I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">http://www.shihaizhou.com/2020/05/10/MI-Maximization/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">May 10th 2020, 2:29:18 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">June 14th 2020, 9:58:54 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/10/MI-Maximization/">June 24th 2020, 12:46:03 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -504,8 +504,8 @@ I(X ; Y) \geq \mathbb{E}\left[\frac{1}{K} \sum_{i=1}^{K} \log \frac{e^{f\left(x_
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/" title="Bias-Variance Tradeoff of the Learning Algorithms">
-                    <div class="nextTitle">Bias-Variance Tradeoff of the Learning Algorithms</div>
+                <a href="/2020/05/13/MI-Maximization-Experiments/" title="Mutual Information Maximization - Experiments">
+                    <div class="nextTitle">Mutual Information Maximization - Experiments</div>
                 </a>
             
         </li>
@@ -1463,9 +1463,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1481,6 +1484,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1491,17 +1534,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1521,32 +1554,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1586,7 +1599,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1617,11 +1630,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1666,12 +1674,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1705,6 +1713,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1716,20 +1729,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1776,25 +1775,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     

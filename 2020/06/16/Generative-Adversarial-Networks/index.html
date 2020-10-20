@@ -274,7 +274,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">9 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">11 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -406,13 +406,14 @@ height:50vh;
         <p><strong>Materials</strong></p>
 <ul>
 <li><a href="https://math.stackexchange.com/questions/2435464/show-that-max-function-on-mathbb-rn-is-convex" target="_blank" rel="noopener">Prooving max function is convex.</a></li>
+<li><a href="https://vincentherrmann.github.io/blog/wasserstein/" target="_blank" rel="noopener">blog on WGAN</a></li>
 </ul>
 <h1 id="Vanilla-GAN"><a href="#Vanilla-GAN" class="headerlink" title="Vanilla GAN"></a>Vanilla GAN</h1><p>Deep Learning研究的问题本质上是希望学习从一个数据空间到另一个数据空间的映射；更准确地，一个distribution向另一个distribution的映射。在分类任务中，这两个分布分别为合法数据点的分布向0-1分布的映射；在回归任务中，这两个分布分别为特征空间内数据点的分布向预测空间内的分布。</p>
 <p>在GAN的语境下，我们希望能够找到一个generator $G$ 将任意一个随机分布（在实践中通常是 Normal Distribution 或 Uniform Distribution）映射到生成网络分布 $P_G$ 中，并且我们希望 $P_G$ 和 $P_{data}$ 的分布能够尽量接近，divergence被用来度量两个分布的相似度，常见的为KL divergence和JS divergence. 以下为优化目标。</p>
 <script type="math/tex; mode=display">
 G^* = \arg\min_G \operatorname{Div}(P_G, P_{data})</script><p>GAN的核心思想在于将寻找最优generator $G$ 的过程刻画成一个由generator和discriminator两者构成的minmax game：</p>
 <script type="math/tex; mode=display">
-G^* = \arg \min_G \max_DV(D, G)</script><p>其中的优化目标函数为$V$</p>
+G^* = \arg \min_G \max_DV(D, G)</script><p>where</p>
 <script type="math/tex; mode=display">
 V(D,G)=\mathbb E_{x\sim P_{data}}[\log D(x)] + \mathbb E_{x\sim P_{G}}[\log (1-D(x=G(z))]</script><h2 id="Relation-to-JS-Divergence"><a href="#Relation-to-JS-Divergence" class="headerlink" title="Relation to JS Divergence"></a>Relation to JS Divergence</h2><p>下面我们证明以上的优化函数在discriminator取最优的情况下等价于 $P_G$ 和 $P_{data}$ 的 JS divergence $\operatorname{JS}(P_G | P_{data})$. </p>
 <p>首先我们将上式</p>
@@ -460,7 +461,7 @@ D_{f}(P \| Q)=\int_{\mathcal{X}} q(x) \sup _{t \in \operatorname{dom}_{f^{*}}}\l
 D_{f}(P \| Q) &=\int_{\mathcal{X}} q(x) \sup _{t \in \operatorname{dom}_{f^{*}}}\left\{t \frac{p(x)}{q(x)}-f^{*}(t)\right\} \mathrm{d} x \\
 & \geq \sup _{T \in \mathcal{T}}\left(\int_{\mathcal{X}} p(x) T(x) \mathrm{d} x-\int_{\mathcal{X}} q(x) f^{*}(T(x)) \mathrm{d} x\right) \\
 &=\sup _{T \in \mathcal{T}}\left(\mathbb{E}_{x \sim P}[T(x)]-\mathbb{E}_{x \sim Q}\left[f^{*}(T(x))\right]\right)
-\end{aligned}</script><p>where $t=T(x)$, $T: \mathcal{X} \rightarrow \mathbb{R}$. 接下来我们推导原文中略过的部分：在Legendre Transformation的语境下我们可以求出相对紧的下界 $T^*$ (注意不要和conjugate的符号混淆). </p>
+\end{aligned}</script><p>where $t=T(x)​$, $T: \mathcal{X} \rightarrow \mathbb{R}​$. 接下来我们推导原文中略过的部分：在Legendre Transformation的语境下我们可以求出相对紧的下界 $T^*​$ (注意不要和conjugate的符号混淆). </p>
 <p>首先因为Legendre Transformatio中 $f$ is convex, 所以我们可以求出 $f^*(t)=\sup_x\{xt-f(x)\}$ 的唯一解：</p>
 <script type="math/tex; mode=display">
 \begin{align}
@@ -482,17 +483,32 @@ x \frac{\partial f^{\prime-1} (x)}{\partial x} -
 f^{\prime}(f^{\prime-1} (x))
 \frac{\partial f^{\prime-1} (x)}{\partial x} \\
 &= f^{\prime-1}(x)
-\end{align}</script><p>利用以上结果，我们希望去找到对应的 $t=T(x)$ 表达式使得 $\sup$ 能够被最大化，解得</p>
+\end{align}</script><p>利用以上结果，我们希望去找到对应的 $t=T(x)$ 表达式使得 $\sup$ 能够被最大化，从而有</p>
 <script type="math/tex; mode=display">
-T^{*}(x)=f^{\prime}\left(\frac{p(x)}{q(x)}\right)</script><p>以下展示了不同的f-divergence和对应的最优estimate $T^*$ </p>
+\begin{align}
+&\frac{\partial}{\partial t}\left[t \frac{p(x)}{q(x)}-f^{*}(t)\right] = 0 \\
+\Leftrightarrow \quad & f^{\prime -1}(t) = \frac{p(x)}{q(x)} \\
+\Rightarrow \quad & T^*(x) = t^* = f^{-1}\left(\frac{p(x)}{q(x)}\right)
+\end{align}</script><p>以下展示了不同的f-divergence和对应的最优estimate $T^*$ </p>
 <p><img src="https://i.loli.net/2020/06/17/oOAszpE5t8W6rqj.png" alt="image.png"></p>
-<h2 id="Variational-Divergence-Minimization-VDM"><a href="#Variational-Divergence-Minimization-VDM" class="headerlink" title="Variational Divergence Minimization (VDM)"></a>Variational Divergence Minimization (VDM)</h2><p>To this end, we follow the generative-adversarial approach and use two neural networks, $Q$ and $T$ . $Q$ is our generative model, taking as input a random vector and outputting a sample of interest. We parametrize $Q$ through a vector $\theta$ and write $Q_\theta$. $T$ is our variati onal function, taking as input a sample and returning a scalar. We parametrize $T$ using a vector ω and write $T_\omega$ .</p>
+<h2 id="Variational-Divergence-Minimization-VDM"><a href="#Variational-Divergence-Minimization-VDM" class="headerlink" title="Variational Divergence Minimization (VDM)"></a>Variational Divergence Minimization (VDM)</h2><p>To this end, we follow the generative-adversarial approach and use two neural networks, $Q$ and $T$ . $Q$ is our generative model, taking as input a random vector and outputting a sample of interest. We parametrize $Q$ through a vector $\theta$ and write $Q_\theta$. $T$ is our variational function, taking as input a sample and returning a scalar. We parametrize $T$ using a vector ω and write $T_\omega$ .</p>
 <script type="math/tex; mode=display">
 F(\theta, \omega)=\mathbb{E}_{x \sim P}\left[T_{\omega}(x)\right]-\mathbb{E}_{x \sim Q_{\theta}}\left[f^{*}\left(T_{\omega}(x)\right)\right]</script><p>以上给出了基于f-divergence的minmax game. </p>
 <h1 id="WGAN"><a href="#WGAN" class="headerlink" title="WGAN"></a>WGAN</h1><p>WGAN使用了在f-GAN family 之外的用于衡量两个分布的距离函数: Earth-Mover (EM) distance or Wasserstein-1. </p>
 <p><strong>Definition</strong> (Earth-Mover Distance). The <strong>Earth-Mover distance</strong> between two distribution $\mathbb P_r$ and $\mathbb P_g$ is defined as</p>
 <script type="math/tex; mode=display">
 W\left(\mathbb{P}_{r}, \mathbb{P}_{g}\right)=\inf _{\gamma \in \Pi\left(\mathbb{P}_{r}, \mathbb{P}_{g}\right)} \mathbb{E}_{(x, y) \sim \gamma}[\|x-y\|]</script><p>where $\Pi (\mathbb P_r, \mathbb P_g)$ denotes the set of all joint distributions $\gamma (x,y)$ whose marginals are respectively $\mathbb P_r$ and $\mathbb P_g$. Intuitively, $\gamma (x,y)$ indicates how much “mass” must be transported from $x$ to $y$ in order to transform the distributions $\mathbb P_r$ into the distribution $\mathbb P_g$. The EM distance then is the “cost” of the optimal transport plan. </p>
+<p>计算 $\inf$ 需要我们最小化一个目标函数找到对应的最小值。对于离散型随机变量我们可以将这个问题转化成一个线性规划问题，然后使用线性规划进行求解。对于现实问题例如输入为image的高维数据点来说是不切实际的，因此在WGAN中作者采用了Kantorovich-Rubinstein duality来解决这个优化问题，具体的推导我们暂且放一下，以后有空的时候再一并整理优化问题的内容。</p>
+<script type="math/tex; mode=display">
+W\left(\mathbb{P}_{r}, \mathbb{P}_{\theta}\right)=\sup _{\|f\|_{L} \leq 1} \mathbb{E}_{x \sim \mathbb{P}_{r}}[f(x)]-\mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)]</script><p>其中 $|f|_{L} \leq 1$ 表示的是符合1-Lipschitz condition的实值函数，如果我们考虑参数化两个函数，就能得到以下的最大化目标：</p>
+<script type="math/tex; mode=display">
+\max _{w \in \mathcal{W}} \mathbb{E}_{x \sim \mathbb{P}_{r}}\left[f_{w}(x)\right]-\mathbb{E}_{z \sim p(z)}\left[f_{w}\left(g_{\theta}(z)\right]\right.</script><p>从这个角度我们看到了WGAN也是遵从一个minmax game的形式的. 那么为什么WGAN是一个更好的优化目标呢？这是因为WGAN能够量化反应训练质量，以下图为例，两个分布逐渐靠近，WGAN的优化目标是能够反映出来的，但是对于以divergence为基础的训练目标来说，两者的距离会在重合的一瞬间降为0. </p>
+<p><img src="https://i.loli.net/2020/06/22/EBCLkwRrMvsfSJ4.png" alt="image.png"></p>
+<p>WGAN需要对参数化的函数需要进行限制：那就是将函数限制在K-Lipschitz的function family中。文章的方法就是做weight clipping. 当然这个方法导致的具体的$K$是多少，我们就没有办法得知了。</p>
+<blockquote>
+<p>In order to have parameters $W$ lie in a compact space, something simple we can do is clamp the weights to a fixed box (say $W = [−0.01, 0.01]^l$) after each gradient update.</p>
+</blockquote>
+<p><img src="https://i.loli.net/2020/06/22/QGrKpkiconIBEaY.png" alt="image.png"></p>
 
     </article>
     <!-- license  -->
@@ -501,7 +517,7 @@ W\left(\mathbb{P}_{r}, \mathbb{P}_{g}\right)=\inf _{\gamma \in \Pi\left(\mathbb{
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/16/Generative-Adversarial-Networks/">http://www.shihaizhou.com/2020/06/16/Generative-Adversarial-Networks/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/16/Generative-Adversarial-Networks/">June 16th 2020, 7:52:31 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/16/Generative-Adversarial-Networks/">June 18th 2020, 10:06:08 am</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/16/Generative-Adversarial-Networks/">August 2nd 2020, 12:01:30 am</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -518,8 +534,8 @@ W\left(\mathbb{P}_{r}, \mathbb{P}_{g}\right)=\inf _{\gamma \in \Pi\left(\mathbb{
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/" title="Contrastive Learning from the Perspective of Manifold Learning">
-                    <div class="prevTitle">Contrastive Learning from the Perspective of Manifold Learning</div>
+                <a href="/2020/06/14/Manifold-Learning/" title="Manifold Learning">
+                    <div class="prevTitle">Manifold Learning</div>
                 </a>
             
         </li>
@@ -1469,9 +1485,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1487,6 +1506,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1497,17 +1556,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1527,32 +1576,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1592,7 +1621,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1623,11 +1652,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1672,12 +1696,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1711,6 +1735,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1722,20 +1751,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1782,25 +1797,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     

@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Understanding Contrastive Representation Learning · N1H111SM&#39;s Miniverse</title>
+    <title>Pytorch Techniques · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Understanding Contrastive Representation Learning</a>
+                <a href="#" class="post-name">Pytorch Techniques</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Understanding Contrastive Representation Learning
+            Pytorch Techniques
             <!-- 404 -->
             
         </h1>
@@ -266,18 +266,18 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="Contrastive">Contrastive</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="Code">Code</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">225</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">408</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/06/11</span>
+                    <span class="post-intro-time">2020/05/28</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -401,17 +401,27 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h1><p><strong>Q1.</strong> For classification tasks, when we use contrastive learning as the self-supervised objective, the uniformity of the representations is optimized but how the linear-separability is naturally optimized along with uniformity?<br><strong>A1.</strong> In my opinion, the reason that class concentration happens is ultimately the inductive bias of neural networks. Afterall, unrestricted function class, there definitely are encoders that are very aligned and uniform, but gives useless features, in terms of linear classification at least. If you believe the inductive bias of NN tends to lead to “smooth” solutions, then intuitively class concentration happens. It is certainly difficult to argue about this formally though.</p>
-<p><strong>Q2.</strong> For tasks requiring structured output (e.g. reconstruction), I could understand that uniformity is desired since we want the representation to be as different as possible so that when constructing output, different samples are not going to be confused. Then I wonder if the contrastive method is better than the Autoencoder-based method (in this scenario). My assumption is “no” since the contrastive method also pushes similar samples away from each other, while it’s against our instinct that similar inputs shall have similar representations.<br><strong>A2.</strong> I’d say it depends on how you choose positive pairs in contrastive learning.  Surely this could be true if you ask two random crops of the same image to have the same features. </p>
+        <p><strong>Materials</strong></p>
+<ul>
+<li><a href="https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html" target="_blank" rel="noopener">pytorch official guide “training CNN classifiers on CIFAR-10”</a></li>
+</ul>
+<h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><h3 id="torch-nn-Conv2d"><a href="#torch-nn-Conv2d" class="headerlink" title="torch.nn.Conv2d"></a>torch.nn.Conv2d</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.Conv2d(</span><br><span class="line">    in_channels, </span><br><span class="line">    out_channels, </span><br><span class="line">    kernel_size, </span><br><span class="line">    stride=<span class="number">1</span>, </span><br><span class="line">    padding=<span class="number">0</span>, </span><br><span class="line">    dilation=<span class="number">1</span>, </span><br><span class="line">    groups=<span class="number">1</span>, </span><br><span class="line">    bias=<span class="literal">True</span>, </span><br><span class="line">    padding_mode=<span class="string">'zeros'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Pytorch和tensorflow中（也和我们一般理解的）的图像表示形式不同：torch中的channel维在height和width之前，所以input的tensor形状为$(N,C_{\text{in}}, H, W)$. </p>
+<h3 id="torch-nn-ZeroPad2d"><a href="#torch-nn-ZeroPad2d" class="headerlink" title="torch.nn.ZeroPad2d"></a>torch.nn.ZeroPad2d</h3><p>在二维Tensor的左右上下四个方向添加zero-padding. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pad = nn.ZeroPad2d(padding=(1, 2, 3, 4))</span><br><span class="line">y = pad(x)</span><br></pre></td></tr></table></figure>
+<h3 id="torchvision-transforms-Pad"><a href="#torchvision-transforms-Pad" class="headerlink" title="torchvision.transforms.Pad"></a>torchvision.transforms.Pad</h3><p>有的时候我们希望对于数据的处理都封装在load_data这一层中，所以我们希望能够使用torchvision里的<code>transform.Compose</code>. 以下展示了将MNIST上<code>(1, 28, 28)</code>的数据转换为能够匹配用于CIFAR-10的DCGAN架构的代码。注意Pad需要在<code>ToTensor()</code>层前，因为该方法适配于PIL Image对象而不是Tensor对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">transform = transforms.Compose([transforms.Pad(padding=(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>), fill=<span class="number">0</span>),</span><br><span class="line">                                transforms.ToTensor(),</span><br><span class="line">                                transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))])</span><br></pre></td></tr></table></figure>
+<p>在BYOL工作中，我们需要得到一个batch的PIL image然后对该batch进行两次同样的随机化的transform. 注意<code>torchvision.transform</code>对图像的操作都封装在了dataloader中. 背后的原理是可以使用多线程对多个图像进行并行的transform最后将PIL图像转换为tensor组装成为一个batch的tensor可以加速这个操作，这是pytorch的开发人员在设计transform这个机制的哲学，因此他们不认为对batched transform的支持是必须的. 这就给我们的开发带了一些问题. </p>
+<p>一个解决方案是采用<a href="https://kornia.github.io/" target="_blank" rel="noopener">kornia这个pytorch支持库</a>，在<code>dataloader</code>层面我们只需要一个<code>ToTensor</code>的<code>transform</code>即可，然后通过kornia定义一个自己的<code>nn.Sequential</code>即可完成要求. </p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">http://www.shihaizhou.com/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">June 11th 2020, 9:14:56 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">June 15th 2020, 7:09:08 pm</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/05/28/Pytorch-Techniques/">http://www.shihaizhou.com/2020/05/28/Pytorch-Techniques/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/05/28/Pytorch-Techniques/">May 28th 2020, 9:39:09 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/05/28/Pytorch-Techniques/">August 2nd 2020, 3:33:46 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -420,16 +430,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2020/06/14/Manifold-Learning/" title="Manifold Learning">
-                    <div class="nextTitle">Manifold Learning</div>
+                <a href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/" title="Discriminative Clustering by Regularized Information Maximization">
+                    <div class="nextTitle">Discriminative Clustering by Regularized Information Maximization</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/06/10/Learning-Disentangled-Representations-via-Mutual-Information-Estimation/" title="Disentangled Representation Learning via Mutual Information Estimation">
-                    <div class="prevTitle">Disentangled Representation Learning via Mutual Information Estimation</div>
+                <a href="/2020/05/27/Information-Competing-Process-for-Learning-Diversified-Representations/" title="Information Competing Process for Learning Diversified Representations">
+                    <div class="prevTitle">Information Competing Process for Learning Diversified Representations</div>
                 </a>
             
         </li>
@@ -545,7 +555,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#QA"><span class="toc-number">1.</span> <span class="toc-text">QA</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Functions"><span class="toc-number">1.</span> <span class="toc-text">Functions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#torch-nn-Conv2d"><span class="toc-number">1.0.1.</span> <span class="toc-text">torch.nn.Conv2d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#torch-nn-ZeroPad2d"><span class="toc-number">1.0.2.</span> <span class="toc-text">torch.nn.ZeroPad2d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#torchvision-transforms-Pad"><span class="toc-number">1.0.3.</span> <span class="toc-text">torchvision.transforms.Pad</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1379,9 +1389,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1397,6 +1410,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1407,17 +1460,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1437,32 +1480,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1502,7 +1525,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1533,11 +1556,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1582,12 +1600,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1621,6 +1639,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1632,20 +1655,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1692,25 +1701,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     

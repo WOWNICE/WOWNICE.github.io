@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Matplotlib Cookbook · N1H111SM&#39;s Miniverse</title>
+    <title>Bagging · N1H111SM&#39;s Miniverse</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">N1H111SM&#39;s Miniverse</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Matplotlib Cookbook</a>
+                <a href="#" class="post-name">Bagging</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Matplotlib Cookbook
+            Bagging
             <!-- 404 -->
             
         </h1>
@@ -268,18 +268,16 @@ height:50vh;
     
         <a class="post-tag" href="javascript:void(0);" data-tags="Basics">Basics</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="Code">Code</a>
-    
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">60</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">903</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/06/07</span>
+                    <span class="post-intro-time">2020/06/27</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -403,18 +401,39 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="3D-Drawing"><a href="#3D-Drawing" class="headerlink" title="3D Drawing"></a>3D Drawing</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fig = plt.gcf()  </span><br><span class="line">ax = fig.add_subplot(<span class="number">241</span>, projection=<span class="string">'3d'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># <span class="doctag">TODO:</span> Drawing code here.</span></span><br></pre></td></tr></table></figure>
-<h2 id="Dynamic-Drawing"><a href="#Dynamic-Drawing" class="headerlink" title="Dynamic Drawing"></a>Dynamic Drawing</h2><p>In Jupyter Notebook: use <code>display</code> in <code>Ipython</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython <span class="keyword">import</span> display</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="comment"># clear the current figure first</span></span><br><span class="line">    plt.clf() </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># <span class="doctag">TODO:</span> Drawing code here.</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># wait=True avoid picture on&amp;off.</span></span><br><span class="line">    display.display(plt.gcf())</span><br><span class="line">    display.clear_output(wait=<span class="literal">True</span>)</span><br><span class="line">    time.sleep(<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+        <h1 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h1><p>Bagging方法属于ensemble类的方法，表示 Bootstrap AGGregetING. Bagging方法由bootstrap和aggregation两部分组成. </p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p><strong>Bootstrapping</strong>. Given a training set $D=\left\{\left(\mathbf{x}_{1}, y_{1}\right), \ldots\left(\mathbf{x}_{n}, y_{n}\right)\right\}$, we first sample (with replacement) $T$ sets of $n$ elements from $D$, forming $T$ quasi replica training sets $\{D_{1}, D_{2}, \ldots D_{T}\}$. Then we train a machine $f_i$ on each small dataset $D_i, \space i=1,\cdots, T$. Bootstrapping中最需要理解的关键点是 sample with replacement过程。需要注意的是每个dataset包含的数据量都是和原本的dataset相同的，得到的数据集是可以存在重复元素的数据集. 而并不是从大数据集中分割出小数据集。这么做的意义是为了保证每个子数据集中的元素都满足i.i.d条件，从而达到降低variance的效果。</p>
+<p><strong>Aggregation</strong>. Aggregation阶段我们将在小数据集上训练的base learner $\{f_i\}_{i=1}^{T}$ 进行某种方式的聚合.<br>For regression: </p>
+<script type="math/tex; mode=display">
+\bar{f}(\mathbf{x})=\frac{1}{T}\sum_{i=1}^{T} f_{i}(\mathbf{x})</script><p>For classification, we can do average and decide or the majority voting:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\text{simple:}\quad \bar{f}(\mathbf{x})&=\operatorname{sign}\left(\sum_{i=1}^{T} f_{i}(\mathbf{x})\right) \\
+\text{majority voting:}\quad\bar{f}(\mathbf{x}) &= \operatorname{sign}\left(\sum_{i=1}^{T} \operatorname{sign}\left(f_{i}(\mathbf{x})\right)\right)
+\end{align}</script><h2 id="Theoretical-Guarantees"><a href="#Theoretical-Guarantees" class="headerlink" title="Theoretical Guarantees"></a>Theoretical Guarantees</h2><p>As for the question why it helps improve the performance compared with the learner which is trained on the whole dataset, we need to use the formal form of the <strong>EPE</strong> (recall <a href="http://www.shihaizhou.com/2020/06/28/Bias-Variance-Decomposition/">my blog of the bias-variance decomposition</a>). </p>
+<script type="math/tex; mode=display">
+\operatorname{EPE}(\mathcal A) = \underbrace{\mathbb E_{x,D} \left[ \left((h_D(x)-\bar{h}(x)\right)^2 \right]}_{\text{variance}} + \underbrace{\mathbb E_{x} \left[  (\bar{h}(x)-\bar y(x))^2  \right]}_{\text{bias}^2} + 
+\underbrace{\mathbb E_{x,y} \left[  (\bar y(x)-y)^2  \right]}_{\text{noise}}</script><p>If we are able to access the input distribution, we can sample infinite number of independent datasets of size $n$: $\mathcal D=\{D_i\}_{i=1}^\infty$ and average the learners to reduce the variance. Then the variance would be close to zero, simply because:</p>
+<script type="math/tex; mode=display">
+h_{\mathcal D}(x)=\lim_{T\rightarrow\infty}\frac{1}{T}\sum_{i=1}^{T}h_{D_i}(x)=\mathbb E_{D\sim P^n}[h_D](x) = \bar h(x)</script><p>Unfortunately, we can’t get access to so large number of the datsets. But in Bagging algorithm, <strong>the method of sampling with replacement guarantees that each sampled dataset is a dataset consisting of i.i.d samples,</strong> which helps reduce the variance of the base learners. To note here, if we sample $m&lt;n$ data samples from the original dataset $D$, then there is no theoretical proof that the variance is reduced compared with the learner trained on the whole dataset: since the bias-variance decomposition is conditioned on the dataset size. </p>
+<h2 id="Random-Forest"><a href="#Random-Forest" class="headerlink" title="Random Forest"></a>Random Forest</h2><p>Bagging的理论证明告诉我们它能够显著优化base learner的variance而对bias没有优化的效果. 那么什么样的base learner能够从bagging上benefit最大？答案是具有high variance and low bias的base learner: decision  tree. </p>
+<p><img src="https://i.loli.net/2020/06/30/IRHvloA35q1BOUM.png" alt="image.png"></p>
+<p>最常见的关于RF的错误认识是认为RF单一地采取了random feature selection. 但事实上RF作为bagging方法，构建i.i.d的sub-dataset依旧是不可缺少的. 所以RF是同时具备random samples和random feature selection这两个随机性的。在构建每一个单独的decision tree时，参与影响每一次decision boundary决策的是随机选择的$K$个feature. 而通过实验人们发现 $K=\sqrt {d}$ 往往是最优的选择. </p>
+<p>关于Random Forest最美妙的性质在于：</p>
+<ol>
+<li>首先RF几乎不需要任何超参，唯一的超参$K$也在经验上有非常好的设置 $K=\sqrt {d}$. </li>
+<li>其次RF不需要进行train-val的数据集划分：因为在进行dataset sample时sub-dataset一定会出现重复的样本，那么原数据集中没有被采样到的样本就可以用于这个base learner的validation，这叫做Out Of Bag (OOB) validation. </li>
+<li>最后是RF的训练是增量式的，不存在sub-dataset number这样的超参，我们只需要在error曲线平滑时停止训练即可. </li>
+</ol>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
-            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/07/Matplotlib-Cookbook/">http://www.shihaizhou.com/2020/06/07/Matplotlib-Cookbook/</a>
-            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/07/Matplotlib-Cookbook/">June 7th 2020, 4:09:35 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/07/Matplotlib-Cookbook/">June 7th 2020, 11:17:27 pm</a>
+            </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/06/27/Bagging-and-Boosting/">http://www.shihaizhou.com/2020/06/27/Bagging-and-Boosting/</a>
+            </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/06/27/Bagging-and-Boosting/">June 27th 2020, 3:18:04 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/06/27/Bagging-and-Boosting/">October 20th 2020, 2:48:24 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -423,16 +442,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2020/06/08/InfoGAN/" title="InfoGAN">
-                    <div class="nextTitle">InfoGAN</div>
+                <a href="/2020/06/28/Bias-Variance-Decomposition/" title="Bias-Variance Decompostion">
+                    <div class="nextTitle">Bias-Variance Decompostion</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/" title="Discriminative Clustering by Regularized Information Maximization">
-                    <div class="prevTitle">Discriminative Clustering by Regularized Information Maximization</div>
+                <a href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/" title="Learning Representations by Maximizing Mutual Information Across Views">
+                    <div class="prevTitle">Learning Representations by Maximizing Mutual Information Across Views</div>
                 </a>
             
         </li>
@@ -548,7 +567,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#3D-Drawing"><span class="toc-number">1.</span> <span class="toc-text">3D Drawing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-Drawing"><span class="toc-number">2.</span> <span class="toc-text">Dynamic Drawing</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bagging"><span class="toc-number">1.</span> <span class="toc-text">Bagging</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Method"><span class="toc-number">1.1.</span> <span class="toc-text">Method</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theoretical-Guarantees"><span class="toc-number">1.2.</span> <span class="toc-text">Theoretical Guarantees</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Random-Forest"><span class="toc-number">1.3.</span> <span class="toc-text">Random Forest</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1382,9 +1401,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 53
+        Total : 54
         </div>
         <!-- search  -->
         
@@ -1400,6 +1422,46 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href="/2020/07/24/EM-Algorithm/">EM Algorithm</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href="/2020/07/19/RL-environment-stable-baselines/">RL environment & stable-baselines</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href="/2020/06/28/Bias-Variance-Decomposition/">Bias-Variance Decompostion</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href="/2020/06/27/Bagging-and-Boosting/">Bagging</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/24</span><a class="archive-post-title" href="/2020/06/24/Learning-Representations-by-Maximizing-Mutual-Information-Across-Views/">Learning Representations by Maximizing Mutual Information Across Views</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href="/2020/06/23/Momentum-Contrast-for-Unsupervised-Visual-Representation-Learning/">Momentum Contrast for Unsupervised Visual Representation Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href="/2020/06/22/Bootstrap-Your-Own-Latent-A-New-Approach-to-Self-Supervised-Learning/">Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/20</span><a class="archive-post-title" href="/2020/06/20/Lipschitz-Continuity/">Lipschitz Continuity</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/17</span><a class="archive-post-title" href="/2020/06/17/Legendre-Transform-and-Fenchel-Conjugate/">Legendre Transform and Fenchel Conjugate</a>
         </li>
     
@@ -1410,17 +1472,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/15</span><a class="archive-post-title" href="/2020/06/15/Contrastive-Learning-from-the-Perspective-of-Manifold-Learning/">Contrastive Learning from the Perspective of Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/14</span><a class="archive-post-title" href="/2020/06/14/Manifold-Learning/">Manifold Learning</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href="/2020/06/11/Understanding-Contrastive-Representation-Learning-through-Alignment-and-Uniformity-on-the-Hypersphere/">Understanding Contrastive Representation Learning</a>
         </li>
     
     
@@ -1440,32 +1492,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href="/2020/06/07/Matplotlib-Cookbook/">Matplotlib Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href="/2020/06/04/Discriminative-Clustering-by-Regularized-Information-Maximization/">Discriminative Clustering by Regularized Information Maximization</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/02</span><a class="archive-post-title" href="/2020/06/02/Deep-Graph-InfoMax/">Deep Graph InfoMax</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/31</span><a class="archive-post-title" href="/2020/05/31/Data-Simulation/">Data Simulation Cookbook</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-CNNs/">Pytorch - CNNs</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Contrastive-Predictive-Coding/">Contrastive Predictive Coding</a>
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href="/2020/05/28/Pytorch-Techniques/">Pytorch Techniques</a>
         </li>
     
     
@@ -1505,7 +1537,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers - Theory</a>
+            <span class="archive-post-date">05/20</span><a class="archive-post-title" href="/2020/05/20/SGD-Optimizers/">SGD Optimizers</a>
         </li>
     
     
@@ -1536,11 +1568,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/MI-Maximization-Experiments/">Mutual Information Maximization - Experiments</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href="/2020/05/13/Bias-Variance-Tradeoff-of-the-Learning-Algorithms/">Bias-Variance Tradeoff of the Learning Algorithms</a>
         </li>
     
     
@@ -1585,12 +1612,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Visual-Exploration/">Visual Exploration</a>
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href="/2020/02/28/Graph-Neural-Networks/">Graph Neural Networks - Survey</a>
         </li>
     
     
@@ -1624,6 +1651,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
     
     
     
@@ -1635,20 +1667,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href="/2019/07/30/Google-Football-Warm-Start/">Google Football Warm Start</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
         </li>
     
     
@@ -1695,25 +1713,25 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
-    
-        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
-    
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
     
         <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
     
-        <span class="sidebar-tag-name" data-tags="reality"><span class="iconfont-archer">&#xe606;</span>reality</span>
+        <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
+    
+        <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
+    
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+    
+        <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
     
         <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
