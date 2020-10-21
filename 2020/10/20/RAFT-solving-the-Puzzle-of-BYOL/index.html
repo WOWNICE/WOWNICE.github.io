@@ -427,11 +427,11 @@ height:50vh;
 <p>现在我们转而研究BYOL$^\prime$为什么不会发生collapse. 从形式上来看其实我们的任务并没有变得更加轻松：原先的$\mathcal{L}_{\text{BYOL}}$项是使得两个网络的输出相互靠近，而现在的$\mathcal{L}_{\text{BYOL}^\prime}$包含了两项同样相互靠近的项$\mathcal{L}_{\text{align}}$和$\mathcal{L}_{\text{cross-model}}$，我们之前推断的collapse依旧成立。后一项的$\mathcal{L}_{\text{cross-model}}$是唯一能够使得表征空间的uniformity得到优化的动力，但是他们在形式上却完全不同：uniformity loss鼓励相互独立的样本在表征空间里拉开差距，而$\mathcal{L}_{\text{cross-model}}$却在鼓励某种距离的拉近。</p>
 <p>这里来到本篇工作最为重要的一部分：为了至少和uniformity loss的优化沾上一点边，我们尝试最大化$\mathcal{L}_{\text{cross-model}}$而不是最小化它，结果我们发现优化$\mathcal{L}_{\text{align}}-\mathcal{L}_{\text{cross-model}}$也依然是work的！据此（先抛开这个让人惊讶的发现），我们提出了一个全新的自监督学习框架 Run Away From your Teacher (RAFT). 训练过程中，RAFT优化两个目标：拉近同一个data不同view的representation，以及拉开和自己网络EMA（文章中称为Mean Teacher，MT）的距离。RAFT和BYOL框架的流程图见以下：</p>
 <p><img src="https://i.loli.net/2020/10/21/CTbtKHBLxAw1MZm.png" alt="image.png"></p>
-<p>RAFT避免的collapse的机制是直觉上成立的，如下图(b)所示。利用semi-supervised learning中Mean Teacher的部分结论：MT采用的model averaging可以被看成sample averaging的近似，我们发现如果MT给两个data representation的驱动力是分开的，那么这两个representation会在接下来的训练中持续远离对方，从而避免了collapse. </p>
-<p><img src="https://i.loli.net/2020/10/21/PauvQOB6NMEGbxl.png" alt="image.png"></p>
 <p>和BYOL相比，RAFT和BYOL$^\prime$的形式是disentangled，不同loss之间的权重也因此调节，因此更好；而RAFT和BYOL$^\prime$相比，其中远离MT产生的loss: $-\mathcal{L}_{\text{cross-model}}$ 作为alignment loss的正则项在去除掉predictor之后依旧是一个alignment loss的有效正则项；而当BYOL$^\prime$在去除predictor之后就失去了对alignment loss的约束（见前文的表）。从对alignment loss的正则效果来看，如下图所示，RAFT是相对于BYOL$^\prime$更为统一的方法，因此也更应该被作为MT的“正确”使用方法。其中值得探讨的问题是，为什么RAFT在最后一层能够有效的正则alignment loss，但是却不能够防止中间表征层的collapse. 这一疑问我们留给未来的工作。</p>
 <p><img src="https://i.loli.net/2020/10/21/51PVcMdjmBJLN8G.png" alt="image.png"></p>
-<p>最后来看为什么RAFT能够帮助我们理解BYOL的成功。我们发现当以下三个条件：(1) 表征空间是一个超球面；(2) predictor为线性；(3) 表征空间上球面切向梯度被保留而径向梯度被舍弃 满足时，RAFT的训练轨迹和BYOL$^\prime$的训练轨迹存在一一映射关系。第一个条件是BYOL原paper的设置；第二个条件我们已经在之前经验性地说明了不会影响方法最终collapse与否；第三个条件将梯度分解为切向和径向两个方向，由于表征空间是一个球面，所以使得样本在表征空间中聚合和分散的梯度只有切向方向的梯度。径向方向的梯度充其量只是一个scaler的作用，而在学习率非常小的情况下可以忽略不计，因此第三个条件也是一个相对较弱的条件，在实际训练中非常容易可以做到。参考上图(a)，假设除了优化目标不同之外其他所有的训练细节完全相同（包括模型架构、喂进模型的数据顺序、优化器超参等等），BYOL$^\prime$中encoder network和predictor的参数分别用$(\theta, W)$表示并且初始化为$(\theta, W)=(\theta^{(0)}, W^{(0)})$，训练$N$个step得到的训练轨迹为$\{(\theta^{(k)}, W^{(k)})\}_{k=1}^N$，那么容易证明，初始化为$(\theta^\prime, W^\prime)=(\theta^{(0)}, -W^{(0)})$的RAFT算法得到的训练轨迹为$\{(\theta^{(k)}, -W^{(k)})\}_{k=1}^N$. 这也就构造了一个任意训练setting下的一一映射。</p>
+<p>RAFT避免的collapse的机制是直觉上成立的，如下图(b)所示。利用semi-supervised learning中Mean Teacher的部分结论：MT采用的model averaging可以被看成sample averaging的近似，我们发现如果MT给两个data representation的驱动力是分开的，那么这两个representation会在接下来的训练中持续远离对方，从而避免了collapse. </p>
+<p>最后来看为什么RAFT能够帮助我们理解BYOL的成功。我们发现当以下三个条件：(1) 表征空间是一个超球面；(2) predictor为线性；(3) 表征空间上球面切向梯度被保留而径向梯度被舍弃 满足时，RAFT的训练轨迹和BYOL$^\prime$的训练轨迹存在一一映射关系。第一个条件是BYOL原paper的设置；第二个条件我们已经在之前经验性地说明了不会影响方法最终collapse与否；第三个条件将梯度分解为切向和径向两个方向，由于表征空间是一个球面，所以使得样本在表征空间中聚合和分散的梯度只有切向方向的梯度。径向方向的梯度充其量只是一个scaler的作用，而在学习率非常小的情况下可以忽略不计，因此第三个条件也是一个相对较弱的条件，在实际训练中非常容易可以做到。参考上图(a)，假设除了优化目标不同之外其他所有的训练细节完全相同（包括模型架构、喂进模型的数据顺序、优化器超参等等），BYOL$^\prime$中encoder network和predictor的参数分别用$(\theta, W)$表示并且初始化为$(\theta, W)=(\theta^{(0)}, W^{(0)})$，训练$N$个step得到的训练轨迹为$\{(\theta^{(k)}, W^{(k)})\}_{k=1}^N$，那么容易证明，初始化为$(\theta^\prime, W^\prime)=(\theta^{(0)}, -W^{(0)})$的RAFT算法得到的训练轨迹为$\{(\theta^{(k)}, -W^{(k)})\}_{k=1}^N​$. 这也就构造了一个任意训练setting下的一一映射。</p>
+<p><img src="https://i.loli.net/2020/10/21/PauvQOB6NMEGbxl.png" alt="image.png"></p>
 <p>以上一一映射的建立告诉我们RAFT和BYOL$^\prime$作为一个representation learning framework是等价的，它们能够通过优化不同的优化目标得到完全一致的中间representation层的encoder network. 这个等价可以帮助我们解释许多关于BYOL的奇怪现象：首先是BYOL为什么不发生collpase；其次是它解释了为什么我们不能够用最终的convergence来预判BYOL是否work：RAFT的正则项$-\mathcal{L}_{\text{cross-model}}$持续地让当前sample的表征原理自己过去表征的滑动平均，所以根本不会有convergence的出现。这一点也被BYOL工作的最新版本验证：文章中汇报了模型的非收敛性。</p>
 
     </article>
@@ -441,7 +441,7 @@ height:50vh;
             <p>原文作者：<a href="http://www.shihaizhou.com">Haizhou Shi</a>
             </p><p>原文链接：<a href="http://www.shihaizhou.com/2020/10/20/RAFT-solving-the-Puzzle-of-BYOL/">http://www.shihaizhou.com/2020/10/20/RAFT-solving-the-Puzzle-of-BYOL/</a>
             </p><p>发表日期：<a href="http://www.shihaizhou.com/2020/10/20/RAFT-solving-the-Puzzle-of-BYOL/">October 20th 2020, 3:24:47 pm</a>
-            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/10/20/RAFT-solving-the-Puzzle-of-BYOL/">October 21st 2020, 6:52:35 pm</a>
+            </p><p>更新日期：<a href="http://www.shihaizhou.com/2020/10/20/RAFT-solving-the-Puzzle-of-BYOL/">October 21st 2020, 6:56:44 pm</a>
             </p><p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -583,26 +583,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1604,12 +1584,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/ELMo-Deep-Contextualized-Word-Representations/">ELMo - Deep Contextualized Word Representations</a>
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href="/2020/05/03/BERT/">BERT</a>
         </li>
     
     
@@ -1668,25 +1648,6 @@ top:50vh;
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL(4) - Value Function Approximation</a>
-        </li>
-    
-    
     
     
     
@@ -1706,8 +1667,27 @@ top:50vh;
     
         </ul>
     
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href="/2020/02/11/Metric-Space/">Metric Space</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href="/2019/09/04/RL-Course-Lesson-4-Value-Function-Approximation/">RL(4) - Value Function Approximation</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1739,35 +1719,35 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
+        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
     
-        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
-    
-        <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
+        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
     
         <span class="sidebar-tag-name" data-tags="MI"><span class="iconfont-archer">&#xe606;</span>MI</span>
     
-        <span class="sidebar-tag-name" data-tags="Contrastive"><span class="iconfont-archer">&#xe606;</span>Contrastive</span>
+        <span class="sidebar-tag-name" data-tags="Code"><span class="iconfont-archer">&#xe606;</span>Code</span>
+    
+        <span class="sidebar-tag-name" data-tags="Basics"><span class="iconfont-archer">&#xe606;</span>Basics</span>
+    
+        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
+    
+        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
+    
+        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
+    
+        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
+    
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
         <span class="sidebar-tag-name" data-tags="Representation Learning"><span class="iconfont-archer">&#xe606;</span>Representation Learning</span>
     
         <span class="sidebar-tag-name" data-tags="GNN"><span class="iconfont-archer">&#xe606;</span>GNN</span>
     
-        <span class="sidebar-tag-name" data-tags="RL"><span class="iconfont-archer">&#xe606;</span>RL</span>
-    
         <span class="sidebar-tag-name" data-tags="GAN"><span class="iconfont-archer">&#xe606;</span>GAN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Manifold"><span class="iconfont-archer">&#xe606;</span>Manifold</span>
     
         <span class="sidebar-tag-name" data-tags="Negotiation"><span class="iconfont-archer">&#xe606;</span>Negotiation</span>
     
         <span class="sidebar-tag-name" data-tags="CV"><span class="iconfont-archer">&#xe606;</span>CV</span>
-    
-        <span class="sidebar-tag-name" data-tags="poker"><span class="iconfont-archer">&#xe606;</span>poker</span>
-    
-        <span class="sidebar-tag-name" data-tags="FL"><span class="iconfont-archer">&#xe606;</span>FL</span>
-    
-        <span class="sidebar-tag-name" data-tags="overview"><span class="iconfont-archer">&#xe606;</span>overview</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
